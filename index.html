@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Banco de Diseño · Smart Connection</title>
+<style>
+/* Tokens estilo Claude Design + identidad SMC */
+:root{
+  --bg:#F8F8F6;
+  --bg-card:#FFFFFF;
+  --bg-card-hover:#FAF9F5;
+  --ink:#141413;
+  --ink-soft:#5C6370;
+  --ink-muted:#8E8E8B;
+  --line:#D7D7D5;
+  --line-soft:#E8E8E5;
+  --accent:#D97757;          /* Claude orange (logo Anthropic) */
+  --accent-soft:rgba(217,119,87,0.08);
+  --smc-navy:#1B2F4E;
+  --smc-gold:#C49A3A;
+  --radius:10px;
+  --radius-sm:6px;
+  --shadow-card:0 1px 2px rgba(20,20,19,0.04);
+  --shadow-hover:0 8px 24px rgba(20,20,19,0.08);
+  --font:Inter,'Anthropic Sans',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ── Header ── */
+.head{
+  position:sticky;top:0;z-index:50;
+  background:rgba(248,248,246,0.85);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line-soft);
+  padding:16px 32px;
+  display:flex;align-items:center;gap:24px;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-0.01em}
+.brand-mark{width:28px;height:28px;border-radius:8px;background:var(--smc-navy);color:var(--smc-gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.brand-sep{color:var(--ink-muted);font-weight:400;margin:0 4px}
+.brand-name{color:var(--ink)}
+.brand-title{color:var(--ink-soft);font-weight:500}
+.nav-search{
+  flex:1;max-width:560px;
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg-card);border:1px solid var(--line);
+  border-radius:var(--radius);padding:10px 14px;
+  font-size:13px;color:var(--ink-soft);
+  cursor:text;transition:border-color 0.2s;
+}
+.nav-search:focus-within{border-color:var(--ink-soft)}
+.nav-search input{flex:1;border:0;outline:0;background:transparent;font:inherit;color:var(--ink)}
+.nav-search input::placeholder{color:var(--ink-muted)}
+.nav-search .kbd{font-size:11px;color:var(--ink-muted);padding:2px 6px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.nav-actions{display:flex;gap:8px}
+.btn{padding:8px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;transition:all 0.15s;border:1px solid transparent}
+.btn-ghost{color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{background:var(--bg-card)}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#000}
+
+/* ── Hero / título ── */
+.hero{padding:64px 32px 32px;max-width:1280px;margin:0 auto}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.hero-title{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.05;color:var(--ink);margin-bottom:14px;max-width:820px}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:15px;color:var(--ink-soft);line-height:1.6;max-width:680px}
+
+/* ── Filtros tipo Claude Gallery ── */
+.filters{padding:24px 32px 8px;max-width:1280px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filter{
+  padding:7px 14px;border-radius:100px;
+  font-size:13px;font-weight:500;color:var(--ink-soft);
+  background:var(--bg-card);border:1px solid var(--line);
+  transition:all 0.15s;
+}
+.filter:hover{border-color:var(--ink-soft);color:var(--ink)}
+.filter.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filter-count{margin-left:6px;font-size:11px;color:var(--ink-muted)}
+.filter.active .filter-count{color:rgba(255,255,255,0.6)}
+
+/* ── Grid de cards (estilo gallery) ── */
+.grid{
+  padding:24px 32px 64px;max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+}
+.card{
+  background:var(--bg-card);border:1px solid var(--line-soft);border-radius:var(--radius);
+  padding:0;cursor:pointer;
+  transition:all 0.2s cubic-bezier(0.4,0,0.2,1);
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:var(--shadow-card);
+  text-decoration:none;color:inherit;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:var(--line)}
+.card-preview{
+  aspect-ratio:16/10;
+  background:linear-gradient(135deg,#F5F5F2,#EDEDE8);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--line-soft);
+}
+.card-preview-emoji{font-size:3rem;opacity:0.6}
+.card-preview-shapes{position:absolute;inset:0;opacity:0.5}
+.card-stage{
+  position:absolute;top:10px;left:10px;
+  font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  padding:4px 8px;border-radius:6px;background:rgba(255,255,255,0.92);color:var(--ink);
+}
+.card-body{padding:16px 18px 18px}
+.card-cat{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.card-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px;line-height:1.3}
+.card-desc{font-size:12px;color:var(--ink-soft);line-height:1.5;margin-bottom:10px}
+.card-meta{display:flex;gap:10px;font-size:11px;color:var(--ink-muted);padding-top:10px;border-top:1px solid var(--line-soft)}
+.card-meta-item{display:inline-flex;align-items:center;gap:4px}
+
+/* Previews temáticos (sin imágenes externas) */
+.preview-tokens{background:linear-gradient(135deg,#1B2F4E 0%,#0a1525 100%)}
+.preview-tokens::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,#C49A3A 0%,transparent 40%),radial-gradient(circle at 70% 70%,#F5EDD8 0%,transparent 35%);opacity:0.7}
+.preview-ui{background:#FAFAF7;display:flex;flex-direction:column;align-items:stretch;padding:18px;gap:8px}
+.preview-ui::before{content:'';height:8px;border-radius:4px;background:var(--ink);width:48%}
+.preview-ui::after{content:'';height:32px;border-radius:8px;background:var(--smc-navy);width:60%}
+.preview-motion{background:linear-gradient(135deg,#FFFFFF,#FAF9F5);position:relative}
+.preview-motion::before{content:'';position:absolute;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,#C49A3A,transparent 70%);top:30%;left:30%;animation:pulse 2.4s ease-in-out infinite}
+.preview-motion::after{content:'';position:absolute;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle,#1B2F4E,transparent 70%);top:50%;left:55%;animation:pulse 2.4s ease-in-out infinite 0.6s}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(1.2);opacity:1}}
+.preview-opening{background:#141413;position:relative;overflow:hidden}
+.preview-opening::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#D97757,#C49A3A);transform-origin:center;animation:openZoom 3s ease-in-out infinite}
+@keyframes openZoom{0%,100%{transform:scale(0.7);opacity:0}50%{transform:scale(1);opacity:0.9}}
+.preview-premium{background:linear-gradient(135deg,#0a1525,#1B2F4E);position:relative}
+.preview-premium::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(196,154,58,0.4),transparent 60%)}
+.preview-premium::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(transparent,rgba(0,0,0,0.4))}
+.preview-canva{background:linear-gradient(135deg,#7D2AE8,#00C4CC);display:flex;align-items:center;justify-content:center}
+.preview-logo{background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;padding:20px}
+.preview-logo span{width:36px;height:36px;background:var(--ink);border-radius:8px}
+.preview-logo span:nth-child(2){background:var(--accent);border-radius:50%}
+.preview-logo span:nth-child(3){background:var(--smc-navy);border-radius:4px;transform:rotate(45deg)}
+.preview-logo span:nth-child(4){background:var(--smc-gold);border-radius:50%}
+.preview-maqueta{background:#FAFAF7;display:grid;grid-template-columns:1fr 2fr;gap:8px;padding:18px}
+.preview-maqueta::before{content:'';background:var(--ink);border-radius:6px;height:100%}
+.preview-maqueta::after{content:'';background:var(--smc-gold);border-radius:6px;height:60%}
+.preview-claude{background:linear-gradient(135deg,#FAF9F5,#F5F5F2);display:flex;align-items:center;justify-content:center;font-family:'Anthropic Sans',serif;font-weight:700;font-size:2.4rem;color:#D97757;letter-spacing:-0.04em}
+.preview-panchita{background:linear-gradient(135deg,#FFF8E7,#FAEED4);display:flex;align-items:center;justify-content:center;font-size:3.6rem}
+
+/* ── Footer mini ── */
+.foot{padding:32px;text-align:center;color:var(--ink-muted);font-size:12px;border-top:1px solid var(--line-soft);background:var(--bg-card)}
+.foot a{color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--line)}
+.foot a:hover{color:var(--ink)}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  .head{padding:12px 16px;gap:12px}
+  .nav-search{font-size:12px;padding:8px 12px}
+  .nav-actions{display:none}
+  .hero{padding:32px 16px 16px}
+  .filters{padding:12px 16px 4px}
+  .grid{padding:12px 16px 40px;grid-template-columns:1fr;gap:14px}
+  .card-preview{aspect-ratio:16/9}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="head">
+  <a class="brand" href="#">
+    <span class="brand-mark">S</span>
+    <span class="brand-name">Smart Connection</span>
+    <span class="brand-sep">/</span>
+    <span class="brand-title">Banco de Diseño</span>
+  </a>
+  <div class="nav-search">
+    <span>🔍</span>
+    <input type="search" id="searchInput" placeholder="Buscar catálogo, efecto, patrón…" />
+    <span class="kbd">⌘K</span>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-ghost">Importar</button>
+    <button class="btn btn-primary">+ Nuevo</button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-eyebrow">Design System · Smart Connection · v1</div>
+  <h1 class="hero-title">El banco único de <em>diseño</em>.<br/>Catálogos, efectos, patrones y maquetas.</h1>
+  <p class="hero-sub">Una sola fuente de verdad para todo el sistema de diseño SMC. Inspirado en Claude Design Gallery. Mobile-first, federado por proyecto.</p>
+</section>
+
+<!-- ═══ FILTROS ═══ -->
+<nav class="filters" id="filters">
+  <button class="filter active" data-cat="all">Todo<span class="filter-count">10</span></button>
+  <button class="filter" data-cat="tokens">Tokens<span class="filter-count">2</span></button>
+  <button class="filter" data-cat="ui">UI<span class="filter-count">1</span></button>
+  <button class="filter" data-cat="motion">Motion<span class="filter-count">2</span></button>
+  <button class="filter" data-cat="opening">Aperturas<span class="filter-count">1</span></button>
+  <button class="filter" data-cat="premium">Premium<span class="filter-count">2</span></button>
+  <button class="filter" data-cat="brand">Brand<span class="filter-count">2</span></button>
+  <button class="filter" data-cat="maquetas">Maquetas<span class="filter-count">1</span></button>
+  <button class="filter" data-cat="ref">Referencia<span class="filter-count">1</span></button>
+</nav>
+
+<!-- ═══ GRID ═══ -->
+<section class="grid" id="grid">
+
+  <!-- 1 — Design Tokens -->
+  <a class="card" data-cat="tokens" data-q="design tokens css variables paleta tipografia kanki intranet marketing"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/reference_design_tokens.md">
+    <div class="card-preview preview-tokens">
+      <span class="card-stage">Foundations</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Tokens</div>
+      <h3 class="card-title">Design Tokens SMC</h3>
+      <p class="card-desc">Paletas, tipografía y CSS variables aprobadas por proyecto (Intranet dark, Marketing, Kanki Surf).</p>
+      <div class="card-meta">
+        <span class="card-meta-item">📐 fuente única</span>
+        <span class="card-meta-item">⚙️ CSS vars</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 2 — @smc/ui Catalog -->
+  <a class="card" data-cat="ui" data-q="smc ui catalogo componentes button card badge dialog tailwind radix"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/reference_smc_ui_catalog.md">
+    <div class="card-preview preview-ui">
+      <span class="card-stage">Components</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">UI Library</div>
+      <h3 class="card-title">@smc/ui · Catálogo</h3>
+      <p class="card-desc">Catálogo unificado Panchita + Fiori: efectos, mobile-first, tokens CSS, componentes, HTML, JS.</p>
+      <div class="card-meta">
+        <span class="card-meta-item">🧩 Radix + Tailwind</span>
+        <span class="card-meta-item">📦 packages/ui</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 3 — Motion Graphics Mobile -->
+  <a class="card" data-cat="motion" data-q="motion graphics mobile catalogo ken burns scroll driven kinetic touch gradient mesh marquee"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/reference_motion_catalog_mobile.md">
+    <div class="card-preview preview-motion">
+      <span class="card-stage">Motion</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Motion Graphics</div>
+      <h3 class="card-title">Motion Catalog Mobile 2026</h3>
+      <p class="card-desc">20 efectos curados: Ken Burns, scroll-driven, kinetic type, touch, gradient mesh, marquee, anti-patrones.</p>
+      <div class="card-meta">
+        <span class="card-meta-item">🎬 20 efectos</span>
+        <span class="card-meta-item">📱 mobile-first</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 4 — Aperturas Mobile -->
+  <a class="card" data-cat="opening motion" data-q="aperturas mobile opening pinch zoom card unfold mask wipe liquid morph editorial type scroll snap stories mirror split"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/reference_mobile_opening_catalog.md">
+    <div class="card-preview preview-opening">
+      <span class="card-stage">Mobile</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Aperturas Mobile</div>
+      <h3 class="card-title">Banco de Aperturas Mobile</h3>
+      <p class="card-desc">12 patrones de apertura mobile-native (Pinch Zoom, Card Unfold, Mirror Split, Scroll-Snap Stories) + 4 combos Kanki.</p>
+      <div class="card-meta">
+        <span class="card-meta-item">🚪 12 patrones</span>
+        <span class="card-meta-item">🎯 4 combos</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 5 — Premium Effects -->
+  <a class="card" data-cat="premium motion" data-q="premium effects panchita design system temas layouts efectos mobile microcopy conversion animacion datos accesibilidad"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/feedback_panchita_design_system.md">
+    <div class="card-preview preview-premium">
+      <span class="card-stage">Premium</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Effects</div>
+      <h3 class="card-title">Panchita Design System</h3>
+      <p class="card-desc">Catálogo Panchita: temas, layouts, efectos, mobile, microcopy, conversión, animación, datos, accesibilidad. Skill /premium-effects con recetas CSS/JS.</p>
+      <div class="card-meta">
+        <span class="card-meta-item">💎 premium</span>
+        <span class="card-meta-item">/premium-effects</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 6 — Banco de Logos -->
+  <a class="card" data-cat="brand" data-q="logos banco wikimedia seeklogo brandfetch sap salesforce adobe oficiales"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/reference_logo_banks.md">
+    <div class="card-preview preview-logo">
+      <span></span><span></span><span></span><span></span>
+      <span class="card-stage">Brand</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Brand</div>
+      <h3 class="card-title">Banco de Logos Oficiales</h3>
+      <p class="card-desc">Wikimedia · Seeklogo · Brandfetch + URLs validadas SAP/SF/Adobe + regla "no inventar logos".</p>
+      <div class="card-meta">
+        <span class="card-meta-item">🏷️ bancos</span>
+        <span class="card-meta-item">⚖️ legal</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 7 — Canva Workflow -->
+  <a class="card" data-cat="brand premium" data-q="canva workflow mcp brand kit panchita maquetas"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/reference_canva_workflow.md">
+    <div class="card-preview preview-canva">
+      <span class="card-stage" style="background:rgba(255,255,255,0.95)">Canva</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Brand · Assets</div>
+      <h3 class="card-title">Canva Workflow MCP</h3>
+      <p class="card-desc">SOP cuándo usar Canva vs Panchita · brand kit · flujo Canva→código.</p>
+      <div class="card-meta">
+        <span class="card-meta-item">🎨 Canva MCP</span>
+        <span class="card-meta-item">🔁 workflow</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 8 — Maquetas SMC -->
+  <a class="card" data-cat="maquetas" data-q="maquetas smc kanki intranet marketing voy infopet marketplace alpaso cencosud valmer sap"
+     href="../SmartConnection/index.html">
+    <div class="card-preview preview-maqueta">
+      <span class="card-stage">Live</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Maquetas</div>
+      <h3 class="card-title">Banco de Maquetas Cross-Proyecto</h3>
+      <p class="card-desc">17 carpetas de proyectos con maquetas vivas: Kanki, Intranet, Marketing, VOY, InfoPet, Marketplace, AlPaso, Cencosud, Valmer, SAP, Discovery…</p>
+      <div class="card-meta">
+        <span class="card-meta-item">📐 17 proyectos</span>
+        <span class="card-meta-item">🔗 navegable</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 9 — Claude Design Ref -->
+  <a class="card" data-cat="ref" data-q="claude design anthropic labs prototipado visual referencia panchita fiori"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/reference_claude_design.md">
+    <div class="card-preview preview-claude">
+      claude
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Referencia</div>
+      <h3 class="card-title">Claude Design — Anthropic Labs</h3>
+      <p class="card-desc">Prototipado visual de Anthropic. Skill /claude-design para Panchita+Fiori. Inspiración estética de este banco.</p>
+      <div class="card-meta">
+        <span class="card-meta-item">🧪 Labs</span>
+        <span class="card-meta-item">🔗 claude.ai/design</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 10 — @smc/ui Package (proyecto) -->
+  <a class="card" data-cat="ui" data-q="smc ui package fiori components roadmap incremental"
+     href="../../../../.claude/projects/-Users-guillermogonzalezleon/memory/project_smc_ui_package.md">
+    <div class="card-preview preview-ui" style="background:#FAF9F5">
+      <span class="card-stage">Roadmap</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">UI Package</div>
+      <h3 class="card-title">@smc/ui · Package</h3>
+      <p class="card-desc">Diseñado en Fiori.md pero NO construido aún. Roadmap incremental por demanda real.</p>
+      <div class="card-meta">
+        <span class="card-meta-item">📦 packages/ui</span>
+        <span class="card-meta-item">🚧 backlog</span>
+      </div>
+    </div>
+  </a>
+
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="foot">
+  <p>Banco de Diseño · Smart Connection · v1 · creado 2026-05-11 · estilo Claude Design Gallery</p>
+  <p style="margin-top:6px">Fuente única para Panchita + Fiori + Frontend + Functional Lead. Catálogos vivos persistidos en <code>~/.claude/.../memory/</code>.</p>
+</footer>
+
+<script>
+// ── Filtros ──
+const filters = document.querySelectorAll('.filter');
+const cards = document.querySelectorAll('.card');
+filters.forEach(f => f.addEventListener('click', () => {
+  const cat = f.dataset.cat;
+  filters.forEach(x => x.classList.toggle('active', x === f));
+  cards.forEach(c => {
+    const cats = (c.dataset.cat || '').split(/\s+/);
+    c.style.display = (cat === 'all' || cats.includes(cat)) ? '' : 'none';
+  });
+}));
+
+// ── Búsqueda live (full-text en data-q) ──
+const search = document.getElementById('searchInput');
+search.addEventListener('input', e => {
+  const q = e.target.value.toLowerCase().trim();
+  cards.forEach(c => {
+    const haystack = (c.dataset.q + ' ' + c.textContent).toLowerCase();
+    c.style.display = (q === '' || haystack.includes(q)) ? '' : 'none';
+  });
+});
+
+// ── ⌘K para foco ──
+document.addEventListener('keydown', e => {
+  if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
+    e.preventDefault();
+    search.focus();
+  }
+});
+</script>
+</body>
+</html>
