@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Motion · SMC Design System</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    background: var(--bg, #0A0A0B);
+    color: var(--text, #F5F5F7);
+    letter-spacing: -0.012em;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(10,10,11,0.72);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 32px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .nav-logo { font-weight: 600; font-size: 17px; letter-spacing: -0.022em; }
+  .nav-logo a { color: #F5F5F7; text-decoration: none; }
+  .nav-back { font-size: 12px; color: #86868B; text-decoration: none; transition: 200ms; }
+  .nav-back:hover { color: #F5F5F7; }
+  .nav-spacer { flex: 1; }
+  .nav-meta { font-size: 11px; color: #86868B; font-family: 'SF Mono', monospace; letter-spacing: 0.04em; }
+
+  .hero {
+    padding: 88px 32px 56px;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 13px;
+    color: #FF6B35;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    background: linear-gradient(180deg, #F5F5F7 0%, #86868B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 22px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    background: linear-gradient(135deg, #FF6B35 0%, #FFD23F 50%, #00E5B0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 19px;
+    color: #86868B;
+    line-height: 1.45;
+    max-width: 620px;
+    margin: 0 auto 38px;
+    letter-spacing: -0.012em;
+  }
+  .hero-cta {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: 980px;
+    font: 600 15px -apple-system, sans-serif;
+    letter-spacing: -0.012em;
+    text-decoration: none;
+    transition: 200ms cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: #F5F5F7; color: #0A0A0B; }
+  .btn-primary:hover { transform: scale(1.04); box-shadow: 0 12px 36px rgba(255,255,255,0.16); }
+  .btn-ghost { background: transparent; color: #F5F5F7; border: 1px solid rgba(255,255,255,0.2); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.06); }
+
+  .filters {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px 32px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+    justify-content: center;
+  }
+  .chip {
+    padding: 8px 16px;
+    border-radius: 980px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #86868B;
+    font: 500 13px -apple-system, sans-serif;
+    letter-spacing: -0.012em;
+    cursor: pointer;
+    transition: 180ms;
+  }
+  .chip:hover { background: rgba(255,255,255,0.08); color: #F5F5F7; }
+  .chip.active { background: #F5F5F7; color: #0A0A0B; border-color: #F5F5F7; }
+
+  .grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px 96px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    position: relative;
+    background: #161618;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: 280ms cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+    aspect-ratio: 4/5;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.16); box-shadow: 0 24px 48px rgba(0,0,0,0.4); }
+
+  .card-preview {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1A1A1D, #0A0A0B);
+  }
+  .card-meta {
+    padding: 18px 22px 22px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: #0F0F11;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    margin-bottom: 4px;
+  }
+  .card-cat {
+    font: 500 11px 'SF Mono', monospace;
+    color: #86868B;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .card-badge {
+    position: absolute; top: 14px; right: 14px;
+    padding: 4px 10px;
+    border-radius: 980px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    font: 600 10px 'SF Mono', monospace;
+    color: #FFD23F;
+    letter-spacing: 0.08em;
+    z-index: 3;
+  }
+
+  /* ===== MOTION PREVIEWS (live CSS, no GIFs) ===== */
+
+  /* 1 · Aurora gradient mesh */
+  .m-aurora { position: absolute; inset: 0; background:
+    radial-gradient(circle at 20% 30%, #FF6B35 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, #00E5B0 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, #6366F1 0%, transparent 50%);
+    filter: blur(40px);
+    animation: aurora 12s ease-in-out infinite alternate;
+  }
+  @keyframes aurora {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+  }
+
+  /* 2 · Marquee infinito */
+  .m-marquee {
+    position: absolute; inset: 0;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .m-marquee-track {
+    display: flex; gap: 24px;
+    font: 700 64px 'Instrument Serif', serif;
+    letter-spacing: -0.04em;
+    color: rgba(255,255,255,0.2);
+    white-space: nowrap;
+    animation: marquee 18s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* 3 · Kinetic typography */
+  .m-kinetic {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font: 800 56px -apple-system, sans-serif;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+  }
+  .m-kinetic span {
+    display: block; opacity: 0;
+    animation: kinetic 4s cubic-bezier(0.4,0,0.2,1) infinite;
+  }
+  .m-kinetic span:nth-child(1) { animation-delay: 0s; color: #FF6B35; }
+  .m-kinetic span:nth-child(2) { animation-delay: 0.5s; color: #00E5B0; }
+  .m-kinetic span:nth-child(3) { animation-delay: 1s; color: #6366F1; }
+  @keyframes kinetic {
+    0%, 80%, 100% { opacity: 0; transform: translateY(20px); }
+    20%, 60% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 4 · Particles drift */
+  .m-particles { position: absolute; inset: 0; overflow: hidden; }
+  .m-particles span {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #00E5B0;
+    box-shadow: 0 0 16px #00E5B0;
+    animation: drift 6s ease-in-out infinite;
+  }
+  .m-particles span:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+  .m-particles span:nth-child(2) { top: 60%; left: 40%; animation-delay: 1s; background: #FF6B35; box-shadow: 0 0 16px #FF6B35; }
+  .m-particles span:nth-child(3) { top: 30%; left: 70%; animation-delay: 2s; background: #FFD23F; box-shadow: 0 0 16px #FFD23F; }
+  .m-particles span:nth-child(4) { top: 80%; left: 20%; animation-delay: 3s; background: #6366F1; box-shadow: 0 0 16px #6366F1; }
+  .m-particles span:nth-child(5) { top: 50%; left: 80%; animation-delay: 1.5s; }
+  @keyframes drift {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(40px,-30px) scale(1.6); }
+  }
+
+  /* 5 · Liquid blob morph */
+  .m-blob {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .m-blob-shape {
+    width: 200px; height: 200px;
+    background: linear-gradient(135deg, #FF6B35, #FFD23F);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    animation: blob 8s ease-in-out infinite;
+    filter: blur(2px);
+  }
+  @keyframes blob {
+    0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(0deg); }
+    33% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: rotate(120deg); }
+    66% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; transform: rotate(240deg); }
+  }
+
+  /* 6 · Grid scroll */
+  .m-grid-scroll {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridScroll 4s linear infinite;
+  }
+  @keyframes gridScroll {
+    from { background-position: 0 0; }
+    to { background-position: 40px 40px; }
+  }
+
+  /* 7 · Text gradient sweep */
+  .m-sweep {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font: 800 56px -apple-system, sans-serif;
+    letter-spacing: -0.04em;
+  }
+  .m-sweep span {
+    background: linear-gradient(90deg, #86868B 0%, #86868B 40%, #F5F5F7 50%, #86868B 60%, #86868B 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: sweep 3s linear infinite;
+  }
+  @keyframes sweep {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  /* 8 · 3D Cube rotate */
+  .m-cube {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    perspective: 600px;
+  }
+  .m-cube-shape {
+    width: 140px; height: 140px;
+    transform-style: preserve-3d;
+    animation: cube 14s linear infinite;
+  }
+  .m-cube-face {
+    position: absolute; width: 140px; height: 140px;
+    background: rgba(0,229,176,0.16);
+    border: 1px solid #00E5B0;
+    backdrop-filter: blur(8px);
+  }
+  .m-cube-face:nth-child(1) { transform: translateZ(70px); }
+  .m-cube-face:nth-child(2) { transform: rotateY(180deg) translateZ(70px); }
+  .m-cube-face:nth-child(3) { transform: rotateY(90deg) translateZ(70px); background: rgba(255,107,53,0.16); border-color: #FF6B35; }
+  .m-cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(70px); background: rgba(255,107,53,0.16); border-color: #FF6B35; }
+  .m-cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(70px); background: rgba(99,102,241,0.16); border-color: #6366F1; }
+  .m-cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(70px); background: rgba(99,102,241,0.16); border-color: #6366F1; }
+  @keyframes cube {
+    from { transform: rotateX(0) rotateY(0); }
+    to { transform: rotateX(360deg) rotateY(360deg); }
+  }
+
+  /* 9 · Wave SVG */
+  .m-wave {
+    position: absolute; inset: 0;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .m-wave svg { width: 200%; height: 60%; }
+  .m-wave path {
+    fill: none;
+    stroke: url(#waveGrad);
+    stroke-width: 2;
+    animation: wave 6s ease-in-out infinite;
+  }
+  @keyframes wave {
+    0%, 100% { d: path("M 0 50 Q 25 30 50 50 T 100 50 T 150 50 T 200 50"); }
+    50% { d: path("M 0 50 Q 25 70 50 50 T 100 50 T 150 50 T 200 50"); }
+  }
+
+  /* 10 · Spotlight follow */
+  .m-spotlight {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle 200px at 50% 50%, rgba(0,229,176,0.4) 0%, transparent 70%);
+    animation: spot 5s ease-in-out infinite;
+  }
+  @keyframes spot {
+    0% { background-position: 0% 0%; }
+    25% { background-position: 100% 0%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 0% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+  .m-spotlight {
+    background-image: radial-gradient(circle 200px at var(--x,50%) var(--y,50%), rgba(0,229,176,0.5) 0%, rgba(255,107,53,0.2) 30%, transparent 70%);
+  }
+
+  /* 11 · Glitch text */
+  .m-glitch {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font: 900 64px -apple-system, sans-serif;
+    letter-spacing: -0.04em;
+    color: #F5F5F7;
+    position: relative;
+  }
+  .m-glitch span {
+    position: relative;
+    text-shadow:
+      2px 0 #FF6B35,
+      -2px 0 #00E5B0;
+    animation: glitch 3s steps(2, end) infinite;
+  }
+  @keyframes glitch {
+    0%, 100% { text-shadow: 2px 0 #FF6B35, -2px 0 #00E5B0; transform: translate(0); }
+    20% { text-shadow: -2px 0 #FF6B35, 2px 0 #00E5B0; transform: translate(-2px,1px); }
+    40% { text-shadow: 2px 0 #FF6B35, -2px 0 #00E5B0; transform: translate(2px,-1px); }
+    60% { text-shadow: -2px 1px #FF6B35, 2px -1px #00E5B0; transform: translate(0); }
+  }
+
+  /* 12 · Ripple */
+  .m-ripple {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .m-ripple span {
+    position: absolute;
+    width: 80px; height: 80px;
+    border: 2px solid #00E5B0;
+    border-radius: 50%;
+    animation: ripple 2s ease-out infinite;
+    opacity: 0;
+  }
+  .m-ripple span:nth-child(2) { animation-delay: 0.5s; border-color: #FF6B35; }
+  .m-ripple span:nth-child(3) { animation-delay: 1s; border-color: #FFD23F; }
+  .m-ripple span:nth-child(4) { animation-delay: 1.5s; border-color: #6366F1; }
+  @keyframes ripple {
+    0% { transform: scale(0.4); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
+  }
+
+  /* 13 · Noise texture */
+  .m-noise {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 40%, #FF6B35 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, #6366F1 0%, transparent 50%);
+    filter: contrast(1.4);
+  }
+  .m-noise::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    animation: noise 0.5s steps(4) infinite;
+    mix-blend-mode: overlay;
+  }
+  @keyframes noise {
+    0%, 100% { transform: translate(0,0); }
+    25% { transform: translate(-2px,1px); }
+    50% { transform: translate(1px,-2px); }
+    75% { transform: translate(2px,2px); }
+  }
+
+  /* 14 · Letter cascade */
+  .m-cascade {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font: 800 64px -apple-system, sans-serif;
+    letter-spacing: -0.04em;
+  }
+  .m-cascade span { display: inline-block; animation: cascade 2s ease-in-out infinite; }
+  .m-cascade span:nth-child(1) { animation-delay: 0s; }
+  .m-cascade span:nth-child(2) { animation-delay: 0.1s; }
+  .m-cascade span:nth-child(3) { animation-delay: 0.2s; }
+  .m-cascade span:nth-child(4) { animation-delay: 0.3s; }
+  .m-cascade span:nth-child(5) { animation-delay: 0.4s; }
+  .m-cascade span:nth-child(6) { animation-delay: 0.5s; }
+  @keyframes cascade {
+    0%, 100% { transform: translateY(0); color: #F5F5F7; }
+    50% { transform: translateY(-20px); color: #FF6B35; }
+  }
+
+  /* 15 · Conic spinner */
+  .m-conic {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .m-conic-shape {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #FF6B35, #FFD23F, #00E5B0, #6366F1, #FF6B35);
+    filter: blur(8px);
+    animation: spin 8s linear infinite;
+  }
+  .m-conic-inner {
+    position: absolute;
+    width: 120px; height: 120px;
+    background: #0A0A0B;
+    border-radius: 50%;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .footer {
+    text-align: center;
+    padding: 56px 32px 88px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: #6E6E73;
+    font-size: 13px;
+    letter-spacing: -0.012em;
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 56px 24px 32px; }
+    .grid { padding: 0 16px 56px; gap: 12px; grid-template-columns: 1fr 1fr; }
+    .card { aspect-ratio: 3/4; }
+    .card-meta { padding: 12px 14px 14px; }
+    .card-title { font-size: 13px; }
+    .card-cat { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo"><a href="../index.html">SMC Design System</a></div>
+  <a href="../index.html" class="nav-back">← Volver al banco</a>
+  <div class="nav-spacer"></div>
+  <div class="nav-meta">BANCO DE MOTION · v16 · 15 patrones</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Banco de Motion · 2026</div>
+  <h1>Motion que <em>copias y pegas</em></h1>
+  <p>15 patrones de motion premium en CSS/JS puro · live preview · sin GIFs · sin builder · copy/paste plug-and-play. Inspirado en motionsites.ai + awwwards + 60fps.design pero sin vendor lock-in.</p>
+  <div class="hero-cta">
+    <a href="#grid" class="btn btn-primary">Explorar patrones →</a>
+    <a href="../index.html" class="btn btn-ghost">Volver al banco</a>
+  </div>
+</section>
+
+<div class="filters">
+  <div class="chip active" data-filter="all">Todos · 15</div>
+  <div class="chip" data-filter="hero">Hero backgrounds</div>
+  <div class="chip" data-filter="text">Tipografía</div>
+  <div class="chip" data-filter="3d">3D + Spatial</div>
+  <div class="chip" data-filter="ambient">Ambient</div>
+</div>
+
+<div class="grid" id="grid">
+
+  <a href="#" class="card" data-cat="hero ambient">
+    <div class="card-preview"><div class="m-aurora"></div></div>
+    <div class="card-meta">
+      <div class="card-title">Aurora Gradient Mesh</div>
+      <div class="card-cat">HERO · AMBIENT</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="text">
+    <div class="card-preview"><div class="m-marquee"><div class="m-marquee-track">MOTION · MOTION · MOTION · MOTION ·&nbsp;</div></div></div>
+    <div class="card-meta">
+      <div class="card-title">Marquee Infinito</div>
+      <div class="card-cat">TIPOGRAFÍA</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="text">
+    <div class="card-preview"><div class="m-kinetic"><span>SMC</span><span>2026</span><span>MOTION</span></div></div>
+    <div class="card-meta">
+      <div class="card-title">Kinetic Typography</div>
+      <div class="card-cat">TIPOGRAFÍA</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="ambient">
+    <div class="card-preview"><div class="m-particles"><span></span><span></span><span></span><span></span><span></span></div></div>
+    <div class="card-meta">
+      <div class="card-title">Particles Drift</div>
+      <div class="card-cat">AMBIENT</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="hero ambient">
+    <div class="card-preview"><div class="m-blob"><div class="m-blob-shape"></div></div></div>
+    <div class="card-meta">
+      <div class="card-title">Liquid Blob Morph</div>
+      <div class="card-cat">HERO</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="ambient">
+    <div class="card-preview"><div class="m-grid-scroll"></div></div>
+    <div class="card-meta">
+      <div class="card-title">Grid Scroll</div>
+      <div class="card-cat">AMBIENT</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="text">
+    <div class="card-preview"><div class="m-sweep"><span>SHIMMER</span></div></div>
+    <div class="card-meta">
+      <div class="card-title">Text Gradient Sweep</div>
+      <div class="card-cat">TIPOGRAFÍA</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="3d">
+    <div class="card-preview"><div class="m-cube"><div class="m-cube-shape"><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div></div></div></div>
+    <div class="card-meta">
+      <div class="card-title">3D Cube Rotate</div>
+      <div class="card-cat">3D · SPATIAL</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="ambient">
+    <div class="card-preview">
+      <div class="m-wave">
+        <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+          <defs><linearGradient id="waveGrad"><stop offset="0%" stop-color="#FF6B35"/><stop offset="100%" stop-color="#00E5B0"/></linearGradient></defs>
+          <path d="M 0 50 Q 25 30 50 50 T 100 50 T 150 50 T 200 50"/>
+        </svg>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-title">Wave SVG</div>
+      <div class="card-cat">AMBIENT</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="hero ambient" id="spotCard">
+    <div class="card-preview"><div class="m-spotlight" id="spot"></div></div>
+    <div class="card-meta">
+      <div class="card-title">Spotlight Follow Mouse</div>
+      <div class="card-cat">HERO · INTERACTIVE</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="text">
+    <div class="card-preview"><div class="m-glitch"><span>GLITCH</span></div></div>
+    <div class="card-meta">
+      <div class="card-title">Glitch Text</div>
+      <div class="card-cat">TIPOGRAFÍA</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="ambient">
+    <div class="card-preview"><div class="m-ripple"><span></span><span></span><span></span><span></span></div></div>
+    <div class="card-meta">
+      <div class="card-title">Ripple Pulse</div>
+      <div class="card-cat">AMBIENT</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="hero ambient">
+    <div class="card-preview"><div class="m-noise"></div></div>
+    <div class="card-meta">
+      <div class="card-title">Noise Grain Texture</div>
+      <div class="card-cat">HERO · TEXTURE</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="text">
+    <div class="card-preview"><div class="m-cascade"><span>S</span><span>M</span><span>C</span><span>·</span><span>2</span><span>6</span></div></div>
+    <div class="card-meta">
+      <div class="card-title">Letter Cascade</div>
+      <div class="card-cat">TIPOGRAFÍA</div>
+    </div>
+  </a>
+
+  <a href="#" class="card" data-cat="ambient 3d">
+    <div class="card-preview"><div class="m-conic"><div class="m-conic-shape"></div><div class="m-conic-inner"></div></div></div>
+    <div class="card-meta">
+      <div class="card-title">Conic Spinner</div>
+      <div class="card-cat">AMBIENT · 3D</div>
+    </div>
+  </a>
+
+</div>
+
+<footer class="footer">
+  Banco de Motion v16 · SMC Design System · 15 patrones CSS/JS puro · sin GIFs · sin builder dependency
+</footer>
+
+<script>
+  // Filter chips
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const f = chip.dataset.filter;
+      document.querySelectorAll('.card').forEach(card => {
+        if (f === 'all') { card.style.display = 'flex'; return; }
+        const cats = card.dataset.cat || '';
+        card.style.display = cats.includes(f) ? 'flex' : 'none';
+      });
+    });
+  });
+
+  // Spotlight follow mouse
+  const spotCard = document.getElementById('spotCard');
+  const spot = document.getElementById('spot');
+  if (spotCard && spot) {
+    spotCard.addEventListener('mousemove', e => {
+      const rect = spotCard.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      spot.style.setProperty('--x', x + '%');
+      spot.style.setProperty('--y', y + '%');
+    });
+  }
+</script>
+
+<script src="../_themes.js"></script>
+<script src="../_auth.js"></script>
+</body>
+</html>
