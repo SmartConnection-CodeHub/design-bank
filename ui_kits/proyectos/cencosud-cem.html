@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Cencosud CEM · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 22px; min-height: 380px; display:flex; flex-direction:column; gap: 14px; }
+  .ce-flow { display:grid; grid-template-columns: 1fr 60px 1fr 60px 1fr; gap: 0; align-items: center; }
+  .ce-node { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 14px; display:flex; flex-direction:column; gap: 6px; box-shadow: var(--shadow-rest); }
+  .ce-node .lbl { font: 600 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+  .ce-node .nm { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.02em; }
+  .ce-node .sub { font: 10px var(--font-mono); color: var(--fg-3); }
+  .ce-node.sf { border-color: #00A1E0; }
+  .ce-node.sf .nm { color: #00A1E0; }
+  .ce-node.sap { border-color: #1B2F4E; }
+  .ce-node.cpi { background: var(--smc-navy-900); color: var(--smc-cream); border: none; }
+  .ce-node.cpi .lbl { color: var(--smc-accent); }
+  .ce-node.cpi .nm { color: var(--smc-cream); }
+  .ce-node.cpi .sub { color: var(--smc-cream-400); }
+  .ce-arrow { font: 600 18px var(--font-mono); color: var(--fg-3); text-align: center; position: relative; }
+  .ce-arrow .pulse { position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 99px; background: var(--smc-accent); animation: travel 2s linear infinite; }
+  @keyframes travel { 0% { left: 0; opacity: 1; } 100% { left: 100%; opacity: 0; } }
+  .ce-meta { display:flex; gap: 8px; flex-wrap: wrap; }
+  .ce-meta span { font: 11px var(--font-mono); padding: 5px 10px; border-radius: 99px; background: #fff; border: 1px solid var(--border-default); }
+  .ce-meta span.ok { background: var(--smc-accent-100); color: var(--smc-accent-700); border-color: transparent; }
+  .ce-log { background: var(--smc-navy-900); color: var(--smc-cream); border-radius: 10px; padding: 14px; font-family: var(--font-mono); font-size: 11px; line-height: 1.7; overflow: hidden; max-height: 180px; }
+  .ce-log .ts { color: var(--smc-cream-400); }
+  .ce-log .ok { color: var(--smc-accent); }
+  .ce-log .warn { color: var(--smc-gold); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Cencosud CEM">
+<div class="hub">
+  <header class="hub-top"><div class="brand">Cencosud CEM<span class="dot">.</span></div><div class="crumbs">proyectos · 08/13 · SF → SAP integration</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · enterprise · SAP CPI pipeline</div>
+  <h1 class="hub-title">Salesforce le habla a SAP, sin pelear.</h1>
+  <p class="hub-strap">Pipeline de customer-experience entre Salesforce (front retail Cencosud) y SAP (ERP central). 240k eventos/día via SAP CPI con dedup + idempotency.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Pipeline en vivo</button>
+    <button class="pill"><span class="n">02</span>Mapping de objetos</button>
+    <button class="pill"><span class="n">03</span>Dead-letter queue</button>
+    <button class="pill"><span class="n">04</span>Reportes SLA</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 pipeline · 240k eventos/d · SLA 99.91%</div>
+      <h3 class="ttl">SF Account/Contact → SAP CRM_PARTNER</h3>
+      <div class="stage">
+        <div class="ce-flow">
+          <div class="ce-node sf"><span class="lbl">origen</span><span class="nm">Salesforce</span><span class="sub">cencosud-prod.lightning</span><span class="sub">Account · Contact</span></div>
+          <div class="ce-arrow">→<span class="pulse"></span></div>
+          <div class="ce-node cpi"><span class="lbl">middleware</span><span class="nm">SAP CPI</span><span class="sub">iflow ZCEM-001</span><span class="sub">dedup · transform · split</span></div>
+          <div class="ce-arrow">→<span class="pulse" style="animation-delay: .5s"></span></div>
+          <div class="ce-node sap"><span class="lbl">destino</span><span class="nm">SAP S/4 HANA</span><span class="sub">cmd-bp-prod.cencosud</span><span class="sub">CRM_PARTNER · BP</span></div>
+        </div>
+        <div class="ce-meta">
+          <span class="ok">● vivo · 0 errores 24h</span>
+          <span>240.428 eventos · 24 h</span>
+          <span>p95 1.4 s</span>
+          <span>SLA 99.91%</span>
+          <span>dedup 4.2%</span>
+          <span>dead-letter 12 (revisión)</span>
+        </div>
+        <div class="ce-log">
+<span class="ts">14:32:18.124</span> <span class="ok">OK</span> SF.Account 0010X00002 → SAP BP 60012484 · 1.2 s<br>
+<span class="ts">14:32:18.402</span> <span class="ok">OK</span> SF.Contact 0030X00003 → SAP BP 60012485 · 0.9 s<br>
+<span class="ts">14:32:18.821</span> <span class="ok">OK</span> SF.Account 0010X00004 → SAP BP 60012486 · 1.1 s · dedup-merge<br>
+<span class="ts">14:32:19.044</span> <span class="warn">RETRY</span> SF.Contact 0030X00005 → 1/5 · SAP timeout<br>
+<span class="ts">14:32:19.512</span> <span class="ok">OK</span> SF.Contact 0030X00005 → SAP BP 60012487 · retry-ok<br>
+<span class="ts">14:32:19.844</span> <span class="ok">OK</span> SF.Account 0010X00006 → SAP BP 60012488 · 0.8 s
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · pipeline</span></div>
+      <div class="dim"><span class="name">Diagram orientation</span><div class="opts"><span class="opt on">horizontal</span><span class="opt">vertical</span></div></div>
+      <div class="dim"><span class="name">iflow detail</span><div class="opts"><span class="opt on">resumen</span><span class="opt">steps completos</span></div></div>
+      <div class="dim"><span class="name">Log lateral</span><div class="opts"><span class="opt on">live tail</span><span class="opt">filtrado</span></div></div>
+      <div class="dim"><span class="name">Retry policy</span><div class="opts"><span class="opt on">5x · exponential</span><span class="opt">manual</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">SAP Cloud Integration (CPI). iflows en Groovy. Salesforce Lightning + Apex triggers. Splunk para observability. SLA contractual 99.9%.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

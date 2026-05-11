@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cards · 4 anatomies · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 40px; background: var(--bg-warm); display: flex; align-items: center; justify-content: center; }
+
+.smc-card {
+  width: var(--c-w, 320px);
+  padding: var(--c-pad, 24px);
+  background: var(--c-bg, white);
+  color: var(--c-fg, var(--text));
+  border: var(--c-border, 1px solid var(--border-soft));
+  border-radius: var(--c-radius, 18px);
+  box-shadow: var(--c-shadow, 0 2px 8px rgba(0,0,0,0.04));
+  transition: 280ms var(--ease-out);
+  display: flex; flex-direction: column; gap: 12px;
+  position: relative; overflow: hidden;
+}
+.smc-card.hover-lift:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.1); }
+.smc-card.hover-glow:hover { box-shadow: 0 0 0 4px rgba(0,229,176,0.2), 0 20px 48px rgba(0,0,0,0.1); }
+.smc-card.hover-scale:hover { transform: scale(1.02); }
+.smc-card .eb { font: 600 10px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-eb, var(--text-muted)); }
+.smc-card h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; letter-spacing: -0.012em; }
+.smc-card p { margin: 0; font-size: 14px; color: var(--c-meta, var(--text-muted)); line-height: 1.4; }
+.smc-card .stat-num { font-family: var(--font-display); font-size: 48px; font-weight: 600; letter-spacing: -0.022em; line-height: 1; }
+.smc-card .cta-link { font: 500 13px var(--font-text); color: var(--c-link, var(--accent)); margin-top: auto; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.ctrl-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; transition: 160ms; }
+.opt:hover { border-color: var(--accent); }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.slider { width: 100%; appearance: none; height: 4px; background: var(--border-soft); border-radius: 2px; outline: none; }
+.slider::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; margin-top: auto; }
+.copy-btn:hover { background: #000; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+@media (max-width: 900px) { .playground { grid-template-columns: 1fr; } .controls { border-left: none; border-top: 1px solid var(--border-soft); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v14</a>
+  <h1>🃏 Cards · 4 anatomies</h1>
+  <span class="meta">Glass · Bento · Stat · Pricing · 90% del uso real SMC</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage" id="stage">
+    <article class="smc-card hover-lift" id="card">
+      <div class="eb" id="cardEb">CARD · CONNECTED</div>
+      <h3 id="cardTitle">Conectar Bsale</h3>
+      <p id="cardDesc">Sincroniza inventario con Jumpseller en tiempo real. RLS activo · auth seguro.</p>
+      <div class="cta-link">Conectar ahora <span>→</span></div>
+    </article>
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Anatomy <span class="val" id="v-anat">glass</span></div>
+      <div class="ctrl-row" data-ctrl="anat">
+        <span class="opt active" data-val="glass">glass</span>
+        <span class="opt" data-val="bento">bento</span>
+        <span class="opt" data-val="stat">stat</span>
+        <span class="opt" data-val="pricing">pricing</span>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Theme</div>
+      <div class="ctrl-row" data-ctrl="theme">
+        <span class="opt active" data-val="light">light</span>
+        <span class="opt" data-val="dark">dark</span>
+        <span class="opt" data-val="gold">gold</span>
+        <span class="opt" data-val="accent">accent</span>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Width <span class="val" id="v-w">320px</span></div>
+      <input type="range" class="slider" id="wSlider" min="240" max="480" value="320" step="10">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Radius <span class="val" id="v-r">18px</span></div>
+      <input type="range" class="slider" id="rSlider" min="0" max="40" value="18" step="2">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Padding <span class="val" id="v-p">24px</span></div>
+      <input type="range" class="slider" id="pSlider" min="12" max="56" value="24" step="2">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Hover effect</div>
+      <div class="ctrl-row" data-ctrl="hover">
+        <span class="opt active" data-val="lift">lift</span>
+        <span class="opt" data-val="glow">glow</span>
+        <span class="opt" data-val="scale">scale</span>
+        <span class="opt" data-val="none">none</span>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Border</div>
+      <div class="ctrl-row" data-ctrl="border">
+        <span class="opt active" data-val="soft">soft</span>
+        <span class="opt" data-val="none">none</span>
+        <span class="opt" data-val="strong">strong</span>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyJSX()">📋 Copy &lt;Card&gt;</button>
+  </div>
+</div>
+
+</div>
+<script>
+const ANATOMIES = {
+  glass: { eb: 'CARD · CONNECTED', title: 'Conectar Bsale', desc: 'Sincroniza inventario con Jumpseller en tiempo real. RLS activo.', html: '<div class="eb"></div><h3></h3><p></p><div class="cta-link">Conectar ahora <span>→</span></div>' },
+  bento: { eb: 'BENTO · FEATURED', title: '$211M', desc: 'Ventas YTD · 18 sistemas integrados con Bsale + Jumpseller', html: '<div class="eb"></div><h3 style="font-size:64px; line-height:1;"></h3><p></p>' },
+  stat: { eb: 'STAT · KPI', title: '720+', desc: 'combos de botón generables · @smc/ui Button Kit', html: '<div class="eb"></div><div class="stat-num"></div><p></p>' },
+  pricing: { eb: 'PRICING · POPULAR', title: 'SMC Pro', desc: '$99/mes · 24 agentes · RADAR semanal · 11 feeds', html: '<div class="eb"></div><h3></h3><div class="stat-num" style="font-size:36px;">$99</div><p></p><div class="cta-link">Empezar ahora <span>→</span></div>' }
+};
+const THEMES = {
+  light: { bg: 'white', fg: 'var(--text)', eb: 'var(--text-muted)', meta: 'var(--text-muted)', link: 'var(--accent)' },
+  dark: { bg: '#1B2F4E', fg: 'white', eb: '#FFD60A', meta: 'rgba(255,255,255,0.7)', link: '#00E5B0' },
+  gold: { bg: '#F4E7C3', fg: '#5C4716', eb: '#8A6B23', meta: '#8A6B23', link: '#1B2F4E' },
+  accent: { bg: 'linear-gradient(135deg, #00E5B0, #009E78)', fg: 'white', eb: 'rgba(255,255,255,0.85)', meta: 'rgba(255,255,255,0.85)', link: 'white' }
+};
+const BORDERS = { soft: '1px solid var(--border-soft)', none: 'none', strong: '2px solid var(--text)' };
+
+const state = new Proxy({ anat: 'glass', theme: 'light', w: 320, r: 18, p: 24, hover: 'lift', border: 'soft' }, { set(t,k,v){t[k]=v;render();return true;}});
+
+function render() {
+  const card = document.getElementById('card');
+  const a = ANATOMIES[state.anat];
+  const th = THEMES[state.theme];
+  card.innerHTML = a.html;
+  card.querySelector('.eb').textContent = a.eb;
+  if (card.querySelector('h3')) card.querySelector('h3').textContent = a.title;
+  if (card.querySelector('.stat-num')) card.querySelector('.stat-num').textContent = a.title;
+  if (card.querySelector('p')) card.querySelector('p').textContent = a.desc;
+  card.className = 'smc-card' + (state.hover !== 'none' ? ' hover-' + state.hover : '');
+  card.style.setProperty('--c-w', state.w + 'px');
+  card.style.setProperty('--c-bg', th.bg);
+  card.style.setProperty('--c-fg', th.fg);
+  card.style.setProperty('--c-eb', th.eb);
+  card.style.setProperty('--c-meta', th.meta);
+  card.style.setProperty('--c-link', th.link);
+  card.style.setProperty('--c-radius', state.r + 'px');
+  card.style.setProperty('--c-pad', state.p + 'px');
+  card.style.setProperty('--c-border', BORDERS[state.border]);
+
+  document.getElementById('v-anat').textContent = state.anat;
+  document.getElementById('v-w').textContent = state.w + 'px';
+  document.getElementById('v-r').textContent = state.r + 'px';
+  document.getElementById('v-p').textContent = state.p + 'px';
+  document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+    row.querySelectorAll('.opt').forEach(o => o.classList.toggle('active', o.dataset.val == state[row.dataset.ctrl]));
+  });
+}
+
+document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+  row.addEventListener('click', e => {
+    if (!e.target.classList.contains('opt')) return;
+    state[row.dataset.ctrl] = e.target.dataset.val;
+  });
+});
+document.getElementById('wSlider').addEventListener('input', e => state.w = parseInt(e.target.value));
+document.getElementById('rSlider').addEventListener('input', e => state.r = parseInt(e.target.value));
+document.getElementById('pSlider').addEventListener('input', e => state.p = parseInt(e.target.value));
+
+function copyJSX() {
+  const code = '<Card\n  anatomy="' + state.anat + '"\n  theme="' + state.theme + '"\n  width={' + state.w + '}\n  radius={' + state.r + '}\n  padding={' + state.p + '}\n  hover="' + state.hover + '"\n>\n  <h3>' + ANATOMIES[state.anat].title + '</h3>\n  <p>' + ANATOMIES[state.anat].desc + '</p>\n</Card>';
+  navigator.clipboard.writeText(code);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copy'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copy <Card>'; btn.classList.remove('copied'); }, 1600);
+}
+
+render();
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

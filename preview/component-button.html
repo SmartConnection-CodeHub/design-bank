@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Button — variants</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 22px 24px; display: grid; gap: 18px; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .label { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); min-width: 78px; letter-spacing: .04em; text-transform: uppercase; font-weight:600; }
+  button { font-family: var(--font-sans); font-weight: 600; font-size: 14px; border-radius: var(--radius-md); padding: 0 18px; height: 44px; cursor: pointer; transition: all 200ms var(--ease-out); display: inline-flex; align-items: center; gap: 8px; border: 1px solid transparent; box-shadow: var(--shadow-rest); }
+  .b-primary { background: var(--smc-navy); color: var(--smc-cream); }
+  .b-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); background: var(--smc-navy-700); }
+  .b-secondary { background: var(--bg-elevated); color: var(--fg-1); border-color: var(--border-default); }
+  .b-secondary:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); }
+  .b-gold { background: var(--smc-gold); color: var(--smc-navy-900); }
+  .b-ghost { background: transparent; color: var(--fg-1); box-shadow: none; }
+  .b-ghost:hover { background: var(--bg-sunk); }
+  .b-danger { background: var(--danger); color: #fff; }
+  .b-pill { border-radius: 100px; padding: 0 22px; }
+  .b-sm { height: 36px; padding: 0 14px; font-size: 13px; }
+  .b-lg { height: 52px; padding: 0 24px; font-size: 15px; }
+  .dot { width:8px; height:8px; border-radius: 999px; background: var(--smc-accent); box-shadow: 0 0 0 3px rgba(0,229,176,.30); }
+</style></head>
+<body>
+  <div class="row"><span class="label">variant</span>
+    <button class="b-primary">Cotizar ahora</button>
+    <button class="b-secondary">Cancelar</button>
+    <button class="b-gold">Plan Pro</button>
+    <button class="b-ghost">Volver</button>
+    <button class="b-danger">Eliminar</button>
+  </div>
+  <div class="row"><span class="label">size</span>
+    <button class="b-primary b-sm">sm · 36</button>
+    <button class="b-primary">md · 44</button>
+    <button class="b-primary b-lg">lg · 52</button>
+    <button class="b-primary b-pill">pill</button>
+  </div>
+  <div class="row"><span class="label">state</span>
+    <button class="b-primary"><span class="dot"></span>Conectado</button>
+    <button class="b-primary" style="opacity:.4;cursor:not-allowed">Disabled</button>
+    <button class="b-secondary" style="box-shadow: var(--shadow-focus);outline:none">Focused</button>
+  </div>
+</body></html>

@@ -1,0 +1,50 @@
+/* SMC Bank — shared hub-card chrome
+   Used by every PATTERN / PROYECTO / RADAR hub. Pairs with colors_and_type.css */
+
+.hub { max-width: 1240px; margin: 0 auto; padding: 24px 24px 60px; min-height: 100vh; }
+
+.hub-top { display:flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
+.hub-top .brand { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.03em; color: var(--fg-1); }
+.hub-top .brand .dot { color: var(--smc-accent); }
+.hub-top .crumbs { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-3); }
+
+.hub-eyebrow { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent-700); margin-bottom: 6px; }
+.hub-title { font-family: var(--font-display); font-size: 40px; letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 6px; color: var(--fg-1); }
+.hub-strap { font-size: 14px; color: var(--fg-2); margin: 0 0 18px; max-width: 640px; line-height: 1.5; }
+
+.pill-row { display:flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+.pill { background: #fff; border: 1px solid var(--border-default); padding: 7px 14px; border-radius: 100px; font-size: 12.5px; color: var(--fg-1); cursor: pointer; transition: 200ms var(--ease-out); }
+.pill:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+.pill.on { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+.pill.gold { background: var(--smc-gold); color: var(--smc-navy-900); border-color: var(--smc-gold); }
+.pill .n { font-family: var(--font-mono); font-size: 10px; opacity: .7; margin-right: 5px; }
+
+.hub-kit { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: flex-start; }
+@media (max-width: 900px) { .hub-kit { grid-template-columns: 1fr; } }
+
+.scene { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-rest); padding: 22px; min-height: 420px; display:flex; flex-direction:column; gap: 14px; position: relative; overflow: hidden; }
+.scene.dark { background: var(--smc-navy-900); color: var(--smc-cream); border-color: var(--smc-navy-700); }
+.scene-h { display:flex; gap: 8px; align-items: center; font: 11px var(--font-mono); color: var(--fg-3); letter-spacing: .04em; text-transform: uppercase; }
+.scene.dark .scene-h { color: var(--smc-cream-400); }
+.scene-h .live { width: 6px; height: 6px; border-radius: 99px; background: var(--smc-accent); box-shadow: 0 0 0 3px rgba(0,229,176,.25); }
+
+.panel { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-rest); padding: 16px; display:flex; flex-direction:column; gap: 12px; position: sticky; top: 18px; }
+.panel-h { display:flex; align-items: center; gap: 8px; }
+.panel-h .lbl { font: 600 10px var(--font-mono); color: var(--fg-3); letter-spacing: .08em; text-transform: uppercase; }
+.panel-h .dot { width: 6px; height: 6px; border-radius: 99px; background: var(--smc-accent); box-shadow: 0 0 0 3px rgba(0,229,176,.25); }
+
+.dim { display:flex; flex-direction:column; gap: 5px; }
+.dim .row { display:flex; align-items: center; justify-content: space-between; }
+.dim .name { font-size: 12.5px; color: var(--fg-1); font-weight: 500; }
+.dim .val { font: 11px var(--font-mono); color: var(--fg-2); }
+.dim input[type=range] { width:100%; accent-color: var(--smc-navy); margin: 0; }
+.dim .opts { display:flex; gap: 5px; flex-wrap: wrap; }
+.dim .opt { font-size: 11px; padding: 3px 9px; border-radius: 100px; border: 1px solid var(--border-default); background: #fff; cursor: pointer; }
+.dim .opt.on { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+.divider { height: 1px; background: var(--border-subtle); margin: 2px 0; }
+
+.use-cta { background: var(--smc-navy); color: var(--smc-cream); border-radius: var(--radius-md); padding: 14px; display:flex; flex-direction:column; gap: 8px; }
+.use-cta .lbl { font: 600 10px var(--font-mono); color: var(--smc-accent); letter-spacing: .08em; text-transform: uppercase; }
+.use-cta .where { font-size: 13px; line-height: 1.45; color: var(--smc-cream-100); }
+.use-cta .where b { color: #fff; font-weight: 600; }
+.use-cta .btn { background: var(--smc-accent); color: var(--smc-navy-900); padding: 8px 12px; border-radius: 8px; font: 600 12px var(--font-sans); display:inline-flex; align-items: center; gap: 6px; align-self: flex-start; }

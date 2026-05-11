@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Iconography · Lucide stroke · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 40px; background: var(--bg-warm); display: flex; flex-direction: column; gap: 24px; }
+
+.icon-area { background: var(--bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 28px; }
+.icon-area .ttl { font: 600 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
+.icon-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 14px; }
+.icon-cell {
+  aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  border-radius: 12px; background: var(--bg-soft); cursor: pointer; transition: 180ms;
+  padding: 8px;
+}
+.icon-cell:hover { background: rgba(0,102,204,0.08); }
+.icon-cell.active { background: var(--text); color: white; }
+.icon-cell svg { width: var(--ic-size, 22px); height: var(--ic-size, 22px); stroke: var(--ic-color, currentColor); fill: none; stroke-width: var(--ic-stroke, 1.75); stroke-linecap: round; stroke-linejoin: round; }
+.icon-cell .nm { font: 9px var(--font-mono); color: inherit; opacity: 0.7; }
+.icon-cell.active .nm { opacity: 1; }
+
+.preview-large { background: var(--bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 32px; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.preview-large .big-icon { width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; background: var(--bg-soft); border-radius: 22px; }
+.preview-large .big-icon svg { width: 64px; height: 64px; stroke: var(--ic-color, var(--text)); fill: none; stroke-width: var(--ic-stroke, 1.75); stroke-linecap: round; stroke-linejoin: round; }
+.preview-large .info { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.preview-large .info .nm { font-family: var(--font-display); font-size: 24px; font-weight: 600; letter-spacing: -0.012em; }
+.preview-large .info .specs { font: 12px var(--font-mono); color: var(--text-muted); }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.slider { width: 100%; appearance: none; height: 4px; background: var(--border-soft); border-radius: 2px; outline: none; }
+.slider::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.ctrl-row { display: flex; gap: 4px; flex-wrap: wrap; }
+input[type="color"] { width: 100%; height: 36px; border: 1px solid var(--border-soft); border-radius: 8px; padding: 0; cursor: pointer; }
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; margin-top: auto; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+@media (max-width: 900px) { .playground { grid-template-columns: 1fr; } .controls { border-left: none; border-top: 1px solid var(--border-soft); } .icon-grid { grid-template-columns: repeat(5, 1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v15</a>
+  <h1>🔣 Iconography · Lucide stroke</h1>
+  <span class="meta">20 íconos · stroke 1.75 · 20-in-24 · same family across 13 SMC projects</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage">
+
+    <div class="icon-area">
+      <div class="ttl">SET CANON · 20 íconos Lucide · click para preview</div>
+      <div class="icon-grid" id="grid"></div>
+    </div>
+
+    <div class="preview-large">
+      <div class="big-icon"><svg id="bigIcon" viewBox="0 0 24 24"></svg></div>
+      <div class="info">
+        <div class="nm" id="bigName">home</div>
+        <div class="specs" id="bigSpecs">stroke 1.75 · 64px · currentColor · 24×24 box</div>
+        <div style="font:11px var(--font-mono); color:var(--text-muted); margin-top:6px;">import { Home } from "lucide-react"</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Size <span class="val" id="v-size">22px</span></div>
+      <input type="range" class="slider" id="sizeSlider" min="14" max="64" value="22">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Stroke <span class="val" id="v-stroke">1.75</span></div>
+      <input type="range" class="slider" id="strokeSlider" min="0.5" max="3" step="0.25" value="1.75">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Color</div>
+      <input type="color" id="cPicker" value="#1B2F4E">
+      <div class="ctrl-row" style="margin-top:8px;">
+        <span class="opt active" data-c="#1B2F4E">navy</span>
+        <span class="opt" data-c="#0066CC">blue</span>
+        <span class="opt" data-c="#00E5B0">accent</span>
+        <span class="opt" data-c="#C49A3A">gold</span>
+        <span class="opt" data-c="#FF3B30">danger</span>
+      </div>
+    </div>
+    <div class="ctrl-group" style="border-top:1px solid var(--border-soft); padding-top:14px;">
+      <div class="ctrl-label">Specs canon SMC</div>
+      <pre style="background:var(--text); color:var(--bg-warm); padding:12px 14px; border-radius:10px; font:11px var(--font-mono); line-height:1.6; margin:0;">stroke-width: 1.75;
+stroke-linecap: round;
+stroke-linejoin: round;
+stroke: currentColor;
+fill: none;
+size: 20 in 24×24 box</pre>
+    </div>
+    <button class="copy-btn" onclick="copyImport()">📋 Copy import + SVG</button>
+  </div>
+</div>
+
+</div>
+<script>
+const ICONS = {
+  home: '<path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/>',
+  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  trash: '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  grid: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+  user: '<circle cx="12" cy="7" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/>',
+  menu: '<path d="M3 6h18M3 12h18M3 18h18"/>',
+  arrow: '<path d="m15 18-6-6 6-6"/>',
+  check: '<path d="M5 12l5 5L20 7"/>',
+  close: '<path d="M6 6l12 12M6 18 18 6"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  server: '<rect x="2" y="4" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="6" rx="2"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>',
+  refresh: '<path d="M21 12a9 9 0 1 1-3-7"/><path d="M21 3v6h-6"/>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>',
+  settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8L4.2 6a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V2a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+  building: '<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/>',
+  sync: '<path d="M21 12a9 9 0 1 1-9-9"/><path d="m12 7 4-4"/><path d="M16 3v5h-5"/>',
+  star: '<path d="m12 2 3 7 7 .6-5.4 4.7L18 22l-6-3.5L6 22l1.4-7.7L2 9.6l7-.6z"/>'
+};
+
+const state = { active: 'home', size: 22, stroke: 1.75, color: '#1B2F4E' };
+const grid = document.getElementById('grid');
+
+function buildGrid() {
+  grid.innerHTML = Object.keys(ICONS).map(k =>
+    '<div class="icon-cell' + (k === state.active ? ' active' : '') + '" data-k="' + k + '">' +
+    '<svg viewBox="0 0 24 24">' + ICONS[k] + '</svg>' +
+    '<span class="nm">' + k + '</span></div>'
+  ).join('');
+  grid.querySelectorAll('.icon-cell').forEach(c => c.addEventListener('click', () => { state.active = c.dataset.k; render(); }));
+}
+
+function render() {
+  document.documentElement.style.setProperty('--ic-size', state.size + 'px');
+  document.documentElement.style.setProperty('--ic-stroke', state.stroke);
+  document.documentElement.style.setProperty('--ic-color', state.color);
+  grid.querySelectorAll('.icon-cell').forEach(c => c.classList.toggle('active', c.dataset.k === state.active));
+  document.getElementById('bigIcon').innerHTML = ICONS[state.active];
+  document.getElementById('bigName').textContent = state.active;
+  document.getElementById('bigSpecs').textContent = 'stroke ' + state.stroke + ' · ' + state.size + 'px nominal · ' + state.color + ' · 24×24 box';
+  document.getElementById('v-size').textContent = state.size + 'px';
+  document.getElementById('v-stroke').textContent = state.stroke;
+}
+
+document.getElementById('sizeSlider').addEventListener('input', e => { state.size = parseInt(e.target.value); render(); });
+document.getElementById('strokeSlider').addEventListener('input', e => { state.stroke = parseFloat(e.target.value); render(); });
+document.getElementById('cPicker').addEventListener('input', e => { state.color = e.target.value; render(); });
+document.querySelectorAll('.opt[data-c]').forEach(o => o.addEventListener('click', () => {
+  document.querySelectorAll('.opt[data-c]').forEach(x => x.classList.remove('active'));
+  o.classList.add('active'); state.color = o.dataset.c;
+  document.getElementById('cPicker').value = state.color; render();
+}));
+
+function copyImport() {
+  const Cap = state.active.charAt(0).toUpperCase() + state.active.slice(1);
+  const code = 'import { ' + Cap + ' } from "lucide-react";\n\n<' + Cap + ' size={' + state.size + '} strokeWidth={' + state.stroke + '} color="' + state.color + '" />\n\n/* SVG inline:\n<svg width="' + state.size + '" height="' + state.size + '" viewBox="0 0 24 24" stroke="' + state.color + '" stroke-width="' + state.stroke + '" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  ' + ICONS[state.active] + '\n</svg>\n*/';
+  navigator.clipboard.writeText(code);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copy'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copy import + SVG'; btn.classList.remove('copied'); }, 1600);
+}
+
+buildGrid(); render();
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

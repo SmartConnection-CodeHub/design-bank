@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>VOY · Cotizador</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { padding: 0; min-height: 100vh; }
+  .app { max-width: 1240px; margin: 0 auto; padding: 32px 32px 80px; }
+  header.top { display:flex; align-items:center; justify-content: space-between; margin-bottom: 28px; }
+  .brand { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.03em; }
+  .brand .green { color: var(--smc-accent); }
+  .pill-row { display:flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .pill { background: #fff; border: 1px solid var(--border-default); padding: 8px 16px; border-radius: 100px; font-size: 13px; color: var(--fg-1); cursor: pointer; transition: 200ms var(--ease-out); }
+  .pill:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .pill.on { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+  .pill.gold { background: var(--smc-gold); color: var(--smc-navy-900); border-color: var(--smc-gold); }
+
+  .kit { display:grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: flex-start; }
+  @media (max-width: 880px) { .kit { grid-template-columns: 1fr; } }
+
+  /* Central scene */
+  .scene { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-rest); padding: 28px 32px; display:flex; flex-direction:column; gap: 20px; }
+  .scene .eyebrow { font-size: 11px; letter-spacing:.06em; text-transform: uppercase; color: var(--fg-3); font-weight:600; }
+  .scene h1 { font-family: var(--font-display); font-size: 44px; margin: 0; letter-spacing: -0.02em; line-height: 1.05; color: var(--fg-1); }
+  .scene .strap { font-size: 14px; color: var(--fg-2); max-width: 460px; }
+
+  .breakdown { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .b-cell { background: #fff; padding: 14px 16px; }
+  .b-cell .k { font-size: 11px; color: var(--fg-3); letter-spacing: .06em; text-transform: uppercase; font-weight: 600; }
+  .b-cell .v { font-family: var(--font-display); font-size: 26px; color: var(--fg-1); margin-top: 4px; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .b-cell .sub { font-size: 12px; color: var(--fg-2); margin-top: 2px; }
+
+  .total { display:flex; align-items: baseline; gap: 12px; padding: 16px 0 0; border-top: 1px solid var(--border-subtle); }
+  .total .k { font-size: 13px; color: var(--fg-2); font-weight: 500; flex: 1; }
+  .total .v { font-family: var(--font-display); font-size: 56px; letter-spacing: -0.03em; color: var(--fg-1); font-variant-numeric: tabular-nums; }
+  .total .vu { font-family: var(--font-mono); font-size: 13px; color: var(--fg-3); align-self: flex-end; padding-bottom: 12px; }
+
+  .cta-row { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; }
+  .btn { font: 600 14px var(--font-sans); padding: 0 20px; height: 48px; border-radius: var(--radius-md); cursor: pointer; border: 1px solid transparent; display:inline-flex; align-items:center; gap: 8px; }
+  .btn-primary { background: var(--smc-navy); color: var(--smc-cream); }
+  .btn-primary:hover { background: var(--smc-navy-700); }
+  .btn-ghost { background: transparent; color: var(--fg-1); }
+  .copy { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); display:flex; align-items:center; gap: 6px; }
+
+  /* Tweak panel */
+  .panel { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-rest); padding: 18px; display:flex; flex-direction:column; gap: 14px; position: sticky; top: 24px; }
+  .panel .h { display:flex; align-items:center; gap: 8px; }
+  .panel .h .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--smc-accent); box-shadow: 0 0 0 3px rgba(0,229,176,.25); }
+  .panel .h .lbl { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-3); font-weight: 600; }
+  .dim { display:flex; flex-direction:column; gap: 4px; }
+  .dim .row { display:flex; align-items:center; justify-content: space-between; }
+  .dim .name { font-size: 13px; color: var(--fg-1); font-weight: 500; }
+  .dim .val  { font-family: var(--font-mono); font-size: 12px; color: var(--fg-2); }
+  .dim input[type=range] { width:100%; accent-color: var(--smc-navy); }
+  .dim .opts { display:flex; gap: 6px; flex-wrap: wrap; }
+  .dim .opt { font-size: 11px; padding: 4px 9px; border-radius: 100px; border: 1px solid var(--border-default); background: #fff; cursor: pointer; }
+  .dim .opt.on { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+  .divider { height: 1px; background: var(--border-subtle); margin: 4px 0; }
+</style></head>
+<body data-screen-label="VOY Cotizador">
+<div class="app">
+  <header class="top">
+    <div class="brand">VOY<span class="green">.</span></div>
+    <div class="copy">smconnection.cl/voy · v0.4.2</div>
+  </header>
+
+  <div class="pill-row">
+    <button class="pill on">Software custom</button>
+    <button class="pill">Integración SAP</button>
+    <button class="pill">E-commerce</button>
+    <button class="pill">Marketplace B2G</button>
+    <button class="pill gold">★ IA agentes</button>
+    <button class="pill">Mantenimiento</button>
+  </div>
+
+  <div class="kit">
+    <!-- SCENE -->
+    <section class="scene">
+      <span class="eyebrow">Cotización en vivo</span>
+      <h1>Tu plataforma en <span style="color:var(--smc-gold)">9 semanas</span>, no 9 meses.</h1>
+      <p class="strap">Ajusta las 12 dimensiones a la derecha. El total se recalcula en tiempo real — sin reunión, sin Calendly, sin pre-venta.</p>
+
+      <div class="breakdown">
+        <div class="b-cell"><div class="k">Equipo</div><div class="v">3</div><div class="sub">2 dev · 1 PM</div></div>
+        <div class="b-cell"><div class="k">Duración</div><div class="v">9 sem</div><div class="sub">≈ 360 hrs útiles</div></div>
+        <div class="b-cell"><div class="k">Integración</div><div class="v">Bsale</div><div class="sub">+ Jumpseller</div></div>
+        <div class="b-cell"><div class="k">IA</div><div class="v">Sí</div><div class="sub">Cerebro · embeddings</div></div>
+        <div class="b-cell"><div class="k">Soporte</div><div class="v">6 m</div><div class="sub">post-launch</div></div>
+        <div class="b-cell"><div class="k">RLS</div><div class="v">Activo</div><div class="sub">por tenant</div></div>
+      </div>
+
+      <div class="total">
+        <span class="k">Total estimado</span>
+        <span class="v">$ 18.420.000</span>
+        <span class="vu">CLP · neto</span>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn btn-primary">→ Bloquear esta cotización</button>
+        <button class="btn btn-ghost">Descargar PDF</button>
+        <span class="copy">Vence en 14 días</span>
+      </div>
+    </section>
+
+    <!-- TWEAK PANEL -->
+    <aside class="panel">
+      <div class="h"><span class="dot"></span><span class="lbl">12 dimensiones</span></div>
+
+      <div class="dim">
+        <div class="row"><span class="name">Tamaño del equipo</span><span class="val">3 personas</span></div>
+        <input type="range" min="1" max="8" value="3">
+      </div>
+      <div class="dim">
+        <div class="row"><span class="name">Duración (semanas)</span><span class="val">9</span></div>
+        <input type="range" min="2" max="24" value="9">
+      </div>
+      <div class="dim">
+        <span class="name">Seniority</span>
+        <div class="opts"><span class="opt">Mid</span><span class="opt on">Senior</span><span class="opt">Staff</span></div>
+      </div>
+      <div class="dim">
+        <span class="name">Integración principal</span>
+        <div class="opts"><span class="opt on">Bsale</span><span class="opt">SAP</span><span class="opt">MeLi</span><span class="opt">Jumpseller</span></div>
+      </div>
+      <div class="dim">
+        <span class="name">Capa IA</span>
+        <div class="opts"><span class="opt">No</span><span class="opt">RAG</span><span class="opt on">Cerebro</span></div>
+      </div>
+      <div class="dim">
+        <span class="name">RLS multi-tenant</span>
+        <div class="opts"><span class="opt">No</span><span class="opt on">Sí</span></div>
+      </div>
+      <div class="divider"></div>
+      <div class="dim">
+        <span class="name">Soporte post-launch</span>
+        <div class="opts"><span class="opt">3 m</span><span class="opt on">6 m</span><span class="opt">12 m</span></div>
+      </div>
+      <div class="dim">
+        <div class="row"><span class="name">Branding custom</span><span class="val">★★★☆☆</span></div>
+        <input type="range" min="1" max="5" value="3">
+      </div>
+      <div class="dim">
+        <span class="name">SLA</span>
+        <div class="opts"><span class="opt">Best-effort</span><span class="opt on">8×5</span><span class="opt">24×7</span></div>
+      </div>
+      <div class="dim">
+        <span class="name">Hospedaje</span>
+        <div class="opts"><span class="opt on">SMC Cloud</span><span class="opt">Vercel</span><span class="opt">On-prem</span></div>
+      </div>
+      <div class="dim">
+        <span class="name">Migración</span>
+        <div class="opts"><span class="opt on">No</span><span class="opt">Parcial</span><span class="opt">Full</span></div>
+      </div>
+      <div class="dim">
+        <span class="name">Plantilla</span>
+        <div class="opts"><span class="opt on">@smc/ui</span><span class="opt">Custom</span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

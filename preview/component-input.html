@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Input & form fields</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 18px 24px; display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { display:flex; flex-direction: column; gap: 6px; }
+  label { font-size: 12px; color: var(--fg-2); font-weight: 500; }
+  .input { background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 0 14px; height: 44px; font: 15px var(--font-sans); color: var(--fg-1); display: flex; align-items: center; gap: 8px; }
+  .input.focus { box-shadow: var(--shadow-focus); border-color: var(--smc-accent); outline: none; }
+  .input.error { border-color: var(--danger); }
+  .err { font-size: 12px; color: var(--danger); }
+  .ok  { font-size: 12px; color: var(--smc-accent-700); }
+  .ph { color: var(--fg-3); }
+  textarea { resize: none; height: 92px; padding: 10px 14px; line-height: 1.45; }
+  .check { display:flex; align-items:center; gap: 10px; font-size: 14px; color: var(--fg-1); }
+  .box { width: 18px; height: 18px; border: 1.5px solid var(--border-default); border-radius: 4px; display:grid;place-items:center; }
+  .box.on { background: var(--smc-navy); border-color: var(--smc-navy); color: #fff; font-size: 12px; }
+  .switch { width: 36px; height: 22px; background: var(--smc-navy); border-radius: 999px; padding: 2px; display: flex; }
+  .switch .knob { width: 18px; height: 18px; background: #fff; border-radius: 999px; margin-left: auto; }
+</style></head>
+<body>
+  <div class="field"><label>Correo</label><div class="input"><span class="ph">tu@empresa.cl</span></div></div>
+  <div class="field"><label>RUT</label><div class="input focus">12.345.678-9</div></div>
+  <div class="field"><label>Token Bsale</label><div class="input error">bsale_xxx…</div><span class="err">Token expirado — vuelve a iniciar sesión.</span></div>
+  <div class="field"><label>Empresa</label><div class="input">SMC SpA</div><span class="ok">Conectado</span></div>
+  <div class="field" style="grid-column: 1 / -1"><label>Descripción del proyecto</label><textarea class="input" style="display:block">Necesito conectar mi storefront de Jumpseller a un panel de inventario.</textarea></div>
+  <div class="check"><div class="box on">✓</div>Acepto los términos & política RLS</div>
+  <div class="check"><div class="box"></div>Recibir el RADAR Brief los lunes</div>
+  <div class="check"><div class="switch"><div class="knob"></div></div>Modo IA <span style="color:var(--fg-3)">· activado</span></div>
+</body></html>

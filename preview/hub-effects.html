@@ -1,0 +1,89 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Effects Federados hub</title>
+<link rel="stylesheet" href="../colors_and_type.css"><link rel="stylesheet" href="hub.css">
+<style>
+.eff { flex: 1; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: #fff; padding: 24px; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 10px; min-height: 0; overflow: hidden; }
+.cell { background: var(--bg-sunk); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 4px; position: relative; cursor: pointer; transition: all 200ms var(--ease-out); overflow: hidden; }
+.cell:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--smc-navy-300); }
+.cell.on { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+.cell.on .ic { background: var(--smc-accent); color: var(--smc-navy); }
+.cell .ic { width: 28px; height: 28px; border-radius: 6px; background: var(--smc-navy); color: var(--smc-cream); display: grid; place-items: center; font: 600 12px var(--font-mono); }
+.cell .lb { font: 600 13px var(--font-sans); }
+.cell .ct { font: 10px var(--font-mono); color: var(--fg-3); }
+.cell.on .ct { color: var(--smc-accent-300); }
+.cell .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, var(--smc-accent), var(--smc-gold)); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-out); }
+.cell.on .bar { transform: scaleX(1); }
+</style></head>
+<body data-screen-label="Effects Federados hub">
+<div class="hub">
+  <div class="hub-head">
+    <div><span class="crumb">Foundations</span><span class="crumb">Effects Federados</span></div>
+    <div class="meta"><span>12 familias · 64 efectos</span><span class="live">live</span></div>
+  </div>
+  <div class="hub-scene">
+    <h1 class="hub-scene-title">12 familias, <em>64 recetas</em>.</h1>
+    <p class="hub-scene-sub">Cada efecto es una función reutilizable importable desde @smc/ui/effects — Framer Motion + CSS variables. Compone, no copies.</p>
+    <div class="eff">
+      <div class="cell on" data-fx="motion"><div class="ic">⟲</div><div class="lb">Motion</div><div class="ct">6 spring · 4 ease</div><div class="bar"></div></div>
+      <div class="cell" data-fx="visual"><div class="ic">◐</div><div class="lb">Visual</div><div class="ct">blur · noise · grain</div><div class="bar"></div></div>
+      <div class="cell" data-fx="type"><div class="ic">Aa</div><div class="lb">Type</div><div class="ct">stagger · split · shimmer</div><div class="bar"></div></div>
+      <div class="cell" data-fx="touch"><div class="ic">⌖</div><div class="lb">Touch</div><div class="ct">press · tilt · drag</div><div class="bar"></div></div>
+      <div class="cell" data-fx="scroll"><div class="ic">↧</div><div class="lb">Scroll</div><div class="ct">pin · snap · parallax</div><div class="bar"></div></div>
+      <div class="cell" data-fx="layout"><div class="ic">▦</div><div class="lb">Layout</div><div class="ct">flip · reorder · morph</div><div class="bar"></div></div>
+      <div class="cell" data-fx="nav"><div class="ic">≡</div><div class="lb">Nav</div><div class="ct">cmdk · tabs · breadcrumb</div><div class="bar"></div></div>
+      <div class="cell" data-fx="forms"><div class="ic">▤</div><div class="lb">Forms</div><div class="ct">zod · masking · steps</div><div class="bar"></div></div>
+      <div class="cell" data-fx="state"><div class="ic">●</div><div class="lb">State</div><div class="ct">loading · empty · error</div><div class="bar"></div></div>
+      <div class="cell" data-fx="feedback"><div class="ic">!</div><div class="lb">Feedback</div><div class="ct">toast · banner · confetti</div><div class="bar"></div></div>
+      <div class="cell" data-fx="data"><div class="ic">∑</div><div class="lb">Data</div><div class="ct">table · chart · count-up</div><div class="bar"></div></div>
+      <div class="cell" data-fx="media"><div class="ic">▶</div><div class="lb">Media</div><div class="ct">lazy · zoom · marquee</div><div class="bar"></div></div>
+    </div>
+  </div>
+  <div class="hub-ctrls">
+    <div class="grp"><span class="lbl">Familia</span><span class="val" id="fxn">Motion</span></div>
+    <div class="grp"><span class="lbl">Receta destacada</span>
+      <div class="row"><span class="k">Name</span><span class="v" id="rn">spring.smc</span></div>
+      <div class="row"><span class="k">Curve</span><span class="v" id="rc">0.34, 1.56, 0.64, 1</span></div>
+      <div class="row"><span class="k">Duration</span><span class="v" id="rd">340 ms</span></div>
+    </div>
+    <div class="grp"><span class="lbl">Usado en</span><span class="val" id="ru">VOY pricing · Hoku reveal</span></div>
+    <div class="grp"><span class="lbl">Snippet</span><span class="val" style="font-size:11px" id="rs">{`<motion.div transition={spring.smc}/>`}</span></div>
+  </div>
+  <div class="hub-pills">
+    <div class="row" id="pills">
+      <button class="pill" aria-pressed="true" data-fx="motion"><span class="n">01</span>Motion</button>
+      <button class="pill" data-fx="visual"><span class="n">02</span>Visual</button>
+      <button class="pill" data-fx="type"><span class="n">03</span>Type</button>
+      <button class="pill" data-fx="touch"><span class="n">04</span>Touch</button>
+      <button class="pill" data-fx="scroll"><span class="n">05</span>Scroll</button>
+      <button class="pill" data-fx="layout"><span class="n">06</span>Layout</button>
+      <button class="pill" data-fx="nav"><span class="n">07</span>Nav</button>
+      <button class="pill" data-fx="forms"><span class="n">08</span>Forms</button>
+    </div>
+    <a class="cta" href="#">Abrir catálogo <span class="arrow">→</span></a>
+  </div>
+</div>
+<script>
+const META = {
+  motion:  ['Motion','spring.smc','0.34, 1.56, 0.64, 1','340 ms','VOY pricing · Hoku reveal'],
+  visual:  ['Visual','noise.subtle','grain 4 % · blur 8','—','Cards · Glass surfaces'],
+  type:    ['Type','split.line','staggerChildren 0.04','—','Hero reveals · RADAR'],
+  touch:   ['Touch','press.shrink','scale 0.97','120 ms','Buttons · Bento cards'],
+  scroll:  ['Scroll','snap.section','offset 64','—','Marketing · Kanki'],
+  layout:  ['Layout','reorder.flip','layoutId',	'Springs', 'Cart · Sidebar'],
+  nav:     ['Nav','cmdk.open','⌘K · Esc','—','Intranet · Dashboard'],
+  forms:   ['Forms','zod.step','3 steps · 12 fields','—','VOY · Intranet login'],
+  state:   ['State','loading.skeleton','shimmer 1.8 s','—','Lists · Tables'],
+  feedback:['Feedback','toast.success','spring.smc','—','All surfaces'],
+  data:    ['Data','count.up','ease-out 600 ms','—','RADAR · Dashboards'],
+  media:   ['Media','marquee.x','120 s linear','—','Brand strip · CMS']
+};
+function set(k){
+  document.querySelectorAll('.cell').forEach(c => c.classList.toggle('on', c.dataset.fx===k));
+  document.querySelectorAll('#pills .pill').forEach(p => p.setAttribute('aria-pressed', p.dataset.fx===k));
+  const m = META[k];
+  fxn.textContent = m[0]; rn.textContent = m[1]; rc.textContent = m[2]; rd.textContent = m[3]; ru.textContent = m[4];
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-fx]'); if (c) set(c.dataset.fx);
+});
+</script>
+</body></html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion · easing & duration · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 40px; background: var(--bg-warm); display: flex; flex-direction: column; gap: 24px; }
+
+.track-row { background: var(--bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 24px; }
+.track-row .ttl { font: 600 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.track-row .play-btn { padding: 5px 14px; background: var(--smc-navy); color: white; border: none; border-radius: 980px; font: 500 11px var(--font-text); cursor: pointer; }
+
+.track { background: var(--bg-soft); border-radius: 10px; padding: 16px; position: relative; height: 80px; overflow: hidden; }
+.ball { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; transition: left var(--dur, 600ms) var(--ease, ease-out); }
+.track.run .ball { left: calc(100% - 64px); }
+.ball.ease-out { background: linear-gradient(135deg, #1B2F4E, #00E5B0); }
+.ball.ease-in-out { background: linear-gradient(135deg, #C49A3A, #8A6B23); }
+.ball.spring { background: linear-gradient(135deg, #0066CC, #00E5B0); }
+
+.bezier-vis { width: 100%; max-width: 200px; aspect-ratio: 1; }
+.bezier-vis svg { width: 100%; height: 100%; }
+
+.tracks-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.compare-cell { display: flex; flex-direction: column; gap: 8px; }
+.compare-cell .nm { font: 600 12px var(--font-text); }
+.compare-cell .csv { font: 10px var(--font-mono); color: var(--text-muted); }
+.compare-cell .track-mini { height: 56px; background: var(--bg-soft); border-radius: 8px; position: relative; overflow: hidden; }
+.compare-cell .ball-mini { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; }
+.compare-cell.run .ball-mini { animation: slide-once 1.6s var(--ease, ease-out); }
+@keyframes slide-once { 0% { left: 8px; } 100% { left: calc(100% - 40px); } }
+
+.demo-row { display: flex; gap: 14px; flex-wrap: wrap; padding: 20px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 14px; }
+.demo-btn-m {
+  padding: 12px 24px; background: var(--smc-navy); color: white;
+  border: none; border-radius: 980px; font: 500 14px var(--font-text); cursor: pointer;
+  transition: all var(--dur, 280ms) var(--ease, ease-out);
+}
+.demo-btn-m:hover { background: var(--smc-accent); color: var(--text); transform: translateY(-3px) scale(1.05); }
+.demo-card-m {
+  padding: 16px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 12px;
+  transition: all var(--dur, 280ms) var(--ease, ease-out);
+  cursor: pointer; font: 600 13px var(--font-text);
+}
+.demo-card-m:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.slider { width: 100%; appearance: none; height: 4px; background: var(--border-soft); border-radius: 2px; outline: none; }
+.slider::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.ctrl-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; margin-top: auto; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+@media (max-width: 900px) { .playground { grid-template-columns: 1fr; } .controls { border-left: none; border-top: 1px solid var(--border-soft); } .tracks-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v15</a>
+  <h1>⚡ Motion · easing & duration</h1>
+  <span class="meta">3 easings · 3 durations · ease-out canon · 280ms base</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage">
+
+    <div class="track-row">
+      <div class="ttl"><span>LIVE TRACK · click "Run" para animar con tus parámetros</span><button class="play-btn" onclick="runMain()">▶ Run</button></div>
+      <div class="track" id="mainTrack"><div class="ball" id="mainBall" style="background:linear-gradient(135deg,#1B2F4E,#00E5B0);"></div></div>
+      <div style="font:11px var(--font-mono); color:var(--text-muted); margin-top:10px;" id="csvOut">cubic-bezier(.22,1,.36,1) · 600ms</div>
+    </div>
+
+    <div class="track-row">
+      <div class="ttl">COMPARATIVA · 3 easings SMC canon</div>
+      <div class="tracks-row">
+        <div class="compare-cell" id="cc1">
+          <div class="nm">ease-out · default</div>
+          <div class="csv">cubic-bezier(.22, 1, .36, 1)</div>
+          <div class="track-mini"><div class="ball-mini" style="background:linear-gradient(135deg,#1B2F4E,#00E5B0);"></div></div>
+        </div>
+        <div class="compare-cell" id="cc2">
+          <div class="nm">ease-in-out · balanced</div>
+          <div class="csv">cubic-bezier(.65, 0, .35, 1)</div>
+          <div class="track-mini"><div class="ball-mini" style="background:linear-gradient(135deg,#C49A3A,#8A6B23);"></div></div>
+        </div>
+        <div class="compare-cell" id="cc3">
+          <div class="nm">spring · delight</div>
+          <div class="csv">cubic-bezier(.34, 1.56, .64, 1)</div>
+          <div class="track-mini"><div class="ball-mini" style="background:linear-gradient(135deg,#0066CC,#00E5B0);"></div></div>
+        </div>
+      </div>
+      <button class="play-btn" onclick="runCompare()" style="margin-top:14px;">▶ Run all 3</button>
+    </div>
+
+    <div class="demo-row">
+      <button class="demo-btn-m">Hover me</button>
+      <div class="demo-card-m">Hover card</div>
+      <div class="demo-card-m" style="background: linear-gradient(135deg, var(--smc-navy), var(--smc-accent)); color: white; border: none;">Premium</div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Easing <span class="val" id="v-e">ease-out</span></div>
+      <div class="ctrl-row" data-ctrl="ease">
+        <span class="opt active" data-val=".22,1,.36,1|ease-out">ease-out</span>
+        <span class="opt" data-val=".65,0,.35,1|ease-in-out">ease-in-out</span>
+        <span class="opt" data-val=".34,1.56,.64,1|spring">spring</span>
+        <span class="opt" data-val=".42,0,1,1|ease-in">ease-in</span>
+        <span class="opt" data-val="0,0,.58,1|ease">ease</span>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Duration <span class="val" id="v-d">600ms</span></div>
+      <input type="range" class="slider" id="dSlider" min="60" max="2000" value="600" step="20">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Preset SMC</div>
+      <div class="ctrl-row">
+        <span class="opt" onclick="preset(120,'.22,1,.36,1','ease-out')">fast 120</span>
+        <span class="opt active" onclick="preset(280,'.22,1,.36,1','ease-out')">base 280</span>
+        <span class="opt" onclick="preset(480,'.22,1,.36,1','ease-out')">slow 480</span>
+        <span class="opt" onclick="preset(800,'.34,1.56,.64,1','spring')">delight</span>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">CSS tokens</div>
+      <pre style="background:var(--text); color:var(--bg-warm); padding:12px 14px; border-radius:10px; font:11px var(--font-mono); line-height:1.6; margin:0;">--ease-out: cubic-bezier(.22,1,.36,1);
+--dur-fast: 120ms;
+--dur-base: 280ms;
+--dur-slow: 480ms;</pre>
+    </div>
+    <button class="copy-btn" onclick="copyCSS()">📋 Copy CSS transition</button>
+  </div>
+</div>
+
+</div>
+<script>
+const state = { ease: '.22,1,.36,1', easeName: 'ease-out', dur: 600 };
+function render() {
+  const css = 'cubic-bezier(' + state.ease + ')';
+  document.getElementById('mainBall').parentElement.style.setProperty('--ease', css);
+  document.getElementById('mainBall').parentElement.style.setProperty('--dur', state.dur + 'ms');
+  document.querySelectorAll('.demo-btn-m, .demo-card-m').forEach(el => {
+    el.style.setProperty('--ease', css);
+    el.style.setProperty('--dur', state.dur + 'ms');
+  });
+  document.getElementById('csvOut').textContent = css + ' · ' + state.dur + 'ms';
+  document.getElementById('v-e').textContent = state.easeName;
+  document.getElementById('v-d').textContent = state.dur + 'ms';
+}
+document.querySelectorAll('.ctrl-row[data-ctrl="ease"] .opt').forEach(o => o.addEventListener('click', () => {
+  document.querySelectorAll('.ctrl-row[data-ctrl="ease"] .opt').forEach(x => x.classList.remove('active'));
+  o.classList.add('active');
+  const [csv, name] = o.dataset.val.split('|');
+  state.ease = csv; state.easeName = name;
+  render();
+}));
+document.getElementById('dSlider').addEventListener('input', e => { state.dur = parseInt(e.target.value); render(); });
+
+function runMain() {
+  const t = document.getElementById('mainTrack');
+  t.classList.remove('run'); void t.offsetWidth; t.classList.add('run');
+  setTimeout(() => t.classList.remove('run'), state.dur + 100);
+}
+function runCompare() {
+  ['cc1','cc2','cc3'].forEach((id,i) => {
+    const c = document.getElementById(id);
+    const tracks = [['ease-out','cubic-bezier(.22,1,.36,1)'],['ease-in-out','cubic-bezier(.65,0,.35,1)'],['spring','cubic-bezier(.34,1.56,.64,1)']];
+    c.style.setProperty('--ease', tracks[i][1]);
+    c.classList.remove('run'); void c.offsetWidth; c.classList.add('run');
+    setTimeout(() => c.classList.remove('run'), 1700);
+  });
+}
+function preset(d, e, n) { state.dur = d; state.ease = e; state.easeName = n;
+  document.getElementById('dSlider').value = d;
+  document.querySelectorAll('.ctrl-row[data-ctrl="ease"] .opt').forEach(x => x.classList.toggle('active', x.dataset.val.split('|')[1] === n));
+  render(); runMain();
+}
+function copyCSS() {
+  navigator.clipboard.writeText('transition: all ' + state.dur + 'ms cubic-bezier(' + state.ease + ');');
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copy'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copy CSS transition'; btn.classList.remove('copied'); }, 1600);
+}
+render();
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

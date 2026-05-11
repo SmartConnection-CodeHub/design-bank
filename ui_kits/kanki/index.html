@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Kanki Street · Mobile storefront</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { padding: 0; background: var(--bg); }
+  .app { max-width: 1320px; margin: 0 auto; padding: 28px 24px 60px; }
+  header.top { display:flex; align-items:center; justify-content:space-between; margin-bottom: 22px; }
+  .brand { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.03em; text-transform: uppercase; }
+  .brand .red { color: #D9483A; }
+  .crumbs { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+
+  .flow { display: grid; grid-template-columns: repeat(4, 250px); gap: 20px; align-items: start; overflow-x: auto; padding-bottom: 12px; }
+  .screen { display:flex; flex-direction:column; gap: 8px; align-items: center; }
+  .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); letter-spacing: .06em; text-transform: uppercase; font-weight: 600; }
+
+  .phone { width: 250px; height: 540px; background: #000; border-radius: 38px; padding: 8px; box-shadow: 0 12px 40px rgba(27,47,78,.12); position: relative; }
+  .phone::before { content: ""; position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; background: #000; border-radius: 99px; z-index: 4; }
+  .ph-inner { width: 100%; height: 100%; background: var(--smc-cream-100); border-radius: 30px; overflow: hidden; position: relative; display:flex; flex-direction:column; }
+
+  .status { position: absolute; top: 8px; left: 16px; right: 16px; display:flex; justify-content: space-between; font: 600 11px var(--font-sans); color: #000; z-index: 5; }
+  .status.light { color: #fff; }
+
+  /* Sticky header */
+  .hdr { position: sticky; top: 0; height: 56px; padding: 26px 14px 0; display:flex; align-items: center; justify-content: space-between; z-index: 3; background: rgba(248,248,246,.7); backdrop-filter: blur(8px); }
+  .hdr .logo { font-family: var(--font-display); font-size: 16px; text-transform: uppercase; letter-spacing: -0.02em; font-weight: 500; color: var(--fg-1); }
+  .hdr .logo .red { color: #D9483A; }
+  .hdr .ic { width: 22px; height: 22px; display:grid; place-items:center; color: var(--fg-1); }
+  .hdr.dark { background: rgba(27,47,78,.4); backdrop-filter: blur(10px); }
+  .hdr.dark .logo, .hdr.dark .ic { color: #fff; }
+  .hdr-right { display:flex; gap: 12px; align-items: center; }
+  .badge-cart { position: relative; }
+  .badge-cart::after { content: "2"; position: absolute; top: -4px; right: -6px; width: 14px; height: 14px; border-radius: 999px; background: #D9483A; color: #fff; font-size: 9px; font-weight: 700; display:grid; place-items:center; }
+
+  /* Curtain hero */
+  .curtain {
+    position: relative; height: 320px; margin: -56px 0 0;
+    background:
+      radial-gradient(120% 100% at 30% 20%, #2E4769 0%, transparent 60%),
+      radial-gradient(140% 100% at 100% 100%, #131F35 0%, transparent 65%),
+      var(--smc-navy-700);
+    overflow: hidden;
+  }
+  .curtain .word {
+    position: absolute; bottom: 24px; left: 14px; right: 14px;
+    font-family: var(--font-display); font-size: 36px; line-height: 0.95;
+    color: var(--smc-cream); letter-spacing: -0.03em; text-transform: uppercase;
+  }
+  .curtain .word .accent { color: #D9483A; font-style: italic; }
+  .curtain .eyebrow { position: absolute; top: 90px; left: 14px;
+    font: 600 10px var(--font-mono); color: var(--smc-cream); letter-spacing: .12em; text-transform: uppercase;
+    background: rgba(255,255,255,.12); padding: 4px 10px; border-radius: 100px; backdrop-filter: blur(6px); }
+  .curtain svg.streetwear { position: absolute; right: -20px; bottom: 60px; opacity: .8; }
+
+  /* Body */
+  .body { padding: 14px; display:flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+  .section-h { display:flex; justify-content: space-between; align-items: baseline; }
+  .section-h h2 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.02em; margin: 0; color: var(--fg-1); }
+  .section-h .see { font-size: 11px; color: var(--fg-2); }
+
+  /* Product grid */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pcard { display:flex; flex-direction:column; gap: 6px; }
+  .pcard .img {
+    aspect-ratio: 4/5; border-radius: var(--radius-md); background: var(--smc-cream-200);
+    border: 1px solid var(--border-subtle); display:grid; place-items:center;
+    color: var(--fg-3); font: 9px var(--font-mono); letter-spacing:.08em;
+    position: relative; overflow:hidden;
+  }
+  .pcard .img.tee { background:
+    radial-gradient(120% 80% at 50% 30%, #2E4769 0%, transparent 70%),
+    var(--smc-navy-700); }
+  .pcard .img.cap { background:
+    radial-gradient(120% 80% at 50% 20%, #DCBC75 0%, transparent 65%),
+    var(--smc-gold-700); }
+  .pcard .img.hoodie { background:
+    radial-gradient(120% 80% at 30% 30%, #4DEBC4 0%, transparent 60%),
+    var(--smc-accent-700); }
+  .pcard .img.crew { background:
+    radial-gradient(120% 80% at 70% 20%, #FCFCFB 0%, transparent 70%),
+    var(--smc-cream-300); }
+  .pcard .img .drop { position: absolute; top: 8px; left: 8px;
+    font: 600 9px var(--font-mono); color: #fff; background: rgba(0,0,0,.4);
+    padding: 3px 7px; border-radius: 100px; letter-spacing: .06em; }
+  .pcard .nm { font-size: 12.5px; color: var(--fg-1); font-weight: 600; line-height: 1.3; }
+  .pcard .pr { font: 600 12px var(--font-mono); color: var(--fg-2); }
+
+  /* Drop strip */
+  .drops { display:flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .drop-card { flex: 0 0 130px; background: #fff; border-radius: 10px; border: 1px solid var(--border-subtle); padding: 10px; display:flex; flex-direction:column; gap: 4px; }
+  .drop-card .ddate { font: 600 9px var(--font-mono); color: var(--fg-3); letter-spacing: .06em; text-transform: uppercase; }
+  .drop-card .dname { font-size: 12px; font-weight: 600; color: var(--fg-1); }
+  .drop-card .dn { font: 11px var(--font-mono); color: var(--fg-2); }
+
+  /* PDP */
+  .pdp-img { aspect-ratio: 1; background:
+    radial-gradient(120% 80% at 50% 30%, #2E4769 0%, transparent 70%),
+    var(--smc-navy-700);
+    position: relative; }
+  .pdp-img .back-btn { position: absolute; top: 60px; left: 14px;
+    width: 36px; height: 36px; border-radius: 999px; background: rgba(255,255,255,.95); display:grid; place-items:center; color: var(--fg-1); font-size: 16px; }
+  .pdp-img .drop { position: absolute; top: 60px; right: 14px;
+    font: 600 9px var(--font-mono); color: #fff; background: rgba(0,0,0,.4);
+    padding: 4px 10px; border-radius: 100px; letter-spacing: .06em; }
+  .pdp-body { padding: 14px; display:flex; flex-direction:column; gap: 10px; }
+  .pdp-body h2 { font-family: var(--font-display); font-size: 24px; margin: 0; letter-spacing: -0.02em; }
+  .pdp-body .pr { font: 600 16px var(--font-mono); color: var(--fg-1); }
+  .pdp-body .desc { font-size: 12px; color: var(--fg-2); line-height: 1.5; }
+  .size-row { display:flex; gap: 6px; }
+  .size { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border-default); background: #fff; display:grid; place-items:center; font: 600 11px var(--font-sans); color: var(--fg-1); }
+  .size.on { background: var(--smc-navy); color: #fff; border-color: var(--smc-navy); }
+  .size.off { color: var(--fg-3); opacity: .4; text-decoration: line-through; }
+
+  .cta-bar { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 14px 24px;
+    background: linear-gradient(180deg, rgba(248,248,246,0) 0%, var(--smc-cream-100) 30%);
+    display:flex; gap: 8px; }
+  .cta-bar .add { flex: 1; background: var(--smc-navy); color: var(--smc-cream); border-radius: var(--radius-md); height: 48px; display:grid; place-items:center; font: 600 13px var(--font-sans); }
+  .cta-bar .heart { width: 48px; height: 48px; border-radius: var(--radius-md); border: 1px solid var(--border-default); background: #fff; display:grid; place-items:center; }
+
+  /* CART */
+  .cart-line { display:flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-subtle); }
+  .cart-line:last-child { border-bottom: 0; }
+  .cart-line .img { width: 56px; height: 56px; border-radius: 8px; flex-shrink: 0; }
+  .cart-line .img.tee { background:
+    radial-gradient(120% 80% at 50% 30%, #2E4769 0%, transparent 70%),
+    var(--smc-navy-700); }
+  .cart-line .img.cap { background:
+    radial-gradient(120% 80% at 50% 30%, #DCBC75 0%, transparent 70%),
+    var(--smc-gold-700); }
+  .cart-line .info { flex: 1; min-width: 0; }
+  .cart-line .info .nm { font-size: 12.5px; font-weight: 600; color: var(--fg-1); }
+  .cart-line .info .sub { font: 11px var(--font-mono); color: var(--fg-3); }
+  .cart-line .info .qty { display:inline-flex; align-items:center; gap: 8px; margin-top: 4px; font: 11px var(--font-mono); color: var(--fg-2); }
+  .cart-line .info .qty .sq { width: 18px; height: 18px; border: 1px solid var(--border-default); border-radius: 4px; display:inline-grid; place-items: center; font-weight: 600; color: var(--fg-1); }
+  .cart-line .pr { font: 600 12px var(--font-mono); color: var(--fg-1); }
+
+  .summary { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px; display:flex; flex-direction:column; gap: 6px; }
+  .summary .ln { display:flex; justify-content:space-between; font-size: 12px; color: var(--fg-2); }
+  .summary .ln.total { color: var(--fg-1); font-weight: 600; font-size: 15px; padding-top: 8px; border-top: 1px solid var(--border-subtle); margin-top: 4px; }
+  .summary .ln.total .v { font-family: var(--font-mono); }
+</style></head>
+<body data-screen-label="Kanki Storefront">
+<div class="app">
+  <header class="top">
+    <div class="brand">Kanki<span class="red">/</span>Street</div>
+    <div class="crumbs">storefront · 4 pantallas · curtain hero</div>
+  </header>
+
+  <div class="flow">
+    <!-- 01 Home with curtain -->
+    <div class="screen">
+      <span class="lbl">01 · Home (curtain)</span>
+      <div class="phone"><div class="status light"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <div class="hdr dark"><div class="logo">Kanki<span class="red">/</span>Street</div><div class="hdr-right"><div class="ic">⌕</div><div class="ic badge-cart">⛌</div></div></div>
+          <div class="curtain">
+            <div class="eyebrow">Drop 04 · Otoño 26</div>
+            <svg class="streetwear" width="160" height="190" viewBox="0 0 160 190" fill="none">
+              <path d="M40 50 L60 25 L100 25 L120 50 L150 75 L130 100 L120 90 L120 180 L40 180 L40 90 L30 100 L10 75 Z" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+              <path d="M70 25 Q80 35 90 25" stroke="rgba(255,255,255,.3)" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div class="word">Llega<br/>el <span class="accent">frío.</span></div>
+          </div>
+          <div class="body">
+            <div class="section-h"><h2>Drop 04</h2><span class="see">Ver todo →</span></div>
+            <div class="grid">
+              <div class="pcard"><div class="img tee"><span class="drop">D04</span></div><div class="nm">Tee Andes Negro</div><div class="pr">$24.990</div></div>
+              <div class="pcard"><div class="img cap"><span class="drop">D04</span></div><div class="nm">Cap K/S Mostaza</div><div class="pr">$18.990</div></div>
+              <div class="pcard"><div class="img hoodie"><span class="drop">D04</span></div><div class="nm">Hoodie Verde</div><div class="pr">$54.990</div></div>
+              <div class="pcard"><div class="img crew"><span class="drop">D04</span></div><div class="nm">Crewneck Cream</div><div class="pr">$44.990</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Drops -->
+    <div class="screen">
+      <span class="lbl">02 · Drops</span>
+      <div class="phone"><div class="status"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <div class="hdr"><div class="ic">←</div><div class="logo" style="font-size:14px">Drops</div><div class="ic badge-cart">⛌</div></div>
+          <div class="body">
+            <h2 style="font-family:var(--font-display); font-size:28px; margin:0; letter-spacing:-0.02em">Cada mes, un drop.</h2>
+            <p style="font-size:12px; color:var(--fg-2); margin:0; line-height:1.5;">Cantidades limitadas. Una vez agotado, no vuelve. Suscríbete al RADAR para no perdértelo.</p>
+            <div class="drops">
+              <div class="drop-card"><div class="ddate">Nov 25 — vivo</div><div class="dname">Drop 04 · Frío</div><div class="dn">12 / 24 piezas</div></div>
+              <div class="drop-card"><div class="ddate">Oct 25</div><div class="dname">Drop 03 · Cuequeo</div><div class="dn" style="color:#D9483A">sold out</div></div>
+              <div class="drop-card"><div class="ddate">Sep 25</div><div class="dname">Drop 02 · Stgo</div><div class="dn" style="color:#D9483A">sold out</div></div>
+            </div>
+            <div class="section-h"><h2>Drop 04 · vivo</h2><span class="see" style="color:var(--smc-accent-700)">● en línea</span></div>
+            <div class="grid">
+              <div class="pcard"><div class="img tee"><span class="drop">D04</span></div><div class="nm">Tee Andes Negro</div><div class="pr">$24.990</div></div>
+              <div class="pcard"><div class="img hoodie"><span class="drop">D04</span></div><div class="nm">Hoodie Verde</div><div class="pr">$54.990</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 PDP -->
+    <div class="screen">
+      <span class="lbl">03 · PDP</span>
+      <div class="phone"><div class="status light"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <div class="pdp-img"><div class="back-btn">←</div><div class="drop">Drop 04</div></div>
+          <div class="pdp-body">
+            <div style="font: 600 10px var(--font-mono); color: var(--fg-3); letter-spacing: .08em; text-transform: uppercase;">Tee · 100% algodón pima</div>
+            <h2>Tee Andes Negro</h2>
+            <div class="pr">$24.990</div>
+            <p class="desc">Estampado serigrafiado a mano en Stgo. Edición de 24. Lavado en frío, secado al aire, contra el cambio climático.</p>
+            <div style="font-size:11px; color:var(--fg-2); margin-top:4px;">Talla</div>
+            <div class="size-row">
+              <div class="size">XS</div>
+              <div class="size">S</div>
+              <div class="size on">M</div>
+              <div class="size">L</div>
+              <div class="size off">XL</div>
+            </div>
+          </div>
+          <div class="cta-bar"><div class="add">Agregar al carro</div><div class="heart">♡</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 Cart -->
+    <div class="screen">
+      <span class="lbl">04 · Cart</span>
+      <div class="phone"><div class="status"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <div class="hdr"><div class="ic">←</div><div class="logo" style="font-size:14px">Tu carro</div><div class="ic">⛌</div></div>
+          <div class="body">
+            <div class="cart-line"><div class="img tee"></div><div class="info"><div class="nm">Tee Andes Negro</div><div class="sub">M · Drop 04</div><div class="qty"><span class="sq">−</span>1<span class="sq">+</span></div></div><div class="pr">$24.990</div></div>
+            <div class="cart-line"><div class="img cap"></div><div class="info"><div class="nm">Cap K/S Mostaza</div><div class="sub">Única · Drop 04</div><div class="qty"><span class="sq">−</span>1<span class="sq">+</span></div></div><div class="pr">$18.990</div></div>
+            <div class="summary">
+              <div class="ln"><span>Subtotal</span><span class="v" style="font-family:var(--font-mono)">$43.980</span></div>
+              <div class="ln"><span>Despacho · Stgo</span><span class="v" style="font-family:var(--font-mono)">$3.500</span></div>
+              <div class="ln total"><span>Total</span><span class="v">$47.480</span></div>
+            </div>
+            <div style="background: var(--smc-navy); color: var(--smc-cream); height: 48px; border-radius: var(--radius-md); display: grid; place-items:center; font: 600 13px var(--font-sans);">Ir a pagar</div>
+            <div style="font: 11px var(--font-mono); color: var(--fg-3); text-align:center;">Pago seguro · Webpay + MercadoPago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

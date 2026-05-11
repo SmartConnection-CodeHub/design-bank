@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Hoku · Chat streaming</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { padding: 0; }
+  .app { max-width: 1240px; margin: 0 auto; padding: 28px 32px 80px; }
+  header.top { display:flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .brand { font-family: var(--font-display); font-size: 26px; letter-spacing: -0.03em; }
+  .brand .green { color: var(--smc-accent); }
+  .crumbs { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 880px) { .grid { grid-template-columns: 1fr; } }
+
+  .pane { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-rest); padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; min-height: 220px; }
+  .pane .h { display:flex; align-items:center; gap: 10px; justify-content: space-between; }
+  .pane .h .lbl { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-3); font-weight: 600; }
+  .pane .h .var { font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); }
+
+  .msg { font-size: 15px; line-height: 1.55; color: var(--fg-1); }
+  .msg .role { font-size: 11px; color: var(--fg-3); letter-spacing: .04em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+
+  /* Caret animations */
+  .caret { display:inline-block; width: 1.5ch; height: 1em; background: var(--smc-navy); margin-left: 2px; vertical-align: text-bottom; animation: blink 800ms steps(1) infinite; }
+  @keyframes blink { 50% { background: transparent; } }
+  .caret.green { background: var(--smc-accent); }
+  .caret.gold  { background: var(--smc-gold); }
+  .caret.bar   { width: 2px; }
+  .caret.under { width: 1ch; height: 2px; vertical-align: baseline; margin-bottom: 4px; }
+
+  /* Streaming text fade-in reveal */
+  .tok { opacity: 0; animation: tok 200ms var(--ease-out) forwards; }
+  @keyframes tok { to { opacity: 1; } }
+
+  /* Variant: tokens slide in */
+  .tok-slide { opacity:0; display: inline-block; transform: translateY(4px); animation: tslide 240ms var(--ease-out) forwards; }
+  @keyframes tslide { to { opacity: 1; transform: translateY(0); } }
+
+  /* Variant: highlighted token streaming */
+  .tok-hl { background: var(--smc-accent-100); padding: 0 2px; border-radius: 2px; opacity:0; animation: tok 220ms var(--ease-out) forwards; }
+
+  /* Variant: code stream */
+  pre.stream { background: var(--bg-sunk); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px 14px; font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-1); margin: 0; line-height: 1.55; }
+  pre.stream .k { color: var(--smc-navy-500); font-weight: 600; }
+  pre.stream .s { color: var(--smc-gold-700); }
+  pre.stream .c { color: var(--fg-3); }
+
+  /* Variant: thinking block */
+  .think { background: var(--bg-sunk); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--fg-2); font-style: italic; display:flex; gap: 8px; align-items: flex-start; }
+  .think .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--smc-accent); margin-top: 6px; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: .3 } 50% { opacity: 1 } }
+
+  /* Variant: tool-call card */
+  .tool { background: #fff; border: 1px solid var(--border-default); border-radius: 8px; padding: 10px 12px; display:flex; gap: 10px; align-items: center; font-size: 13px; }
+  .tool .ic { width: 22px; height: 22px; background: var(--bg-sunk); border-radius: 6px; display:grid; place-items:center; font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); }
+  .tool .nm { font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-1); }
+  .tool .st { margin-left:auto; font-size: 11px; color: var(--smc-accent-700); display:flex; align-items:center; gap: 6px; }
+  .tool .dot { width: 6px; height: 6px; border-radius: 99px; background: var(--smc-accent); }
+
+  /* Variant: skeleton shimmer */
+  .skel { height: 10px; border-radius: 4px; background: linear-gradient(90deg, var(--bg-sunk), var(--smc-cream-300), var(--bg-sunk)); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .skel.s2 { width: 90%; }
+  .skel.s3 { width: 60%; margin-top: 6px; }
+
+  /* Variant: progress bar */
+  .progress { height: 4px; border-radius: 99px; background: var(--bg-sunk); overflow: hidden; }
+  .progress .fill { width: 60%; height: 100%; background: var(--smc-accent); animation: fill 2s var(--ease-out) infinite; }
+  @keyframes fill { 0% { width: 0% } 100% { width: 100% } }
+
+  /* Variant: word-by-word ghost */
+  .ghost-word { color: var(--fg-3); opacity: .5; }
+  .ghost-current { background: var(--smc-cream-200); padding: 0 2px; border-radius: 2px; }
+
+  .composer { margin-top: 8px; background: #fff; border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 12px 14px; display:flex; align-items: center; gap: 10px; }
+  .composer input { flex: 1; border: 0; outline: 0; font: 14px var(--font-sans); color: var(--fg-1); }
+  .composer .ph { color: var(--fg-3); }
+  .composer .send { width: 36px; height: 36px; border-radius: 8px; background: var(--smc-navy); color: var(--smc-cream); display:grid; place-items: center; font-size: 14px; cursor: pointer; }
+</style></head>
+<body data-screen-label="Hoku Chat Streaming">
+<div class="app">
+  <header class="top">
+    <div class="brand">Hoku<span class="green">.</span></div>
+    <div class="crumbs">streaming variants · 10 patterns</div>
+  </header>
+
+  <div class="grid">
+    <!-- 1. token-by-token reveal + blinking block caret -->
+    <div class="pane">
+      <div class="h"><span class="lbl">01 · Token reveal</span><span class="var">cadence 12 ms · block caret</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        <span class="tok" style="animation-delay:0ms">Para </span><span class="tok" style="animation-delay:60ms">conectar </span><span class="tok" style="animation-delay:120ms">Bsale </span><span class="tok" style="animation-delay:180ms">a </span><span class="tok" style="animation-delay:240ms">Jumpseller, </span><span class="tok" style="animation-delay:300ms">primero </span><span class="tok" style="animation-delay:360ms">obtén </span><span class="tok" style="animation-delay:420ms">el </span><span class="tok" style="animation-delay:480ms">API </span><span class="tok" style="animation-delay:540ms">token <span class="caret"></span></span>
+      </div>
+    </div>
+
+    <!-- 2. word slide-up -->
+    <div class="pane">
+      <div class="h"><span class="lbl">02 · Word slide-up</span><span class="var">translateY 4 → 0</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        <span class="tok-slide" style="animation-delay:0ms">Cerebro </span><span class="tok-slide" style="animation-delay:80ms">recomienda </span><span class="tok-slide" style="animation-delay:160ms">migrar </span><span class="tok-slide" style="animation-delay:240ms">los </span><span class="tok-slide" style="animation-delay:320ms">248 </span><span class="tok-slide" style="animation-delay:400ms">SKUs </span><span class="tok-slide" style="animation-delay:480ms">en </span><span class="tok-slide" style="animation-delay:560ms">2 </span><span class="tok-slide" style="animation-delay:640ms">lotes.</span>
+      </div>
+    </div>
+
+    <!-- 3. highlighted streaming tokens -->
+    <div class="pane">
+      <div class="h"><span class="lbl">03 · Highlight stream</span><span class="var">accent-100 wash · 220 ms decay</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        Identifiqué <span class="tok-hl" style="animation-delay:0ms">3 productos</span> con stock negativo en <span class="tok-hl" style="animation-delay:200ms">Bsale</span> pero positivo en <span class="tok-hl" style="animation-delay:400ms">Jumpseller</span>. Voy a sincronizarlos.
+      </div>
+    </div>
+
+    <!-- 4. thinking block -->
+    <div class="pane">
+      <div class="h"><span class="lbl">04 · Thinking block</span><span class="var">collapsable · italic</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        <div class="think"><span class="pulse"></span><span>Revisando inventario Bsale → comparando con Jumpseller → buscando deltas &gt; 0…</span></div>
+      </div>
+    </div>
+
+    <!-- 5. code streaming -->
+    <div class="pane">
+      <div class="h"><span class="lbl">05 · Code stream</span><span class="var">JetBrains Mono · per-token reveal</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        <pre class="stream"><span class="c">// fix: sync deltas</span>
+<span class="k">await</span> bsale.sync({
+  <span class="s">strategy</span>: <span class="s">'jumpseller-wins'</span>,
+  <span class="s">dry</span>: <span class="k">false</span>,
+});<span class="caret bar green"></span></pre>
+      </div>
+    </div>
+
+    <!-- 6. tool call card -->
+    <div class="pane">
+      <div class="h"><span class="lbl">06 · Tool call</span><span class="var">inline card · live dot</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        <div class="tool"><div class="ic">{ }</div><div class="nm">bsale.list_products({ filter:"negative" })</div><div class="st"><span class="dot"></span>248 → 3</div></div>
+      </div>
+    </div>
+
+    <!-- 7. skeleton -->
+    <div class="pane">
+      <div class="h"><span class="lbl">07 · Skeleton</span><span class="var">pre-first-token placeholder</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        <div class="skel"></div><div class="skel s2"></div><div class="skel s3"></div>
+      </div>
+    </div>
+
+    <!-- 8. progress -->
+    <div class="pane">
+      <div class="h"><span class="lbl">08 · Progress</span><span class="var">indeterminate · accent</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        Subiendo embeddings… <span style="font-family:var(--font-mono); font-size: 12px; color: var(--fg-2)">832 / 1248</span>
+        <div class="progress" style="margin-top: 10px;"><div class="fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 9. ghost word (next-token preview) -->
+    <div class="pane">
+      <div class="h"><span class="lbl">09 · Ghost preview</span><span class="var">faded next tokens</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        El stock en Jumpseller queda <span class="ghost-current">en</span> <span class="ghost-word">12 unidades</span> <span class="ghost-word">tras la sync</span>.
+      </div>
+    </div>
+
+    <!-- 10. underscore caret -->
+    <div class="pane">
+      <div class="h"><span class="lbl">10 · Underscore caret</span><span class="var">retro · gold</span></div>
+      <div class="msg"><div class="role">Hoku</div>
+        Cerebro está pensando<span class="caret under gold"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="composer">
+    <span class="ph">Pega tu pedido — lo armo.</span>
+    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); padding: 2px 6px; border: 1px solid var(--border-subtle); border-radius: 4px;">⌘↵</span>
+    <input type="text" hidden><div class="send">→</div>
+  </div>
+</div>
+</body></html>

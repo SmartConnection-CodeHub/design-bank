@@ -1,0 +1,121 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Themes SMC</title>
+<link rel="stylesheet" href="../colors_and_type.css"><link rel="stylesheet" href="hub.css">
+<style>
+.scene-stage { flex: 1; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); padding: 18px; display:flex; gap: 14px; min-height: 0; transition: background 240ms var(--ease-out), color 240ms; }
+.scene-stage .side { width: 80px; display:flex; flex-direction: column; gap: 8px; }
+.scene-stage .nav { padding: 8px 10px; border-radius: 8px; font: 600 11px var(--font-sans); }
+.scene-stage .main { flex: 1; display:flex; flex-direction: column; gap: 10px; }
+.scene-stage h3 { font: 600 18px var(--font-display); letter-spacing: -0.01em; margin: 0; }
+.scene-stage .stat { padding: 12px; border-radius: 10px; display:flex; flex-direction: column; gap: 4px; }
+.scene-stage .stat .n { font: 600 22px var(--font-display); letter-spacing: -0.02em; }
+.scene-stage .stat .l { font: 11px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+.scene-stage .row { display:grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.scene-stage .btn { padding: 8px 14px; border-radius: 100px; font: 600 12px var(--font-sans); display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; border: 0; }
+
+/* Theme: Intranet dark */
+[data-theme="intranet"] .scene-stage { background: #0F1B2D; color: #E8EEF7; border-color: #1F2E47; }
+[data-theme="intranet"] .scene-stage .nav { background: #1B2A42; }
+[data-theme="intranet"] .scene-stage .nav.active { background: var(--smc-accent); color: #0F1B2D; }
+[data-theme="intranet"] .scene-stage .stat { background: #1B2A42; }
+[data-theme="intranet"] .scene-stage .stat .n { color: var(--smc-accent); }
+[data-theme="intranet"] .scene-stage .btn { background: var(--smc-accent); color: #0F1B2D; }
+
+/* Marketing light */
+[data-theme="marketing"] .scene-stage { background: #FFFFFF; color: #1B2F4E; }
+[data-theme="marketing"] .scene-stage .nav { background: #F8F8F6; color: #1B2F4E; }
+[data-theme="marketing"] .scene-stage .nav.active { background: var(--smc-navy); color: var(--smc-cream); }
+[data-theme="marketing"] .scene-stage .stat { background: #F8F8F6; }
+[data-theme="marketing"] .scene-stage .stat .n { color: var(--smc-navy); }
+[data-theme="marketing"] .scene-stage .btn { background: var(--smc-navy); color: var(--smc-cream); }
+
+/* Kanki Surf */
+[data-theme="kanki"] .scene-stage { background: #E8F0F0; color: #0B3D40; border-color: #BBDADC; }
+[data-theme="kanki"] .scene-stage .nav { background: #FFFFFF; color: #0B3D40; }
+[data-theme="kanki"] .scene-stage .nav.active { background: #FF6B47; color: #FFF; }
+[data-theme="kanki"] .scene-stage .stat { background: #FFF; }
+[data-theme="kanki"] .scene-stage .stat .n { color: #FF6B47; }
+[data-theme="kanki"] .scene-stage .btn { background: #FF6B47; color: #FFF; }
+
+/* Design Bank — cream + gold */
+[data-theme="bank"] .scene-stage { background: var(--smc-cream); color: var(--smc-navy); }
+[data-theme="bank"] .scene-stage .nav { background: #FFF; color: var(--smc-navy); }
+[data-theme="bank"] .scene-stage .nav.active { background: var(--smc-gold); color: #fff; }
+[data-theme="bank"] .scene-stage .stat { background: #FFF; }
+[data-theme="bank"] .scene-stage .stat .n { color: var(--smc-gold); font-style: italic; }
+[data-theme="bank"] .scene-stage .btn { background: var(--smc-gold); color: #FFF; }
+
+/* Holding — navy primary */
+[data-theme="holding"] .scene-stage { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy-700); }
+[data-theme="holding"] .scene-stage .nav { background: var(--smc-navy-700); }
+[data-theme="holding"] .scene-stage .nav.active { background: var(--smc-gold); color: var(--smc-navy); }
+[data-theme="holding"] .scene-stage .stat { background: var(--smc-navy-700); }
+[data-theme="holding"] .scene-stage .stat .n { color: var(--smc-gold); }
+[data-theme="holding"] .scene-stage .btn { background: var(--smc-gold); color: var(--smc-navy); }
+</style></head>
+<body data-screen-label="Themes SMC hub" data-theme="intranet">
+<div class="hub">
+  <div class="hub-head">
+    <div><span class="crumb">Foundations</span><span class="crumb">Themes SMC</span></div>
+    <div class="meta"><span>5 themes</span><span class="live">live</span></div>
+  </div>
+  <div class="hub-scene">
+    <h1 class="hub-scene-title">Un design system, <em>cinco contextos</em>.</h1>
+    <p class="hub-scene-sub">Cada surface SMC se pinta con sus propios tokens manteniendo la grilla, el ritmo tipográfico y el comportamiento de @smc/ui. Tap a un theme para verlo aplicado a la misma escena.</p>
+    <div class="scene-stage">
+      <div class="side">
+        <div class="nav active">Home</div>
+        <div class="nav">Reports</div>
+        <div class="nav">Inbox</div>
+        <div class="nav">Setup</div>
+      </div>
+      <div class="main">
+        <h3>Buenos días, Guille</h3>
+        <div class="row">
+          <div class="stat"><span class="l">Tickets</span><span class="n">142</span></div>
+          <div class="stat"><span class="l">Conv. rate</span><span class="n">7.8%</span></div>
+          <div class="stat"><span class="l">GMV semana</span><span class="n">$3.2M</span></div>
+          <div class="stat"><span class="l">Uptime</span><span class="n">99.97%</span></div>
+        </div>
+        <button class="btn">Crear cotización <span>→</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="hub-ctrls">
+    <div class="grp"><span class="lbl">Theme</span><span class="val" id="tn">Intranet · dark</span></div>
+    <div class="grp"><span class="lbl">Tokens</span>
+      <div class="row"><span class="k">Surface</span><span class="v" id="ts">#0F1B2D</span></div>
+      <div class="row"><span class="k">Primary</span><span class="v" id="tp">#00E5B0</span></div>
+      <div class="row"><span class="k">On-surf</span><span class="v" id="tt">#E8EEF7</span></div>
+    </div>
+    <div class="grp"><span class="lbl">Used in</span><span class="val" id="tu">SMC Intranet · Cerebro Cliente</span></div>
+    <div class="grp"><span class="lbl">Files</span><span class="val">themes/intranet.css · 1.8 KB</span></div>
+  </div>
+  <div class="hub-pills">
+    <div class="row" id="pills">
+      <button class="pill" aria-pressed="true" data-t="intranet"><span class="n">01</span>Intranet · dark</button>
+      <button class="pill" data-t="marketing"><span class="n">02</span>Marketing · light</button>
+      <button class="pill" data-t="kanki"><span class="n">03</span>Kanki Surf</button>
+      <button class="pill" data-t="bank"><span class="n">04</span>Design Bank</button>
+      <button class="pill" data-t="holding"><span class="n">05</span>Holding</button>
+    </div>
+    <a class="cta" href="#">Usar en proyecto <span class="arrow">→</span></a>
+  </div>
+</div>
+<script>
+const META = {
+  intranet: ['Intranet · dark', '#0F1B2D', '#00E5B0', '#E8EEF7', 'SMC Intranet · Cerebro Cliente'],
+  marketing: ['Marketing · light', '#FFFFFF', '#1B2F4E', '#1B2F4E', 'smconnection.cl · Landing'],
+  kanki: ['Kanki Surf', '#E8F0F0', '#FF6B47', '#0B3D40', 'Kanki Street storefront'],
+  bank: ['Design Bank', '#F8F8F6', '#C49A3A', '#1B2F4E', 'Esta galería · RADAR'],
+  holding: ['Holding', '#1B2F4E', '#C49A3A', '#F8F8F6', 'Sitio corporativo · Pitches']
+};
+document.getElementById('pills').addEventListener('click', e => {
+  const b = e.target.closest('.pill'); if (!b) return;
+  document.querySelectorAll('#pills .pill').forEach(p => p.setAttribute('aria-pressed', p === b));
+  const t = b.dataset.t;
+  document.body.dataset.theme = t;
+  const m = META[t];
+  tn.textContent = m[0]; ts.textContent = m[1]; tp.textContent = m[2]; tt.textContent = m[3]; tu.textContent = m[4];
+});
+</script>
+</body></html>

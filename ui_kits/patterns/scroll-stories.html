@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Scroll Stories · Patrón federado</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex: 1; display:flex; gap: 14px; align-items: stretch; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 340px; }
+  .phone { width: 200px; background: #000; border-radius: 28px; padding: 6px; position: relative; flex-shrink: 0; }
+  .phone-inner { width:100%; height: 100%; background: #000; border-radius: 22px; overflow:hidden; position:relative; }
+  .reel { position:absolute; inset:0; display:flex; flex-direction:column;
+    animation: scroll 9s linear infinite;
+  }
+  @keyframes scroll { 0% { transform: translateY(0); } 33% { transform: translateY(-100%); } 66% { transform: translateY(-200%); } 100% { transform: translateY(-300%); } }
+  .slide { width:100%; height: 100%; flex-shrink: 0; padding: 14px; display:flex; flex-direction: column; justify-content: flex-end; color: #fff; font-family: var(--font-display); font-size: 22px; line-height: 1.1; letter-spacing: -0.02em; position: relative; }
+  .slide .eb { position: absolute; top: 14px; left: 14px; font: 600 9px var(--font-mono); color: #fff; letter-spacing: .12em; text-transform: uppercase; background: rgba(0,0,0,.4); padding: 3px 8px; border-radius: 99px; }
+  .slide.s1 { background: radial-gradient(120% 80% at 30% 30%, #2E4769, var(--smc-navy-900)); }
+  .slide.s2 { background: radial-gradient(120% 80% at 60% 40%, #DCBC75, var(--smc-gold-700)); color: var(--smc-navy-900); }
+  .slide.s2 .eb { background: rgba(255,255,255,.5); color: var(--smc-navy-900); }
+  .slide.s3 { background: radial-gradient(120% 80% at 50% 50%, #4DEBC4, var(--smc-accent-700)); color: var(--smc-navy-900); }
+  .slide.s3 .eb { background: rgba(255,255,255,.5); color: var(--smc-navy-900); }
+  .slide.s4 { background: var(--smc-cream); color: var(--smc-navy-900); border: 4px solid var(--smc-navy); }
+  .slide.s4 .eb { background: var(--smc-navy); color: #fff; }
+
+  /* Right panel — pinned reveal demonstration */
+  .pinned { flex: 1; background: #fff; border-radius: 8px; overflow:hidden; display:flex; flex-direction:column; position: relative; min-height: 300px; }
+  .pinned .sticky { padding: 22px; flex: 1; display:flex; flex-direction:column; gap: 10px; position: relative; background:
+    radial-gradient(120% 80% at 80% 20%, var(--smc-accent-100), transparent 60%),
+    var(--smc-cream); }
+  .pinned .sticky h4 { font-family: var(--font-display); font-size: 26px; letter-spacing: -0.02em; margin: 0; line-height: 1.08; }
+  .pinned .sticky p { font-size: 12px; color: var(--fg-2); line-height: 1.5; margin: 0; max-width: 280px; }
+  .pinned .progress { height: 4px; background: var(--bg-sunk); border-radius: 99px; overflow:hidden; }
+  .pinned .progress .fill { height: 100%; width: 60%; background: var(--smc-navy); animation: pf 4s var(--ease-out) infinite; }
+  @keyframes pf { 0% { width: 0%; } 100% { width: 100%; } }
+  .pinned .steps { display:flex; gap: 6px; margin-top: 6px; }
+  .pinned .step { font: 11px var(--font-mono); color: var(--fg-3); padding: 4px 10px; border-radius: 99px; background: var(--bg-sunk); }
+  .pinned .step.on { background: var(--smc-navy); color: var(--smc-cream); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Scroll Stories">
+<div class="hub">
+  <header class="hub-top">
+    <div class="brand">Scroll Stories<span class="dot">.</span></div>
+    <div class="crumbs">patterns · 5 variantes · IG-friendly</div>
+  </header>
+  <div class="hub-eyebrow">Patrón federado · @smc/ui · narrativa vertical</div>
+  <h1 class="hub-title">Contar la historia, scrolleando.</h1>
+  <p class="hub-strap">Cinco formas de narrar al scroll. Reels Stack para Kanki Drops y RADAR. Pinned Reveal para la landing de Marketing. Parallax 2-layer para InfoPet chat onboarding.</p>
+
+  <div class="pill-row">
+    <button class="pill"><span class="n">01</span>Scroll-Snap</button>
+    <button class="pill on"><span class="n">02</span>Reels Stack</button>
+    <button class="pill"><span class="n">03</span>Pinned Reveal</button>
+    <button class="pill"><span class="n">04</span>Parallax 2-layer</button>
+    <button class="pill"><span class="n">05</span>Concentric Ring</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 02 Reels Stack · IG-format · loop 9 s</div>
+      <h3 class="ttl">Drops Kanki · Otoño 26</h3>
+      <div class="stage">
+        <div class="phone"><div class="phone-inner">
+          <div class="reel">
+            <div class="slide s1"><span class="eb">Drop 04 · vivo</span>Tee Andes<br>$24.990</div>
+            <div class="slide s2"><span class="eb">Cap K/S</span>Mostaza<br>edición 24</div>
+            <div class="slide s3"><span class="eb">Drop 04 · vivo</span>Hoodie Verde<br>$54.990</div>
+            <div class="slide s4"><span class="eb">RADAR N° 47</span>Esta semana:<br>frío real.</div>
+          </div>
+        </div></div>
+        <div class="pinned">
+          <div class="sticky">
+            <span style="font: 600 9px var(--font-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--fg-3)">Pinned reveal · siguiente</span>
+            <h4>Cada drop, una historia.</h4>
+            <p>El feed se queda fijo. El texto cambia mientras el video sigue. Patrón usado por apple.com/vision-pro y stripe.com/atlas.</p>
+            <div class="progress"><div class="fill"></div></div>
+            <div class="steps"><span class="step on">01</span><span class="step">02</span><span class="step">03</span><span class="step">04</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · reels stack</span></div>
+      <div class="dim"><div class="row"><span class="name">Tiempo / slide</span><span class="val">3 s</span></div><input type="range" min="1" max="8" step="0.5" value="3"></div>
+      <div class="dim"><span class="name">Transición</span><div class="opts"><span class="opt on">cut</span><span class="opt">slide</span><span class="opt">cross</span></div></div>
+      <div class="dim"><span class="name">Aspect</span><div class="opts"><span class="opt on">9:16</span><span class="opt">1:1</span><span class="opt">4:5</span></div></div>
+      <div class="dim"><span class="name">Audio</span><div class="opts"><span class="opt on">off</span><span class="opt">muted-loop</span></div></div>
+      <div class="dim"><span class="name">CTA flotante</span><div class="opts"><span class="opt">no</span><span class="opt on">ver drop →</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Use this in</span>
+        <span class="where"><b>Kanki Reels</b> · drops home feed<br><b>InfoPet</b> · chat onboarding<br><b>Marketing SMC</b> · landing hero<br><b>RADAR</b> · brief preview semanal</span>
+        <button class="btn">Copiar prompt →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

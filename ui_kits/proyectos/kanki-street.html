@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Kanki Street · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--smc-cream-100); border-radius: 10px; padding: 22px; min-height: 380px; display:grid; grid-template-columns: 250px 1fr; gap: 18px; align-items: stretch; }
+  .ks-phone { background: #000; border-radius: 28px; padding: 6px; box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+  .ks-phone-inner { background: var(--smc-cream); border-radius: 22px; overflow: hidden; height: 100%; min-height: 340px; position: relative; }
+  .ks-hero { height: 200px; background:
+    radial-gradient(120% 80% at 30% 30%, #2E4769, transparent 60%),
+    var(--smc-navy-900);
+    position: relative; padding: 14px; display:flex; flex-direction: column; justify-content: space-between; }
+  .ks-eb { font: 600 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-gold); }
+  .ks-h { font-family: var(--font-display); color: var(--smc-cream); font-size: 30px; letter-spacing: -0.025em; line-height: 1; }
+  .ks-h .it { font-style: italic; color: var(--smc-gold); }
+  .ks-grid { padding: 12px; display:grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ks-card { background: var(--smc-cream-100); border-radius: 8px; padding: 8px; display:flex; flex-direction:column; gap: 4px; }
+  .ks-thumb { aspect-ratio: 1; border-radius: 4px; background: linear-gradient(135deg, var(--smc-navy), var(--smc-navy-500)); }
+  .ks-thumb.gold { background: linear-gradient(135deg, var(--smc-gold), var(--smc-gold-700)); }
+  .ks-name { font-size: 10px; color: var(--fg-1); font-weight: 600; }
+  .ks-price { font: 10px var(--font-mono); color: var(--smc-navy); }
+
+  .ks-detail { background: #fff; border-radius: 12px; padding: 18px; display:flex; flex-direction:column; gap: 12px; box-shadow: var(--shadow-rest); }
+  .ks-detail .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-gold-700); }
+  .ks-detail h4 { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.025em; margin: 0; line-height: 1.05; }
+  .ks-bigprice { font-family: var(--font-display); font-size: 36px; color: var(--smc-navy); margin: 0; font-variant-numeric: tabular-nums; }
+  .ks-meta { display:flex; gap: 8px; font: 11px var(--font-mono); color: var(--fg-3); }
+  .ks-stock { display:flex; gap: 6px; flex-wrap: wrap; }
+  .ks-stock span { font: 11px var(--font-mono); padding: 5px 10px; border-radius: 4px; background: var(--bg-sunk); border: 1px solid var(--border-default); }
+  .ks-stock span.sel { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+  .ks-stock span.out { opacity: .35; text-decoration: line-through; }
+  .ks-btn { background: var(--smc-navy); color: var(--smc-cream); padding: 14px; border-radius: 8px; font: 600 13px var(--font-sans); text-align: center; margin-top: auto; }
+  .ks-cd { display:flex; gap: 6px; align-items: center; font: 11px var(--font-mono); color: var(--smc-accent-700); }
+  .ks-cd b { font-variant-numeric: tabular-nums; color: var(--fg-1); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Kanki Street">
+<div class="hub">
+  <header class="hub-top"><div class="brand">Kanki Street<span class="dot">.</span></div><div class="crumbs">proyectos · 01/13 · Jumpseller</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · streetwear · Jumpseller</div>
+  <h1 class="hub-title">Drops que se agotan en 11 minutos.</h1>
+  <p class="hub-strap">E-commerce de streetwear con drops semanales. Storefront Jumpseller custom + headless. Hero reveal estilo Pinch Zoom, contador hasta el drop, stock real-time vía Bsale.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Home drop launch</button>
+    <button class="pill"><span class="n">02</span>Producto detalle</button>
+    <button class="pill"><span class="n">03</span>Drop archive</button>
+    <button class="pill"><span class="n">04</span>Carrito + checkout</button>
+    <button class="pill"><span class="n">05</span>Mi cuenta</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 home drop · live · Drop 04</div>
+      <h3 class="ttl">Drop 04 · Otoño 26 · vivo en 02:14:33</h3>
+      <div class="stage">
+        <div class="ks-phone"><div class="ks-phone-inner">
+          <div class="ks-hero">
+            <span class="ks-eb">Drop 04 · Otoño 26</span>
+            <div class="ks-h">Llega<br>el <span class="it">frío.</span></div>
+          </div>
+          <div class="ks-grid">
+            <div class="ks-card"><div class="ks-thumb"></div><span class="ks-name">Tee Andes</span><span class="ks-price">$24.990</span></div>
+            <div class="ks-card"><div class="ks-thumb gold"></div><span class="ks-name">Cap K/S</span><span class="ks-price">$18.990</span></div>
+            <div class="ks-card"><div class="ks-thumb"></div><span class="ks-name">Hoodie verde</span><span class="ks-price">$54.990</span></div>
+            <div class="ks-card"><div class="ks-thumb gold"></div><span class="ks-name">Polera negra</span><span class="ks-price">$32.990</span></div>
+          </div>
+        </div></div>
+        <div class="ks-detail">
+          <span class="ks-eb">★ Drop 04 · pieza destacada</span>
+          <h4>Hoodie Andes · verde musgo</h4>
+          <div class="ks-meta"><span>SKU KS-04-H-VRD</span><span>·</span><span>180 piezas</span></div>
+          <p class="ks-bigprice">$54.990</p>
+          <div class="ks-cd"><span>●</span>cierra en <b>02:14:33</b> · drop semanal</div>
+          <div>
+            <span class="ks-eb" style="display:block; margin-bottom: 6px;">Talla</span>
+            <div class="ks-stock"><span>XS</span><span class="sel">S</span><span>M</span><span>L</span><span class="out">XL</span></div>
+          </div>
+          <div class="ks-btn">Agregar al carro · $54.990</div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · home drop</span></div>
+      <div class="dim"><span class="name">Hero reveal</span><div class="opts"><span class="opt on">Pinch Zoom</span><span class="opt">Mask Wipe</span></div></div>
+      <div class="dim"><span class="name">Grid productos</span><div class="opts"><span class="opt on">2×N</span><span class="opt">3×N</span></div></div>
+      <div class="dim"><span class="name">Countdown</span><div class="opts"><span class="opt">off</span><span class="opt on">flotante</span><span class="opt">inline</span></div></div>
+      <div class="dim"><span class="name">Sticky CTA</span><div class="opts"><span class="opt">no</span><span class="opt on">bottom</span></div></div>
+      <div class="dim"><span class="name">Tema cromático</span><div class="opts"><span class="opt on">cream + navy</span><span class="opt">all-dark</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">Jumpseller storefront custom + <b>@smc/ui</b> federado. Bsale para stock real-time. Tiendanube + MeLi via Marketplace gateway. Hospedaje S3 + Cloudfront.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

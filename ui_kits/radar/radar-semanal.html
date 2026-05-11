@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>RADAR · Brief semanal</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--smc-cream); border-radius: 10px; padding: 28px; min-height: 380px; display:flex; flex-direction:column; gap: 18px; }
+  .rd-mast { display:flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 2px solid var(--smc-navy-900); }
+  .rd-mast .ti { font-family: var(--font-display); font-size: 44px; letter-spacing: -0.03em; line-height: 1; }
+  .rd-mast .ti em { color: var(--smc-accent-700); font-style: italic; }
+  .rd-mast .meta { font: 11px var(--font-mono); color: var(--fg-3); text-align: right; line-height: 1.6; }
+  .rd-cols { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .rd-col { display:flex; flex-direction:column; gap: 8px; }
+  .rd-eb { font: 600 9px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--smc-gold-700); border-bottom: 1px solid var(--smc-gold); padding-bottom: 4px; }
+  .rd-item { display:flex; flex-direction:column; gap: 4px; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); }
+  .rd-item .hd { font: 600 13px var(--font-sans); color: var(--fg-1); }
+  .rd-item .src { font: 10px var(--font-mono); color: var(--fg-3); }
+  .rd-item .bd { font-size: 12px; color: var(--fg-2); line-height: 1.5; }
+  .rd-feat { background: var(--smc-navy-900); color: var(--smc-cream); border-radius: 10px; padding: 18px; display:flex; gap: 16px; align-items: center; }
+  .rd-feat .num { font-family: var(--font-display); font-size: 64px; line-height: 0.9; color: var(--smc-gold); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .rd-feat .copy h5 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .rd-feat .copy p { font-size: 12px; color: var(--smc-cream-300); line-height: 1.5; margin: 0; }
+  .rd-foot { display:flex; justify-content: space-between; font: 10px var(--font-mono); color: var(--fg-3); padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="RADAR semanal">
+<div class="hub">
+  <header class="hub-top"><div class="brand">RADAR<span class="dot">.</span></div><div class="crumbs">radar · weekly · editorial</div></header>
+  <div class="hub-eyebrow">RADAR · brief semanal · enviado lunes 09:00</div>
+  <h1 class="hub-title">RADAR semanal · el formato editorial.</h1>
+  <p class="hub-strap">Newsletter interna que llega cada lunes 9:00 con lo que se movió en el stack: patrones, gente, números. Formato periódico: masthead, 3 columnas, una pieza destacada con número gigante.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">N°47</span>Esta semana</button>
+    <button class="pill"><span class="n">N°46</span>Hace 1 semana</button>
+    <button class="pill"><span class="n">N°45</span>Hace 2 semanas</button>
+    <button class="pill"><span class="n">N°44</span>Hace 3 semanas</button>
+    <button class="pill"><span class="n">▣</span>Archivo · 47 ed.</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 RADAR N°47 · 22 abr 26 · enviado 09:00</div>
+      <h3 class="ttl">RADAR N°47 · esta semana en el stack</h3>
+      <div class="stage">
+        <div class="rd-mast">
+          <div class="ti">RADAR <em>N°47</em></div>
+          <div class="meta">Lunes 22 abril 2026<br>SMC · brief semanal<br>13 destinatarios</div>
+        </div>
+        <div class="rd-cols">
+          <div class="rd-col">
+            <span class="rd-eb">▣ Patrones de la semana</span>
+            <div class="rd-item"><span class="hd">Curtain reveal en hero</span><span class="src">studio-mate · v9</span><span class="bd">Cortina vertical en lugar de fade. Usable en Kanki Drop launches.</span></div>
+            <div class="rd-item"><span class="hd">Number tick-up estilo terminal</span><span class="src">vercel.com · q1 redesign</span><span class="bd">Animación de números monoespaciada. Encaja en VOY breakdown.</span></div>
+            <div class="rd-item"><span class="hd">Stamped serif italic</span><span class="src">rauno.me · about</span><span class="bd">Itálica grande tipo timbre. Para títulos de RADAR y Marketing hero.</span></div>
+          </div>
+          <div class="rd-col">
+            <span class="rd-eb">▣ Esta semana se movió</span>
+            <div class="rd-item"><span class="hd">Kanki Drop 04 · lanza lunes</span><span class="src">interno · martín</span><span class="bd">12 piezas. Hero usa Pinch Zoom. Countdown desde sábado 00:00.</span></div>
+            <div class="rd-item"><span class="hd">Cerebro entrenó con 142 tickets nuevos</span><span class="src">interno · seba</span><span class="bd">RAG sobre fichas vet de InfoPet quedó estable.</span></div>
+            <div class="rd-item"><span class="hd">MeLi cambió p95 a 6.2s</span><span class="src">marketplace ops</span><span class="bd">Subimos timeouts a 10s. Quedan 3 retries colgados.</span></div>
+          </div>
+          <div class="rd-col">
+            <span class="rd-eb">▣ Bench externo · referencias</span>
+            <div class="rd-item"><span class="hd">linear.app · v6</span><span class="src">producto · 19 abr</span><span class="bd">Nuevo command-K con grouping por dominio. Adoptar en Intranet.</span></div>
+            <div class="rd-item"><span class="hd">stripe.com/atlas</span><span class="src">marketing · 18 abr</span><span class="bd">Scroll-storytelling con pinned numbers. Vale para Discovery output.</span></div>
+            <div class="rd-item"><span class="hd">once-ui.com</span><span class="src">design system · 21 abr</span><span class="bd">3D Tilt limpio sin librería. Replicable en CSS puro.</span></div>
+          </div>
+        </div>
+        <div class="rd-feat">
+          <span class="num">142</span>
+          <div class="copy">
+            <h5>Tickets resueltos esta semana · récord histórico</h5>
+            <p>Cerebro procesó 142 tickets de soporte, +12 vs semana pasada. 38 fueron de InfoPet (stock low), 22 de VOY (pricing edge), el resto reparto. Costo total IA: <b>$420k CLP</b>.</p>
+          </div>
+        </div>
+        <div class="rd-foot"><span>RADAR N°47 · escrito por Cerebro, editado por Sebastián</span><span>Próximo envío · lunes 29 abr 09:00</span></div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · RADAR</span></div>
+      <div class="dim"><span class="name">Columnas</span><div class="opts"><span class="opt">2</span><span class="opt on">3</span><span class="opt">4</span></div></div>
+      <div class="dim"><span class="name">Masthead</span><div class="opts"><span class="opt on">N° gigante</span><span class="opt">tipográfico</span></div></div>
+      <div class="dim"><span class="name">Pieza destacada</span><div class="opts"><span class="opt on">número gigante</span><span class="opt">quote</span><span class="opt">imagen</span></div></div>
+      <div class="dim"><span class="name">Color de eyebrows</span><div class="opts"><span class="opt on">oro</span><span class="opt">verde</span><span class="opt">navy</span></div></div>
+      <div class="dim"><span class="name">Densidad items</span><div class="opts"><span class="opt">2</span><span class="opt on">3</span><span class="opt">5</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Format del proyecto</span>
+        <span class="where">Email HTML + web mirror. Compilado <b>Cerebro</b> los domingos noche. Editado por Sebastián lunes 08:00. Enviado vía Resend a 13 destinatarios.</span>
+        <button class="btn">Abrir RADAR →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

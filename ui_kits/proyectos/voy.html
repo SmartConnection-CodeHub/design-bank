@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>VOY · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 380px; display:grid; grid-template-columns: 1fr 320px; gap: 16px; }
+  .voy-form { background: #fff; border-radius: 12px; padding: 22px; display:flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow-rest); }
+  .voy-form .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent-700); }
+  .voy-form h4 { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.025em; margin: 0; line-height: 1.05; }
+  .voy-field { display:flex; flex-direction:column; gap: 6px; }
+  .voy-field label { font: 600 11px var(--font-mono); letter-spacing: .04em; color: var(--fg-3); text-transform: uppercase; }
+  .voy-field input, .voy-field select { background: var(--bg-sunk); border: 1px solid var(--border-default); border-radius: 8px; padding: 12px 14px; font: 500 14px var(--font-sans); color: var(--fg-1); }
+  .voy-field input:focus, .voy-field select:focus { border-color: var(--smc-navy); outline: 2px solid rgba(27,47,78,.18); }
+  .voy-row { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .voy-chips { display:flex; gap: 6px; flex-wrap: wrap; }
+  .voy-chips span { font: 11.5px var(--font-mono); padding: 6px 12px; border-radius: 99px; background: var(--bg-sunk); border: 1px solid var(--border-default); cursor: pointer; }
+  .voy-chips span.on { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+  .voy-cta { background: var(--smc-navy); color: var(--smc-cream); padding: 16px; border-radius: 8px; font: 600 14px var(--font-sans); text-align: center; }
+
+  .voy-summary { background: var(--smc-navy-900); color: var(--smc-cream); border-radius: 12px; padding: 22px; display:flex; flex-direction:column; gap: 14px; }
+  .voy-summary .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent); }
+  .voy-line { display:flex; justify-content: space-between; align-items: baseline; font-size: 13px; }
+  .voy-line .l { color: var(--smc-cream-300); }
+  .voy-line .v { font: 600 13px var(--font-mono); color: var(--smc-cream); }
+  .voy-divider { height: 1px; background: var(--smc-navy-500); margin: 6px 0; }
+  .voy-total { font-family: var(--font-display); font-size: 44px; color: var(--smc-gold); line-height: 1; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+  .voy-total .sub { font: 11px var(--font-mono); color: var(--smc-cream-400); display:block; letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; }
+  .voy-pill { display:inline-flex; gap: 6px; align-items: center; font: 11px var(--font-mono); color: var(--smc-accent); background: rgba(0,229,176,.15); padding: 5px 10px; border-radius: 99px; align-self: flex-start; }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="VOY">
+<div class="hub">
+  <header class="hub-top"><div class="brand">VOY<span class="dot">.</span></div><div class="crumbs">proyectos · 02/13 · cotizador</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · cotizador / quote-builder</div>
+  <h1 class="hub-title">Una cotización honesta, en 60 segundos.</h1>
+  <p class="hub-strap">Quote-builder para viajes y seguros. Forma compacta a la izquierda, breakdown vivo a la derecha. Los números bailan cuando cambias algo. CTA siempre visible.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Cotizador home</button>
+    <button class="pill"><span class="n">02</span>Resultados / comparar</button>
+    <button class="pill"><span class="n">03</span>Detalle plan</button>
+    <button class="pill"><span class="n">04</span>Checkout pago</button>
+    <button class="pill"><span class="n">05</span>Confirmación</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 home · 4 inputs · breakdown live</div>
+      <h3 class="ttl">Cotizar viaje · Chile → Europa</h3>
+      <div class="stage">
+        <div class="voy-form">
+          <span class="eb">Cotización nueva · paso 1 / 3</span>
+          <h4>¿A dónde vas?</h4>
+          <div class="voy-field"><label>Destino</label><input value="París, Francia"></div>
+          <div class="voy-row">
+            <div class="voy-field"><label>Salida</label><input value="14 / 03 / 2026"></div>
+            <div class="voy-field"><label>Regreso</label><input value="28 / 03 / 2026"></div>
+          </div>
+          <div class="voy-field"><label>Viajeros</label>
+            <div class="voy-chips"><span class="on">1 adulto</span><span>2 adultos</span><span>+ niño</span><span>familia</span></div>
+          </div>
+          <div class="voy-field"><label>Cobertura</label>
+            <div class="voy-chips"><span>Básico</span><span class="on">Estándar</span><span>Premium</span></div>
+          </div>
+          <div class="voy-cta">Ver mi cotización →</div>
+        </div>
+        <div class="voy-summary">
+          <span class="eb">Tu cotización · vive</span>
+          <span class="voy-pill">● actualizado hace 0.4 s</span>
+          <div class="voy-line"><span class="l">Plan Estándar · 14 días</span><span class="v">$142.500</span></div>
+          <div class="voy-line"><span class="l">Cobertura médica USD 60k</span><span class="v">incl.</span></div>
+          <div class="voy-line"><span class="l">Equipaje extraviado</span><span class="v">incl.</span></div>
+          <div class="voy-line"><span class="l">Asistencia 24/7 ES</span><span class="v">incl.</span></div>
+          <div class="voy-divider"></div>
+          <div class="voy-line"><span class="l">Subtotal</span><span class="v">$142.500</span></div>
+          <div class="voy-line"><span class="l">Descuento web · 12%</span><span class="v" style="color: var(--smc-accent);">−$17.100</span></div>
+          <div class="voy-divider"></div>
+          <div>
+            <div class="voy-total">$125.400<span class="sub">CLP · 14 días · 1 adulto</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · cotizador</span></div>
+      <div class="dim"><span class="name">Layout</span><div class="opts"><span class="opt on">split 60/40</span><span class="opt">stacked</span></div></div>
+      <div class="dim"><span class="name">Pasos visibles</span><div class="opts"><span class="opt">1</span><span class="opt on">3</span><span class="opt">5</span></div></div>
+      <div class="dim"><span class="name">Breakdown</span><div class="opts"><span class="opt">oculto</span><span class="opt on">dark sidebar</span><span class="opt">light card</span></div></div>
+      <div class="dim"><span class="name">Animación números</span><div class="opts"><span class="opt">cut</span><span class="opt on">tick-up 200ms</span></div></div>
+      <div class="dim"><span class="name">Sticky CTA mobile</span><div class="opts"><span class="opt on">on</span><span class="opt">off</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">Next.js + Supabase + <b>@smc/ui</b>. Motor de pricing en edge functions. Webpay + Khipu integrados. Telemetría a Cerebro para audit trail.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

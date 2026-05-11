@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Typography Playground · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; letter-spacing: -0.012em; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 56px 48px; display: flex; flex-direction: column; gap: 48px; align-items: flex-start; background: var(--bg-warm); }
+
+.demo-text {
+  font-family: var(--t-family, var(--font-display));
+  font-size: var(--t-size, 96px);
+  font-weight: var(--t-weight, 600);
+  line-height: var(--t-lh, 1.0625);
+  letter-spacing: var(--t-ls, -0.022em);
+  color: var(--text);
+  text-align: var(--t-align, left);
+  font-style: var(--t-style, normal);
+  text-transform: var(--t-tt, none);
+  margin: 0;
+  max-width: 100%;
+  transition: all 280ms var(--ease-out);
+}
+.demo-text em.accent { font-style: normal; background: linear-gradient(135deg, #0066CC, #00E5B0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.specs-bar { display: flex; gap: 24px; padding: 16px 20px; background: rgba(0,0,0,.04); border-radius: 12px; font: 12px var(--font-mono); color: var(--text-muted); letter-spacing: -0.012em; flex-wrap: wrap; }
+.specs-bar strong { color: var(--text); font-weight: 600; }
+
+.compare-grid { display: grid; gap: 24px; width: 100%; }
+.compare-row { padding: 24px; background: var(--bg); border-radius: 14px; border: 1px solid var(--border-soft); }
+.compare-row .lbl { font: 11px var(--font-mono); color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+
+.scale-display { display: grid; gap: 4px; }
+.scale-line { display: grid; grid-template-columns: 80px 1fr; gap: 16px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--border-soft); }
+.scale-line .key { font: 11px var(--font-mono); color: var(--text-muted); letter-spacing: 0.04em; }
+.scale-line .value { font-family: var(--t-family, var(--font-display)); font-weight: 600; letter-spacing: -0.012em; line-height: 1; }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.ctrl-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; transition: 160ms; }
+.opt:hover { border-color: var(--accent); }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.slider { width: 100%; appearance: none; height: 4px; background: var(--border-soft); border-radius: 2px; outline: none; }
+.slider::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; transition: 160ms; }
+input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid var(--border-soft); border-radius: 8px; font: 13px var(--font-text); background: var(--bg); }
+
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; transition: 180ms; margin-top: auto; }
+.copy-btn:hover { background: #000; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+
+@media (max-width: 900px) {
+  .playground { grid-template-columns: 1fr; }
+  .controls { border-left: none; border-top: 1px solid var(--border-soft); }
+  .stage { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v13</a>
+  <h1>✍️ Typography Playground</h1>
+  <span class="meta">SF Pro stack · 3 families · 8 scales · Apple-grade</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage">
+    <div class="specs-bar">
+      <div><strong id="s-family">SF Pro Display</strong></div>
+      <div>size <strong id="s-size">96px</strong></div>
+      <div>weight <strong id="s-weight">600</strong></div>
+      <div>line <strong id="s-lh">1.0625</strong></div>
+      <div>spacing <strong id="s-ls">-0.022em</strong></div>
+    </div>
+
+    <h2 class="demo-text" id="demoText">
+      El banco que <em class="accent">funciona.</em><br>
+      De verdad.
+    </h2>
+
+    <div class="compare-grid">
+      <div class="compare-row">
+        <div class="lbl">SCALE PREVIEW · 8 STEPS</div>
+        <div class="scale-display">
+          <div class="scale-line"><span class="key">DISPLAY</span><span class="value" style="font-size:80px; line-height:0.95;">El banco.</span></div>
+          <div class="scale-line"><span class="key">H1 · 56</span><span class="value" style="font-size:56px; line-height:1.0625;">Cada control.</span></div>
+          <div class="scale-line"><span class="key">H2 · 40</span><span class="value" style="font-size:40px; line-height:1.1;">Cambia la app.</span></div>
+          <div class="scale-line"><span class="key">H3 · 24</span><span class="value" style="font-size:24px; line-height:1.2;">Calculator pattern.</span></div>
+          <div class="scale-line"><span class="key">H4 · 19</span><span class="value" style="font-size:19px; line-height:1.3;">Buttons, badges, inputs, cards.</span></div>
+          <div class="scale-line"><span class="key">BODY · 17</span><span class="value" style="font-size:17px; line-height:1.47; font-family:var(--font-text); font-weight:400;">El cuerpo del texto Apple usa 17px con line-height 25px (1.47).</span></div>
+          <div class="scale-line"><span class="key">SMALL · 14</span><span class="value" style="font-size:14px; line-height:1.43; font-family:var(--font-text); font-weight:400;">Captions, helper text, secondary labels.</span></div>
+          <div class="scale-line"><span class="key">EYEBROW · 12</span><span class="value" style="font-size:12px; line-height:1.4; font-family:var(--font-text); font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted);">FOUNDATIONS · TYPOGRAPHY</span></div>
+        </div>
+      </div>
+
+      <div class="compare-row">
+        <div class="lbl">FAMILY COMPARISON · STACK SMC</div>
+        <div class="scale-display">
+          <div class="scale-line"><span class="key">DISPLAY</span><span class="value" style="font-family:var(--font-display); font-size:32px;">SF Pro Display · 600</span></div>
+          <div class="scale-line"><span class="key">TEXT</span><span class="value" style="font-family:var(--font-text); font-size:17px; font-weight:400;">SF Pro Text · 400 · body workhorse</span></div>
+          <div class="scale-line"><span class="key">MONO</span><span class="value" style="font-family:var(--font-mono); font-size:13px;">SF Mono · code · labels · specs</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Texto</div>
+      <input type="text" id="textInput" value="El banco que funciona.">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Family <span class="val" id="v-family">display</span></div>
+      <div class="ctrl-row" data-ctrl="family">
+        <span class="opt active" data-val="display">Display</span>
+        <span class="opt" data-val="text">Text</span>
+        <span class="opt" data-val="mono">Mono</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Size <span class="val" id="v-size">96px</span></div>
+      <input type="range" class="slider" id="sizeSlider" min="14" max="144" value="96" step="2">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Weight <span class="val" id="v-weight">600</span></div>
+      <div class="ctrl-row" data-ctrl="weight">
+        <span class="opt" data-val="300">300</span>
+        <span class="opt" data-val="400">400</span>
+        <span class="opt" data-val="500">500</span>
+        <span class="opt active" data-val="600">600</span>
+        <span class="opt" data-val="700">700</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Line-height <span class="val" id="v-lh">1.0625</span></div>
+      <input type="range" class="slider" id="lhSlider" min="0.9" max="2" value="1.0625" step="0.0125">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Letter-spacing <span class="val" id="v-ls">-0.022em</span></div>
+      <input type="range" class="slider" id="lsSlider" min="-50" max="50" value="-22" step="2">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Align <span class="val" id="v-align">left</span></div>
+      <div class="ctrl-row" data-ctrl="align">
+        <span class="opt active" data-val="left">left</span>
+        <span class="opt" data-val="center">center</span>
+        <span class="opt" data-val="right">right</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Style</div>
+      <div class="ctrl-row" data-ctrl="style">
+        <span class="opt active" data-val="normal">normal</span>
+        <span class="opt" data-val="italic">italic</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Transform</div>
+      <div class="ctrl-row" data-ctrl="tt">
+        <span class="opt active" data-val="none">none</span>
+        <span class="opt" data-val="uppercase">UPPER</span>
+        <span class="opt" data-val="capitalize">Capital</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group" style="border-top:1px solid var(--border-soft); padding-top:12px;">
+      <div class="ctrl-label">Presets canon</div>
+      <div class="ctrl-row">
+        <span class="opt" onclick="preset('hero')">Hero 96</span>
+        <span class="opt" onclick="preset('h1')">H1 · 56</span>
+        <span class="opt" onclick="preset('h2')">H2 · 40</span>
+        <span class="opt" onclick="preset('body')">Body 17</span>
+        <span class="opt" onclick="preset('mono')">Mono 13</span>
+      </div>
+    </div>
+
+    <button class="copy-btn" onclick="copyCSS()">📋 Copiar CSS</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const FAMILIES = {
+  display: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif',
+  text: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif',
+  mono: '"SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace'
+};
+const FAM_LABEL = { display: 'SF Pro Display', text: 'SF Pro Text', mono: 'SF Mono' };
+
+const state = new Proxy({
+  text: 'El banco que funciona.',
+  family: 'display',
+  size: 96,
+  weight: 600,
+  lh: 1.0625,
+  ls: -22,
+  align: 'left',
+  style: 'normal',
+  tt: 'none'
+}, { set(t,k,v){ t[k]=v; render(); return true; } });
+
+const demo = document.getElementById('demoText');
+
+function render() {
+  demo.style.setProperty('--t-family', FAMILIES[state.family]);
+  demo.style.setProperty('--t-size', state.size + 'px');
+  demo.style.setProperty('--t-weight', state.weight);
+  demo.style.setProperty('--t-lh', state.lh);
+  demo.style.setProperty('--t-ls', (state.ls / 1000) + 'em');
+  demo.style.setProperty('--t-align', state.align);
+  demo.style.setProperty('--t-style', state.style);
+  demo.style.setProperty('--t-tt', state.tt);
+  demo.textContent = state.text;
+
+  document.getElementById('s-family').textContent = FAM_LABEL[state.family];
+  document.getElementById('s-size').textContent = state.size + 'px';
+  document.getElementById('s-weight').textContent = state.weight;
+  document.getElementById('s-lh').textContent = state.lh.toFixed(4);
+  document.getElementById('s-ls').textContent = (state.ls / 1000).toFixed(3) + 'em';
+
+  document.getElementById('v-family').textContent = state.family;
+  document.getElementById('v-size').textContent = state.size + 'px';
+  document.getElementById('v-weight').textContent = state.weight;
+  document.getElementById('v-lh').textContent = state.lh.toFixed(4);
+  document.getElementById('v-ls').textContent = (state.ls / 1000).toFixed(3) + 'em';
+  document.getElementById('v-align').textContent = state.align;
+
+  document.getElementById('sizeSlider').value = state.size;
+  document.getElementById('lhSlider').value = state.lh;
+  document.getElementById('lsSlider').value = state.ls;
+
+  document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+    const ctrl = row.dataset.ctrl;
+    row.querySelectorAll('.opt').forEach(o => o.classList.toggle('active', o.dataset.val == state[ctrl]));
+  });
+}
+
+document.getElementById('textInput').addEventListener('input', e => state.text = e.target.value);
+document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+  const ctrl = row.dataset.ctrl;
+  row.addEventListener('click', e => {
+    if (!e.target.classList.contains('opt')) return;
+    let v = e.target.dataset.val;
+    if (ctrl === 'weight') v = parseInt(v);
+    state[ctrl] = v;
+  });
+});
+document.getElementById('sizeSlider').addEventListener('input', e => state.size = parseInt(e.target.value));
+document.getElementById('lhSlider').addEventListener('input', e => state.lh = parseFloat(e.target.value));
+document.getElementById('lsSlider').addEventListener('input', e => state.ls = parseInt(e.target.value));
+
+const PRESETS = {
+  hero: { family: 'display', size: 96, weight: 600, lh: 1.0625, ls: -22 },
+  h1: { family: 'display', size: 56, weight: 600, lh: 1.0625, ls: -5 },
+  h2: { family: 'display', size: 40, weight: 600, lh: 1.1, ls: -7 },
+  body: { family: 'text', size: 17, weight: 400, lh: 1.47, ls: -22 },
+  mono: { family: 'mono', size: 13, weight: 500, lh: 1.4, ls: 0 }
+};
+function preset(name) {
+  const p = PRESETS[name];
+  Object.keys(p).forEach(k => state[k] = p[k]);
+}
+
+function copyCSS() {
+  const css = `font-family: ${FAMILIES[state.family]};\nfont-size: ${state.size}px;\nfont-weight: ${state.weight};\nline-height: ${state.lh};\nletter-spacing: ${(state.ls/1000).toFixed(3)}em;`;
+  navigator.clipboard.writeText(css);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copiado';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copiar CSS'; btn.classList.remove('copied'); }, 1600);
+}
+
+render();
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

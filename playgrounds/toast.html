@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Toast Notifications · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 40px; background: var(--bg-warm); position: relative; min-height: 720px; display: flex; flex-direction: column; gap: 24px; }
+
+.demo-area {
+  background: var(--bg); border: 1px solid var(--border-soft); border-radius: 18px;
+  flex: 1; position: relative; min-height: 420px; overflow: hidden;
+  background-image: linear-gradient(135deg, transparent 49%, rgba(0,0,0,.03) 49.5%, rgba(0,0,0,.03) 50.5%, transparent 51%);
+  background-size: 14px 14px;
+}
+.demo-label {
+  position: absolute; top: 14px; left: 18px;
+  font: 600 11px var(--font-mono); letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+
+.toast-container {
+  position: absolute; display: flex; flex-direction: column; gap: 10px;
+  z-index: 1; padding: 16px;
+}
+.toast-container.top-right { top: 0; right: 0; }
+.toast-container.top-left { top: 0; left: 0; }
+.toast-container.bottom-right { bottom: 0; right: 0; }
+.toast-container.bottom-left { bottom: 0; left: 0; }
+.toast-container.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+.toast {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg); border: 1px solid var(--border-soft);
+  border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.10);
+  min-width: 280px; max-width: 380px;
+  animation: toast-in 320ms var(--ease-spring);
+  position: relative;
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.toast .ic-dot {
+  width: 8px; height: 8px; border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
+}
+.toast.ok .ic-dot { background: #00E5B0; color: #00E5B0; }
+.toast.warn .ic-dot { background: #C49A3A; color: #C49A3A; }
+.toast.err .ic-dot { background: #FF3B30; color: #FF3B30; }
+.toast.info .ic-dot { background: #0066CC; color: #0066CC; }
+.toast .content { flex: 1; }
+.toast .title { font: 600 14px var(--font-text); margin-bottom: 2px; letter-spacing: -0.012em; }
+.toast .desc { font: 13px var(--font-text); color: var(--text-muted); line-height: 1.4; }
+.toast .close {
+  background: transparent; border: none; cursor: pointer;
+  color: var(--text-muted); font: 18px var(--font-text); padding: 0;
+  width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+}
+.toast .close:hover { color: var(--text); }
+
+.toast-progress {
+  position: absolute; bottom: 0; left: 0; height: 2px;
+  background: currentColor; border-radius: 0 0 12px 12px;
+  animation: progress-fill var(--dur, 4s) linear forwards;
+}
+@keyframes progress-fill {
+  from { width: 100%; }
+  to { width: 0; }
+}
+
+.toast.solid.ok { background: linear-gradient(135deg, #00E5B0, #009E78); color: white; border: none; }
+.toast.solid.warn { background: linear-gradient(135deg, #C49A3A, #8A6B23); color: white; border: none; }
+.toast.solid.err { background: linear-gradient(135deg, #FF3B30, #B83A2E); color: white; border: none; }
+.toast.solid.info { background: linear-gradient(135deg, #0066CC, #003D7A); color: white; border: none; }
+.toast.solid .desc { color: rgba(255,255,255,.85); }
+.toast.solid .ic-dot { background: white; color: white; }
+.toast.solid .close { color: rgba(255,255,255,.6); }
+
+.toast.dark { background: #1B2F4E; color: white; border: none; }
+.toast.dark .desc { color: rgba(255,255,255,.7); }
+.toast.dark .close { color: rgba(255,255,255,.5); }
+
+.trigger-row {
+  display: flex; gap: 8px; flex-wrap: wrap; padding: 16px;
+  background: var(--bg); border: 1px solid var(--border-soft); border-radius: 12px;
+}
+.trigger-btn {
+  padding: 8px 14px; border: 1px solid var(--border-soft);
+  background: var(--bg); border-radius: 8px; cursor: pointer;
+  font: 500 13px var(--font-text); letter-spacing: -0.012em;
+  display: flex; align-items: center; gap: 6px;
+  transition: 180ms;
+}
+.trigger-btn:hover { border-color: var(--text); transform: translateY(-1px); }
+.trigger-btn .dot { width: 6px; height: 6px; border-radius: 50%; }
+.trigger-btn.ok .dot { background: #00E5B0; }
+.trigger-btn.warn .dot { background: #C49A3A; }
+.trigger-btn.err .dot { background: #FF3B30; }
+.trigger-btn.info .dot { background: #0066CC; }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.ctrl-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; transition: 160ms; }
+.opt:hover { border-color: var(--accent); }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.slider { width: 100%; appearance: none; height: 4px; background: var(--border-soft); border-radius: 2px; outline: none; }
+.slider::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; margin-top: auto; transition: 180ms; }
+.copy-btn:hover { background: #000; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+
+@media (max-width: 900px) {
+  .playground { grid-template-columns: 1fr; }
+  .controls { border-left: none; border-top: 1px solid var(--border-soft); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v14</a>
+  <h1>🔔 Toast Notifications</h1>
+  <span class="meta">4 statuses · 5 positions · auto-dismiss · 3 variants · progress bar</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage">
+
+    <div class="demo-area">
+      <div class="demo-label">▸ Click trigger buttons or wait for auto-spawn · position changes below</div>
+      <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <div class="trigger-row">
+      <button class="trigger-btn ok" onclick="spawn('ok')"><span class="dot"></span> Spawn OK</button>
+      <button class="trigger-btn warn" onclick="spawn('warn')"><span class="dot"></span> Spawn Warning</button>
+      <button class="trigger-btn err" onclick="spawn('err')"><span class="dot"></span> Spawn Error</button>
+      <button class="trigger-btn info" onclick="spawn('info')"><span class="dot"></span> Spawn Info</button>
+      <button class="trigger-btn" onclick="spawnAll()" style="margin-left:auto;">⚡ Spawn all 4</button>
+      <button class="trigger-btn" onclick="clearAll()">🗑 Clear</button>
+    </div>
+
+    <div style="padding: 14px 16px; background: var(--text); color: var(--bg-warm); border-radius: 12px; font: 12px var(--font-mono); line-height: 1.6;">
+      <div style="font-weight:600; margin-bottom:6px; color:white;">SMC TOAST EXAMPLES · production</div>
+      <div>✓ <span style="color:#00E5B0;">Deploy completado</span> · intranet.smconnection.cl en 47s</div>
+      <div>⚠ <span style="color:#FFD60A;">Sync pendiente</span> · Bsale → Jumpseller hace 2h</div>
+      <div>✗ <span style="color:#FF6B6B;">Token expirado</span> · Re-autenticar Mercado Libre</div>
+      <div>ℹ <span style="color:#7AB0EA;">RADAR Brief listo</span> · 5 alertas · 12 oportunidades</div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Variant <span class="val" id="v-variant">soft</span></div>
+      <div class="ctrl-row" data-ctrl="variant">
+        <span class="opt active" data-val="soft">soft</span>
+        <span class="opt" data-val="solid">solid</span>
+        <span class="opt" data-val="dark">dark</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Position <span class="val" id="v-pos">top-right</span></div>
+      <div class="ctrl-row" data-ctrl="position">
+        <span class="opt" data-val="top-left">top-left</span>
+        <span class="opt active" data-val="top-right">top-right</span>
+        <span class="opt" data-val="center">center</span>
+        <span class="opt" data-val="bottom-left">bot-left</span>
+        <span class="opt" data-val="bottom-right">bot-right</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Auto-dismiss <span class="val" id="v-dismiss">4s</span></div>
+      <input type="range" class="slider" id="dismissSlider" min="0" max="10" step="1" value="4">
+      <div style="font:10px var(--font-mono); color:var(--text-muted); margin-top:4px;">0 = no auto-dismiss · manual close only</div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Show progress bar</div>
+      <div class="ctrl-row" data-ctrl="progress">
+        <span class="opt active" data-val="on">on</span>
+        <span class="opt" data-val="off">off</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Auto-spawn</div>
+      <div class="ctrl-row" data-ctrl="auto">
+        <span class="opt active" data-val="off">off</span>
+        <span class="opt" data-val="3s">3s</span>
+        <span class="opt" data-val="6s">6s</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group" style="border-top:1px solid var(--border-soft); padding-top:14px;">
+      <div class="ctrl-label">Test rápido · SMC realistic</div>
+      <div class="ctrl-row">
+        <span class="opt" onclick="testSMC('deploy')">Deploy ok</span>
+        <span class="opt" onclick="testSMC('sync')">Sync pending</span>
+        <span class="opt" onclick="testSMC('token')">Token err</span>
+        <span class="opt" onclick="testSMC('radar')">RADAR ready</span>
+      </div>
+    </div>
+
+    <button class="copy-btn" onclick="copyAPI()">📋 Copy toast.show() API</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const state = {
+  variant: 'soft',
+  position: 'top-right',
+  dismiss: 4,
+  progress: 'on',
+  auto: 'off'
+};
+
+const SMC_MESSAGES = {
+  ok: { title: 'Deploy completado', desc: 'intranet.smconnection.cl en 47s · CloudFront cache invalidado' },
+  warn: { title: 'Sync pendiente', desc: 'Bsale → Jumpseller hace 2h · 14 productos en cola' },
+  err: { title: 'Token expirado', desc: 'Mercado Libre OAuth · re-autenticar en panel' },
+  info: { title: 'RADAR Brief listo', desc: '5 alertas críticas · 12 oportunidades mercado · lunes 10am' }
+};
+
+const SMC_VARIANTS = {
+  deploy: 'ok',
+  sync: 'warn',
+  token: 'err',
+  radar: 'info'
+};
+
+let toastId = 0;
+const container = document.getElementById('toastContainer');
+
+function spawn(severity) {
+  const id = ++toastId;
+  const msg = SMC_MESSAGES[severity];
+  const t = document.createElement('div');
+  t.className = 'toast ' + severity + (state.variant !== 'soft' ? ' ' + state.variant : '');
+  t.dataset.id = id;
+  t.innerHTML =
+    '<span class="ic-dot"></span>' +
+    '<div class="content">' +
+    '<div class="title">' + msg.title + '</div>' +
+    '<div class="desc">' + msg.desc + '</div>' +
+    '</div>' +
+    '<button class="close" onclick="dismiss(' + id + ')">×</button>' +
+    (state.progress === 'on' && state.dismiss > 0 ? '<div class="toast-progress" style="--dur: ' + state.dismiss + 's;"></div>' : '');
+  container.appendChild(t);
+
+  if (state.dismiss > 0) {
+    setTimeout(() => dismiss(id), state.dismiss * 1000);
+  }
+}
+
+function spawnAll() {
+  ['ok','warn','err','info'].forEach((s, i) => {
+    setTimeout(() => spawn(s), i * 200);
+  });
+}
+
+function clearAll() {
+  container.innerHTML = '';
+}
+
+function dismiss(id) {
+  const t = container.querySelector('[data-id="' + id + '"]');
+  if (!t) return;
+  t.style.animation = 'toast-in 240ms reverse';
+  setTimeout(() => t.remove(), 240);
+}
+
+function testSMC(key) {
+  spawn(SMC_VARIANTS[key]);
+}
+
+function updatePosition() {
+  container.className = 'toast-container ' + state.position;
+}
+
+document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+  row.addEventListener('click', e => {
+    if (!e.target.classList.contains('opt')) return;
+    row.querySelectorAll('.opt').forEach(o => o.classList.remove('active'));
+    e.target.classList.add('active');
+    const ctrl = row.dataset.ctrl;
+    state[ctrl] = e.target.dataset.val;
+    document.getElementById('v-' + (ctrl === 'position' ? 'pos' : ctrl)).textContent = state[ctrl];
+    if (ctrl === 'position') updatePosition();
+    if (ctrl === 'auto') setupAuto();
+  });
+});
+
+document.getElementById('dismissSlider').addEventListener('input', e => {
+  state.dismiss = parseInt(e.target.value);
+  document.getElementById('v-dismiss').textContent = state.dismiss + 's';
+});
+
+let autoTimer = null;
+function setupAuto() {
+  if (autoTimer) clearInterval(autoTimer);
+  if (state.auto === 'off') return;
+  const interval = state.auto === '3s' ? 3000 : 6000;
+  autoTimer = setInterval(() => {
+    const types = ['ok','warn','err','info'];
+    spawn(types[Math.floor(Math.random() * types.length)]);
+  }, interval);
+}
+
+function copyAPI() {
+  const code =
+'// SMC toast API · @smc/ui\n' +
+'import { toast } from "@smc/ui";\n\n' +
+'toast.success("Deploy completado", {\n' +
+'  description: "intranet.smconnection.cl en 47s",\n' +
+'  position: "' + state.position + '",\n' +
+'  duration: ' + (state.dismiss * 1000) + ',\n' +
+'  variant: "' + state.variant + '",\n' +
+'  progressBar: ' + (state.progress === 'on') + '\n' +
+'});\n\n' +
+'// Otros métodos:\n' +
+'// toast.warning(title, opts)\n' +
+'// toast.error(title, opts)\n' +
+'// toast.info(title, opts)\n' +
+'// toast.dismiss(id)\n' +
+'// toast.clearAll()';
+  navigator.clipboard.writeText(code);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ API copiada';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copy toast.show() API'; btn.classList.remove('copied'); }, 1800);
+}
+
+// Spawn initial demo
+setTimeout(() => spawnAll(), 400);
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

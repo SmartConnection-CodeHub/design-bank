@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Badges & Filter pills · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 40px 32px; background: var(--bg-warm); display: flex; flex-direction: column; gap: 28px; }
+
+.lbl-row { font: 600 11px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.badge-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 18px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 14px; align-items: center; }
+
+.b {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: var(--b-py, 4px) var(--b-px, 10px);
+  border-radius: var(--b-radius, 980px);
+  font: var(--b-fw, 500) var(--b-fs, 12px) var(--font-text);
+  letter-spacing: -0.012em;
+  transition: 180ms var(--ease-out);
+  cursor: default;
+  border: 1px solid transparent;
+}
+.b::before {
+  content: ''; width: var(--b-dot, 6px); height: var(--b-dot, 6px);
+  border-radius: 50%; display: var(--b-show-dot, inline-block);
+}
+
+/* Tone variants */
+.b.ok { background: rgba(0, 229, 176, 0.15); color: #009E78; }
+.b.ok::before { background: #00E5B0; }
+.b.warn { background: rgba(196, 154, 58, 0.18); color: #8A6B23; }
+.b.warn::before { background: #C49A3A; }
+.b.err { background: rgba(255, 59, 48, 0.15); color: #B83A2E; }
+.b.err::before { background: #FF3B30; }
+.b.info { background: rgba(0, 102, 204, 0.12); color: #0066CC; }
+.b.info::before { background: #0066CC; }
+.b.dark { background: #1B2F4E; color: #F5F5F7; }
+.b.dark::before { background: #00E5B0; box-shadow: 0 0 8px rgba(0,229,176,.6); }
+.b.gold { background: #C49A3A; color: #1B2F4E; }
+.b.gold::before { background: #1B2F4E; }
+.b.muted { background: #F5F5F7; color: #6E6E73; }
+.b.muted::before { background: #6E6E73; }
+
+.b.solid.ok { background: #00E5B0; color: #003D2E; }
+.b.solid.warn { background: #C49A3A; color: white; }
+.b.solid.err { background: #FF3B30; color: white; }
+.b.solid.info { background: #0066CC; color: white; }
+.b.solid.ok::before, .b.solid.warn::before, .b.solid.err::before, .b.solid.info::before { background: rgba(255,255,255,0.9); }
+
+.b.outline.ok { background: transparent; color: #009E78; border-color: #00E5B0; }
+.b.outline.warn { background: transparent; color: #8A6B23; border-color: #C49A3A; }
+.b.outline.err { background: transparent; color: #FF3B30; border-color: #FF3B30; }
+.b.outline.info { background: transparent; color: #0066CC; border-color: #0066CC; }
+
+/* Filter pills */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px;
+  border-radius: 980px;
+  font: 500 12.5px var(--font-text);
+  letter-spacing: -0.012em;
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border-soft);
+  cursor: pointer;
+  transition: 180ms var(--ease-out);
+}
+.pill:hover { border-color: var(--text); }
+.pill.active { background: var(--text); color: white; border-color: transparent; }
+.pill.accent.active { background: #0066CC; }
+.pill.smc.active { background: #00E5B0; color: #003D2E; }
+.pill.gold.active { background: #C49A3A; color: #1B2F4E; }
+.pill .count { font: 10px var(--font-mono); opacity: 0.7; }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.ctrl-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; transition: 160ms; }
+.opt:hover { border-color: var(--accent); }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.slider { width: 100%; appearance: none; height: 4px; background: var(--border-soft); border-radius: 2px; outline: none; }
+.slider::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid var(--border-soft); border-radius: 8px; font: 13px var(--font-text); background: var(--bg); }
+
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; margin-top: auto; transition: 180ms; }
+.copy-btn:hover { background: #000; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+
+.code-block { background: var(--text); color: var(--bg-warm); padding: 12px 14px; border-radius: 10px; font: 11px var(--font-mono); line-height: 1.6; overflow-x: auto; }
+.code-block .tag { color: #FFD60A; }
+.code-block .attr { color: #00E5B0; }
+.code-block .str { color: #F5F5F7; }
+
+@media (max-width: 900px) {
+  .playground { grid-template-columns: 1fr; }
+  .controls { border-left: none; border-top: 1px solid var(--border-soft); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v14</a>
+  <h1>🏷️ Badges &amp; Filter pills</h1>
+  <span class="meta">Status reales SMC · Conectado · Sync · Token expirado · 3 tones · 5 sizes</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage">
+
+    <div>
+      <div class="lbl-row">STATUS · estados reales Intranet SMC</div>
+      <div class="badge-row" id="statusRow">
+        <span class="b ok" id="b1">Conectado</span>
+        <span class="b warn">Sync pendiente</span>
+        <span class="b err">Token expirado</span>
+        <span class="b info">Beta</span>
+        <span class="b dark">Plan Pro</span>
+        <span class="b gold">⭐ Destacado</span>
+        <span class="b muted">Free</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="lbl-row">FILTER PILLS · navegación tipo Intranet · Marketing</div>
+      <div class="badge-row">
+        <span class="pill active">Todos<span class="count">13</span></span>
+        <span class="pill">E-commerce<span class="count">4</span></span>
+        <span class="pill">Integraciones<span class="count">5</span></span>
+        <span class="pill">IA<span class="count">3</span></span>
+        <span class="pill gold active">⭐ Destacados<span class="count">2</span></span>
+        <span class="pill">+ Más</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="lbl-row">CASOS REALES SMC · uso en producción</div>
+      <div class="badge-row" style="flex-direction:column; align-items:flex-start; gap:14px;">
+
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font:600 14px var(--font-text);">Bsale API</span>
+          <span class="b ok">Conectado</span>
+          <span style="font:11px var(--font-mono); color:var(--text-muted);">v0.4.2 · 2.3k req/día</span>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font:600 14px var(--font-text);">Jumpseller webhook</span>
+          <span class="b warn">Sync pendiente</span>
+          <span style="font:11px var(--font-mono); color:var(--text-muted);">último ok hace 2h</span>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font:600 14px var(--font-text);">Mercado Libre OAuth</span>
+          <span class="b err">Token expirado</span>
+          <span style="font:11px var(--font-mono); color:var(--text-muted);">re-autenticar →</span>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font:600 14px var(--font-text);">RADAR Brief</span>
+          <span class="b info">Beta</span>
+          <span class="b dark" style="font-size:11px;">Plan Pro</span>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font:600 14px var(--font-text);">Hoku IA</span>
+          <span class="b" style="background: linear-gradient(135deg, #00E5B0, #0066CC); color: white;">✨ Premium</span>
+          <span class="b muted">Free tier disponible</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <div class="lbl-row">PREVIEW · tu badge custom · live</div>
+      <div class="badge-row">
+        <span class="b" id="customBadge" style="--b-py: 4px; --b-px: 10px; --b-fs: 12px; --b-fw: 500; --b-radius: 980px; --b-dot: 6px;">
+          <span id="customText">Conectado</span>
+        </span>
+        <span style="font:11px var(--font-mono); color:var(--text-muted); margin-left:auto;" id="specsLine">soft · sm · pill · 12px · 500 · dot:6</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="lbl-row">CÓDIGO · JSX listo para @smc/ui</div>
+      <div class="code-block" id="codeBlock"></div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Label</div>
+      <input type="text" id="labelInput" value="Conectado">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Tone <span class="val" id="v-tone">ok</span></div>
+      <div class="ctrl-row" data-ctrl="tone">
+        <span class="opt active" data-val="ok">ok</span>
+        <span class="opt" data-val="warn">warn</span>
+        <span class="opt" data-val="err">err</span>
+        <span class="opt" data-val="info">info</span>
+        <span class="opt" data-val="dark">dark</span>
+        <span class="opt" data-val="gold">gold</span>
+        <span class="opt" data-val="muted">muted</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Variant <span class="val" id="v-variant">soft</span></div>
+      <div class="ctrl-row" data-ctrl="variant">
+        <span class="opt active" data-val="soft">soft</span>
+        <span class="opt" data-val="solid">solid</span>
+        <span class="opt" data-val="outline">outline</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Size <span class="val" id="v-size">sm</span></div>
+      <div class="ctrl-row" data-ctrl="size">
+        <span class="opt" data-val="xs">xs</span>
+        <span class="opt active" data-val="sm">sm</span>
+        <span class="opt" data-val="md">md</span>
+        <span class="opt" data-val="lg">lg</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Shape <span class="val" id="v-shape">pill</span></div>
+      <div class="ctrl-row" data-ctrl="shape">
+        <span class="opt active" data-val="pill">pill</span>
+        <span class="opt" data-val="rounded">rounded</span>
+        <span class="opt" data-val="square">square</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Weight <span class="val" id="v-fw">500</span></div>
+      <div class="ctrl-row" data-ctrl="fw">
+        <span class="opt" data-val="400">400</span>
+        <span class="opt active" data-val="500">500</span>
+        <span class="opt" data-val="600">600</span>
+        <span class="opt" data-val="700">700</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Dot indicator</div>
+      <div class="ctrl-row" data-ctrl="dot">
+        <span class="opt active" data-val="on">on</span>
+        <span class="opt" data-val="off">off</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group" style="border-top:1px solid var(--border-soft); padding-top:14px;">
+      <div class="ctrl-label">Presets SMC</div>
+      <div class="ctrl-row">
+        <span class="opt" onclick="preset('connected')">Conectado</span>
+        <span class="opt" onclick="preset('sync')">Sync</span>
+        <span class="opt" onclick="preset('expired')">Expirado</span>
+        <span class="opt" onclick="preset('pro')">Plan Pro</span>
+        <span class="opt" onclick="preset('star')">⭐ Star</span>
+      </div>
+    </div>
+
+    <button class="copy-btn" onclick="copyJSX()">📋 Copy JSX</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const SIZE_CFG = {
+  xs: { py:'2px', px:'8px', fs:'11px', dot:'5px' },
+  sm: { py:'4px', px:'10px', fs:'12px', dot:'6px' },
+  md: { py:'6px', px:'14px', fs:'13px', dot:'7px' },
+  lg: { py:'8px', px:'18px', fs:'14px', dot:'8px' }
+};
+const SHAPE_RADIUS = { pill:'980px', rounded:'8px', square:'2px' };
+
+const state = new Proxy({
+  label: 'Conectado',
+  tone: 'ok',
+  variant: 'soft',
+  size: 'sm',
+  shape: 'pill',
+  fw: 500,
+  dot: 'on'
+}, { set(t,k,v){ t[k]=v; render(); return true; } });
+
+const badge = document.getElementById('customBadge');
+const text = document.getElementById('customText');
+
+function render() {
+  badge.className = 'b ' + state.tone + (state.variant !== 'soft' ? ' ' + state.variant : '');
+  badge.style.setProperty('--b-py', SIZE_CFG[state.size].py);
+  badge.style.setProperty('--b-px', SIZE_CFG[state.size].px);
+  badge.style.setProperty('--b-fs', SIZE_CFG[state.size].fs);
+  badge.style.setProperty('--b-dot', SIZE_CFG[state.size].dot);
+  badge.style.setProperty('--b-radius', SHAPE_RADIUS[state.shape]);
+  badge.style.setProperty('--b-fw', state.fw);
+  badge.style.setProperty('--b-show-dot', state.dot === 'on' ? 'inline-block' : 'none');
+  text.textContent = state.label;
+
+  document.getElementById('v-tone').textContent = state.tone;
+  document.getElementById('v-variant').textContent = state.variant;
+  document.getElementById('v-size').textContent = state.size;
+  document.getElementById('v-shape').textContent = state.shape;
+  document.getElementById('v-fw').textContent = state.fw;
+  document.getElementById('specsLine').textContent = state.variant + ' · ' + state.size + ' · ' + state.shape + ' · ' + SIZE_CFG[state.size].fs + ' · ' + state.fw + ' · dot:' + (state.dot === 'on' ? SIZE_CFG[state.size].dot : 'off');
+
+  document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+    const ctrl = row.dataset.ctrl;
+    row.querySelectorAll('.opt').forEach(o => o.classList.toggle('active', o.dataset.val == state[ctrl]));
+  });
+
+  document.getElementById('codeBlock').innerHTML =
+    '<span class="tag">&lt;Badge</span>\n' +
+    '  <span class="attr">tone</span>=<span class="str">"' + state.tone + '"</span>\n' +
+    (state.variant !== 'soft' ? '  <span class="attr">variant</span>=<span class="str">"' + state.variant + '"</span>\n' : '') +
+    (state.size !== 'sm' ? '  <span class="attr">size</span>=<span class="str">"' + state.size + '"</span>\n' : '') +
+    (state.shape !== 'pill' ? '  <span class="attr">shape</span>=<span class="str">"' + state.shape + '"</span>\n' : '') +
+    (state.dot === 'off' ? '  <span class="attr">hideDot</span>\n' : '') +
+    '<span class="tag">&gt;</span>\n' +
+    '  ' + state.label + '\n' +
+    '<span class="tag">&lt;/Badge&gt;</span>';
+}
+
+document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+  row.addEventListener('click', e => {
+    if (!e.target.classList.contains('opt')) return;
+    let v = e.target.dataset.val;
+    if (row.dataset.ctrl === 'fw') v = parseInt(v);
+    state[row.dataset.ctrl] = v;
+  });
+});
+document.getElementById('labelInput').addEventListener('input', e => state.label = e.target.value);
+
+const PRESETS = {
+  connected: { label:'Conectado', tone:'ok', variant:'soft', size:'sm', shape:'pill', fw:500, dot:'on' },
+  sync: { label:'Sync pendiente', tone:'warn', variant:'soft', size:'sm', shape:'pill', fw:500, dot:'on' },
+  expired: { label:'Token expirado', tone:'err', variant:'soft', size:'sm', shape:'pill', fw:500, dot:'on' },
+  pro: { label:'Plan Pro', tone:'dark', variant:'soft', size:'sm', shape:'pill', fw:500, dot:'on' },
+  star: { label:'⭐ Destacado', tone:'gold', variant:'soft', size:'md', shape:'pill', fw:600, dot:'off' }
+};
+function preset(name) {
+  const p = PRESETS[name];
+  Object.keys(p).forEach(k => state[k] = p[k]);
+  document.getElementById('labelInput').value = p.label;
+}
+
+function copyJSX() {
+  const code = '<Badge\n  tone="' + state.tone + '"' +
+    (state.variant !== 'soft' ? '\n  variant="' + state.variant + '"' : '') +
+    (state.size !== 'sm' ? '\n  size="' + state.size + '"' : '') +
+    (state.shape !== 'pill' ? '\n  shape="' + state.shape + '"' : '') +
+    (state.dot === 'off' ? '\n  hideDot' : '') +
+    '\n>\n  ' + state.label + '\n</Badge>';
+  navigator.clipboard.writeText(code);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copiado';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copy JSX'; btn.classList.remove('copied'); }, 1600);
+}
+
+render();
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Radius</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 20px 24px; display:grid; grid-template-columns: repeat(6,1fr); gap: 14px; }
+  .demo { display:flex; flex-direction:column; align-items:center; gap: 8px; }
+  .box { width: 72px; height: 72px; background: var(--bg-elevated); border: 1px solid var(--border-subtle); box-shadow: var(--shadow-rest); display:grid; place-items:center; font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); }
+  .nm { font-family: var(--font-mono); font-size: 11px; color: var(--fg-1); font-weight: 600; }
+  .vl { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); }
+  .pill { background: var(--smc-navy); color: var(--smc-cream); padding: 6px 14px; border-radius: 100px; font-size: 12px; }
+</style></head>
+<body>
+  <div class="demo"><div class="box" style="border-radius:4px">4</div><div class="nm">xs</div><div class="vl">4 px</div></div>
+  <div class="demo"><div class="box" style="border-radius:6px">6</div><div class="nm">sm</div><div class="vl">6 px</div></div>
+  <div class="demo"><div class="box" style="border-radius:10px;outline:2px solid var(--smc-accent);outline-offset:2px">10</div><div class="nm">md ★</div><div class="vl">CARDS · 10 px</div></div>
+  <div class="demo"><div class="box" style="border-radius:14px">14</div><div class="nm">lg</div><div class="vl">14 px</div></div>
+  <div class="demo"><div class="box" style="border-radius:100px;width:120px;height:44px;padding:0 14px;outline:2px solid var(--smc-accent);outline-offset:2px"><span class="pill" style="background:transparent;color:var(--fg-1);padding:0">filtro</span></div><div class="nm">pill ★</div><div class="vl">FILTROS · 100 px</div></div>
+  <div class="demo"><div class="box" style="border-radius:9999px;width:48px;height:48px"></div><div class="nm">full</div><div class="vl">avatars · dots</div></div>
+</body></html>

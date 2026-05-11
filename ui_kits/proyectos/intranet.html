@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Intranet · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--smc-navy-900); border-radius: 10px; padding: 18px; min-height: 380px; display:grid; grid-template-columns: 220px 1fr; gap: 14px; color: var(--smc-cream); }
+  .in-side { background: rgba(255,255,255,.03); border-radius: 10px; padding: 14px; display:flex; flex-direction:column; gap: 4px; border: 1px solid rgba(255,255,255,.06); }
+  .in-side .brand { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.025em; margin-bottom: 12px; }
+  .in-side .brand .dot { color: var(--smc-accent); }
+  .in-side .group { font: 600 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-cream-400); margin: 10px 0 4px; }
+  .in-side a { font-size: 12.5px; color: var(--smc-cream-300); padding: 7px 10px; border-radius: 6px; display:flex; gap: 8px; align-items: center; }
+  .in-side a.on { background: rgba(0,229,176,.12); color: var(--smc-accent); }
+  .in-side a .num { margin-left: auto; font: 10px var(--font-mono); opacity: .7; }
+
+  .in-main { display:flex; flex-direction:column; gap: 14px; }
+  .in-h { display:flex; justify-content: space-between; align-items: baseline; }
+  .in-h h4 { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.025em; margin: 0; color: var(--smc-cream); }
+  .in-h .crumb { font: 11px var(--font-mono); color: var(--smc-cream-400); }
+  .in-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .in-stat { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 8px; padding: 14px; display:flex; flex-direction:column; gap: 6px; }
+  .in-stat .lbl { font: 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-cream-400); }
+  .in-stat .num { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .in-stat .delta { font: 10px var(--font-mono); color: var(--smc-accent); }
+  .in-stat.gold .num { color: var(--smc-gold); }
+
+  .in-table { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; overflow: hidden; flex: 1; }
+  .in-table-h { padding: 10px 14px; display:grid; grid-template-columns: 1fr 100px 100px 80px; gap: 12px; font: 9px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--smc-cream-400); border-bottom: 1px solid rgba(255,255,255,.06); }
+  .in-row { padding: 11px 14px; display:grid; grid-template-columns: 1fr 100px 100px 80px; gap: 12px; align-items: center; font-size: 12.5px; border-bottom: 1px solid rgba(255,255,255,.04); }
+  .in-row .nm { color: var(--smc-cream); font-weight: 500; }
+  .in-row .nm small { display:block; color: var(--smc-cream-400); font: 10px var(--font-mono); }
+  .in-row .v { font: 12px var(--font-mono); color: var(--smc-cream-300); }
+  .in-row .badge { font: 9px var(--font-mono); padding: 3px 8px; border-radius: 99px; text-align: center; letter-spacing: .04em; text-transform: uppercase; }
+  .in-row .badge.ok { background: rgba(0,229,176,.18); color: var(--smc-accent); }
+  .in-row .badge.warn { background: rgba(220,188,117,.18); color: var(--smc-gold); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Intranet">
+<div class="hub">
+  <header class="hub-top"><div class="brand">Intranet<span class="dot">.</span></div><div class="crumbs">proyectos · 04/13 · Next.js + Supabase</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · interno · panel federado</div>
+  <h1 class="hub-title">El panel donde Sebastián mira los 13.</h1>
+  <p class="hub-strap">Dashboard interno dark. Listado vivo de los 13 proyectos, uptime, tickets pendientes, gasto IA del mes. Built para una sola persona en su escritorio.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Panel principal</button>
+    <button class="pill"><span class="n">02</span>Proyecto detalle</button>
+    <button class="pill"><span class="n">03</span>Logs y alertas</button>
+    <button class="pill"><span class="n">04</span>Equipo y permisos</button>
+    <button class="pill"><span class="n">05</span>Configuración stack</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene dark">
+      <div class="scene-h"><span class="live"></span>variant · 01 panel · dark · 13 servicios live</div>
+      <h3 class="ttl" style="color: var(--smc-cream);">Hola, Sebastián. Está todo bien.</h3>
+      <div class="stage">
+        <nav class="in-side">
+          <div class="brand">SMC<span class="dot">.</span></div>
+          <span class="group">Workspace</span>
+          <a class="on">⬡ Panel<span class="num">13</span></a>
+          <a>○ Proyectos<span class="num">13</span></a>
+          <a>○ Tickets<span class="num">04</span></a>
+          <a>○ RADAR feed</a>
+          <span class="group">Agentes IA</span>
+          <a>◆ Cerebro<span class="num">live</span></a>
+          <a>◆ Hoku</a>
+          <a>◆ Mentor</a>
+          <span class="group">Infra</span>
+          <a>⌬ Stack health</a>
+          <a>⌬ Costos IA</a>
+        </nav>
+        <div class="in-main">
+          <div class="in-h"><h4>Panel · esta semana</h4><span class="crumb">workspace / panel · actualizado hace 12 s</span></div>
+          <div class="in-grid">
+            <div class="in-stat"><span class="lbl">Uptime federado</span><span class="num">99.97<small style="font-size:18px">%</small></span><span class="delta">↑ 0.04 vs L7</span></div>
+            <div class="in-stat"><span class="lbl">Tickets resueltos</span><span class="num">142</span><span class="delta">↑ 12 vs L7</span></div>
+            <div class="in-stat gold"><span class="lbl">Gasto IA mes</span><span class="num">$420<small style="font-size:18px">k</small></span><span class="delta" style="color: var(--smc-gold)">↑ 8% vs L30</span></div>
+            <div class="in-stat"><span class="lbl">Drops Kanki</span><span class="num">04</span><span class="delta">próximo lunes 09:00</span></div>
+          </div>
+          <div class="in-table">
+            <div class="in-table-h"><span>Proyecto · stack</span><span>Uptime</span><span>Tickets</span><span>Status</span></div>
+            <div class="in-row"><span class="nm">Kanki Street<small>Jumpseller + Bsale</small></span><span class="v">99.99%</span><span class="v">02 open</span><span class="badge ok">drop live</span></div>
+            <div class="in-row"><span class="nm">VOY<small>Next.js + Supabase</small></span><span class="v">99.98%</span><span class="v">00</span><span class="badge ok">ok</span></div>
+            <div class="in-row"><span class="nm">InfoPet<small>Bsale + Jumpseller + IA</small></span><span class="v">99.94%</span><span class="v">01</span><span class="badge warn">stock low</span></div>
+            <div class="in-row"><span class="nm">Cerebro<small>Supabase + RAG</small></span><span class="v">99.99%</span><span class="v">00</span><span class="badge ok">ok</span></div>
+            <div class="in-row"><span class="nm">Marketplace<small>MeLi + B2G</small></span><span class="v">99.91%</span><span class="v">01 webhook</span><span class="badge warn">retry x3</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · panel</span></div>
+      <div class="dim"><span class="name">Tema</span><div class="opts"><span class="opt on">dark</span><span class="opt">light</span><span class="opt">auto</span></div></div>
+      <div class="dim"><span class="name">Sidebar</span><div class="opts"><span class="opt on">expandida</span><span class="opt">colapsada</span></div></div>
+      <div class="dim"><span class="name">Grid stats</span><div class="opts"><span class="opt">3</span><span class="opt on">4</span><span class="opt">6</span></div></div>
+      <div class="dim"><span class="name">Refresh</span><div class="opts"><span class="opt on">live · websocket</span><span class="opt">manual</span></div></div>
+      <div class="dim"><span class="name">Listado proyectos</span><div class="opts"><span class="opt on">tabla</span><span class="opt">cards</span><span class="opt">treemap</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">Next.js + Supabase + <b>@smc/ui</b>. RLS estricto. Real-time channels para listing live. Auth con magic-links de Resend. Telemetría a Cerebro.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

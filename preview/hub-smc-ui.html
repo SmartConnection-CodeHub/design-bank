@@ -1,0 +1,144 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>@smc/ui Components hub</title>
+<link rel="stylesheet" href="../colors_and_type.css"><link rel="stylesheet" href="hub.css">
+<style>
+.demo { flex: 1; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: #fff; padding: 28px; display: flex; align-items: center; justify-content: center; min-height: 0; position: relative; overflow: hidden; }
+
+.btn-row { display:flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: center; }
+.smc-btn { padding: 10px 18px; border-radius: 100px; font: 600 13px var(--font-sans); display:inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; transition: all 180ms var(--ease-out); }
+.smc-btn.primary { background: var(--smc-navy); color: var(--smc-cream); }
+.smc-btn.primary:hover { background: var(--smc-navy-700); box-shadow: var(--shadow-hover); }
+.smc-btn.gold { background: var(--smc-gold); color: #fff; }
+.smc-btn.outline { background: transparent; color: var(--smc-navy); box-shadow: inset 0 0 0 1.5px var(--smc-navy); }
+.smc-btn.ghost { background: transparent; color: var(--smc-navy); }
+.smc-btn.icon { width: 40px; padding: 0; justify-content: center; }
+
+.form { display:flex; flex-direction: column; gap: 12px; width: 320px; }
+.field { display:flex; flex-direction: column; gap: 6px; }
+.field label { font: 600 11px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--fg-2); }
+.input { padding: 10px 12px; border: 1px solid var(--border-default); border-radius: 8px; font: 13px var(--font-sans); background: #fff; }
+.input:focus { outline: 2px solid var(--smc-accent); outline-offset: 1px; border-color: transparent; }
+.check { display:flex; align-items: center; gap: 8px; font-size: 13px; }
+.check .bx { width: 18px; height: 18px; border-radius: 5px; background: var(--smc-navy); display:grid; place-items: center; color: #fff; font-size: 11px; }
+
+.card-glass { width: 320px; aspect-ratio: 4/3; border-radius: var(--radius-md); padding: 20px; backdrop-filter: blur(20px); background: rgba(255,255,255,0.62); border: 1px solid rgba(255,255,255,0.5); box-shadow: var(--shadow-hover); color: var(--smc-navy); display:flex; flex-direction:column; justify-content: space-between; position: relative; z-index: 1; }
+.card-bg { position: absolute; inset: 0; background:
+  radial-gradient(50% 60% at 20% 30%, var(--smc-accent-300), transparent 70%),
+  radial-gradient(60% 80% at 80% 70%, var(--smc-gold-300), transparent 70%),
+  var(--smc-cream); }
+.card-glass h4 { font-family: var(--font-display); font-size: 22px; margin: 0; letter-spacing: -0.01em; }
+.card-glass .meta { font: 11px var(--font-mono); color: var(--fg-2); }
+
+.badge-row { display:flex; flex-direction: column; gap: 14px; align-items: center; }
+.bdg-set { display:flex; gap: 8px; }
+.bdg { padding: 4px 10px; border-radius: 100px; font: 600 11px var(--font-mono); letter-spacing: .04em; }
+.bdg.ok { background: color-mix(in oklab, var(--smc-accent) 18%, white); color: var(--smc-accent-700); }
+.bdg.warn { background: color-mix(in oklab, var(--smc-gold) 22%, white); color: var(--smc-gold-700); }
+.bdg.err { background: #FDECEC; color: #C8312A; }
+.bdg.info { background: #EAF1FB; color: var(--smc-navy); }
+.toast { display: flex; gap: 10px; align-items: center; padding: 12px 16px; background: var(--smc-navy); color: var(--smc-cream); border-radius: 10px; box-shadow: var(--shadow-hover); font-size: 13px; }
+.toast .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--smc-accent); }
+
+.dialog-wrap { width: 380px; }
+.dialog { background: #fff; border-radius: 12px; box-shadow: var(--shadow-hover); padding: 20px; display:flex; flex-direction:column; gap: 12px; }
+.dialog h4 { font-family: var(--font-display); margin: 0; font-size: 20px; letter-spacing: -0.01em; }
+.dialog p { font-size: 13px; color: var(--fg-2); margin: 0; line-height: 1.5; }
+.dialog .acts { display:flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+</style></head>
+<body data-screen-label="@smc/ui hub" data-c="button">
+<div class="hub">
+  <div class="hub-head">
+    <div><span class="crumb">Foundations</span><span class="crumb">@smc/ui</span></div>
+    <div class="meta"><span>5 componentes</span><span class="live">live</span></div>
+  </div>
+  <div class="hub-scene">
+    <h1 class="hub-scene-title">Una librería, <em>cinco primitivas</em>.</h1>
+    <p class="hub-scene-sub">Federado vía pnpm workspace. Cada componente envuelve Radix UI + CVA tokens. Importable desde cualquiera de los 13 proyectos SMC.</p>
+    <div class="demo">
+      <!-- Button -->
+      <div class="btn-row" data-show="button">
+        <button class="smc-btn primary">Crear cotización <span>→</span></button>
+        <button class="smc-btn gold">Editorial CTA</button>
+        <button class="smc-btn outline">Cancelar</button>
+        <button class="smc-btn ghost">Skip</button>
+        <button class="smc-btn primary icon" aria-label="Settings">⚙</button>
+      </div>
+      <!-- Input -->
+      <div class="form" data-show="input" hidden>
+        <div class="field"><label>Email de trabajo</label><input class="input" value="guille@smconnection.cl"></div>
+        <div class="field"><label>Empresa</label><input class="input" value="SMC"></div>
+        <div class="check"><span class="bx">✓</span><span>Quiero recibir RADAR cada lunes</span></div>
+      </div>
+      <!-- Card glass -->
+      <div data-show="card" hidden style="position:relative; width: 360px; aspect-ratio: 4/3;">
+        <div class="card-bg"></div>
+        <div class="card-glass">
+          <div>
+            <div class="meta">Kanki Drop 04</div>
+            <h4>Surf the navy line</h4>
+          </div>
+          <div style="display:flex; align-items:center; gap: 8px;"><span class="bdg ok">LIVE</span><span class="meta">312 sold</span></div>
+        </div>
+      </div>
+      <!-- Badge + Toast -->
+      <div class="badge-row" data-show="badge" hidden>
+        <div class="bdg-set">
+          <span class="bdg ok">SUCCESS</span>
+          <span class="bdg warn">PENDING</span>
+          <span class="bdg err">ERROR</span>
+          <span class="bdg info">DRAFT</span>
+        </div>
+        <div class="toast"><span class="dot"></span>Cotización VOY-1284 enviada a Sebastián.</div>
+      </div>
+      <!-- Dialog -->
+      <div class="dialog-wrap" data-show="dialog" hidden>
+        <div class="dialog">
+          <h4>¿Confirmar publicación?</h4>
+          <p>Drop 04 se publicará en kanki.cl y notificará a 312 suscriptores. Esta acción no se puede deshacer.</p>
+          <div class="acts">
+            <button class="smc-btn ghost">Cancelar</button>
+            <button class="smc-btn primary">Publicar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hub-ctrls">
+    <div class="grp"><span class="lbl">Componente</span><span class="val" id="cn">Button</span></div>
+    <div class="grp"><span class="lbl">Anatomy</span>
+      <div class="row"><span class="k">Variants</span><span class="v" id="cv">5</span></div>
+      <div class="row"><span class="k">Sizes</span><span class="v" id="cs">3</span></div>
+      <div class="row"><span class="k">States</span><span class="v" id="cst">7</span></div>
+    </div>
+    <div class="grp"><span class="lbl">Radix base</span><span class="val" id="cr">Slot · Press</span></div>
+    <div class="grp"><span class="lbl">Import</span><span class="val" style="font-size: 11px;">import &#123; Button &#125; from "@smc/ui"</span></div>
+  </div>
+  <div class="hub-pills">
+    <div class="row" id="pills">
+      <button class="pill" aria-pressed="true" data-c="button"><span class="n">01</span>Button</button>
+      <button class="pill" data-c="input"><span class="n">02</span>Input · Form</button>
+      <button class="pill" data-c="card"><span class="n">03</span>Card · Glass</button>
+      <button class="pill" data-c="badge"><span class="n">04</span>Badge · Toast</button>
+      <button class="pill" data-c="dialog"><span class="n">05</span>Dialog · Modal</button>
+    </div>
+    <a class="cta" href="../ui_kits/ui/index.html">Ver UI kit completo <span class="arrow">→</span></a>
+  </div>
+</div>
+<script>
+const META = {
+  button: ['Button', '5', '3', '7', 'Slot · Press', 'import { Button } from "@smc/ui"'],
+  input:  ['Input · Form', '4', '3', '5', 'Form · Label', 'import { Input, Field } from "@smc/ui"'],
+  card:   ['Card · Glass', '3', '—', '4', '—', 'import { Card, GlassCard } from "@smc/ui"'],
+  badge:  ['Badge · Toast', '4 + 4', '2', '—', 'Toast · Provider', 'import { Badge, useToast } from "@smc/ui"'],
+  dialog: ['Dialog · Modal', '2', '—', '4', 'Dialog · Root', 'import { Dialog } from "@smc/ui"']
+};
+document.getElementById('pills').addEventListener('click', e => {
+  const b = e.target.closest('.pill'); if (!b) return;
+  document.querySelectorAll('#pills .pill').forEach(p => p.setAttribute('aria-pressed', p === b));
+  const c = b.dataset.c;
+  document.querySelectorAll('[data-show]').forEach(el => el.hidden = el.dataset.show !== c);
+  const m = META[c];
+  cn.textContent = m[0]; cv.textContent = m[1]; cs.textContent = m[2]; cst.textContent = m[3]; cr.textContent = m[4];
+  document.querySelector('.hub-ctrls .grp:last-child .val').textContent = m[5];
+});
+</script>
+</body></html>

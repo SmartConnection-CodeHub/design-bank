@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Sidebar variants</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 16px 20px; display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; background: var(--bg); }
+  .var { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 10px; display:flex; flex-direction:column; gap: 8px; }
+  .vt  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); text-transform: uppercase; letter-spacing: .06em; font-weight:600; }
+  .frame { background: var(--smc-navy); border-radius: 8px; padding: 10px 8px; color: var(--smc-cream); height: 140px; display:flex; flex-direction:column; gap: 8px; overflow: hidden; }
+  .logo { font-family: var(--font-display); font-size: 16px; padding-left: 4px; letter-spacing: -.02em; }
+  .item { display:flex; align-items:center; gap: 8px; padding: 4px 6px; border-radius: 6px; font-size: 11px; color: var(--smc-cream-300); }
+  .item .ic { width: 14px; height: 14px; background: currentColor; border-radius: 3px; opacity: .7; }
+  .item.on { background: rgba(255,255,255,.10); color: var(--smc-cream); }
+  .item.on .ic { background: var(--smc-accent); opacity: 1; }
+
+  /* compact */
+  .compact { width: 36px; }
+  .compact .item .lbl { display: none; }
+  .compact .item { justify-content: center; padding: 6px 4px; }
+
+  /* floating cmdk */
+  .float-wrap { background: var(--bg-sunk); border-radius: 8px; height: 140px; padding: 10px; position: relative; }
+  .float { background: #fff; border: 1px solid var(--border-default); border-radius: 8px; padding: 8px; position: absolute; inset: 16px 12px; box-shadow: 0 8px 24px rgba(27,47,78,.18); display:flex; flex-direction:column; gap: 6px; }
+  .float .search { display:flex; gap:6px; align-items:center; border-bottom: 1px solid var(--border-subtle); padding: 0 0 6px 0; font-size: 11px; color: var(--fg-3); }
+  .float .kbd { font-family: var(--font-mono); font-size: 9px; padding: 1px 5px; border: 1px solid var(--border-subtle); border-radius: 3px; color: var(--fg-2); margin-left: auto; }
+  .float .row { font-size: 11px; color: var(--fg-1); padding: 3px 4px; display:flex; gap: 6px; align-items: center; }
+  .float .row.on { background: var(--bg-sunk); border-radius: 4px; color: var(--fg-1); }
+</style></head>
+<body>
+  <div class="var">
+    <div class="vt">Expanded · 240</div>
+    <div class="frame" style="width: 130px">
+      <div class="logo">SMC<span style="color: var(--smc-accent)">.</span></div>
+      <div class="item on"><div class="ic"></div><span class="lbl">Panel</span></div>
+      <div class="item"><div class="ic"></div><span class="lbl">Proyectos</span></div>
+      <div class="item"><div class="ic"></div><span class="lbl">VOY</span></div>
+      <div class="item"><div class="ic"></div><span class="lbl">Cerebro</span></div>
+    </div>
+  </div>
+  <div class="var">
+    <div class="vt">Compact · 64</div>
+    <div class="frame compact">
+      <div class="logo" style="text-align:center;padding:0;font-size:14px">S<span style="color:var(--smc-accent)">.</span></div>
+      <div class="item on"><div class="ic"></div></div>
+      <div class="item"><div class="ic"></div></div>
+      <div class="item"><div class="ic"></div></div>
+      <div class="item"><div class="ic"></div></div>
+    </div>
+  </div>
+  <div class="var">
+    <div class="vt">Floating · 320</div>
+    <div class="float-wrap">
+      <div class="float">
+        <div class="search">⌘ cotizar voy…<span class="kbd">⌘K</span></div>
+        <div class="row on">→ VOY · Nueva cotización</div>
+        <div class="row">→ VOY · Listado</div>
+        <div class="row">→ Hoku · Chat</div>
+        <div class="row" style="color:var(--fg-3)">8 más</div>
+      </div>
+    </div>
+  </div>
+  <div class="var">
+    <div class="vt">cmdK trigger</div>
+    <div class="frame" style="background:var(--bg-elevated); color: var(--fg-1); border: 1px solid var(--border-subtle); justify-content: center; align-items:center; padding: 0;">
+      <div style="background: var(--bg-sunk); padding: 8px 12px; border-radius: 100px; font-size: 11px; color: var(--fg-2); display:flex; gap: 8px; align-items: center; min-width: 100px;">
+        <span>Buscar…</span>
+        <span style="margin-left:auto; font-family: var(--font-mono); border: 1px solid var(--border-subtle); padding: 1px 5px; border-radius: 4px; background: #fff;">⌘K</span>
+      </div>
+    </div>
+  </div>
+</body></html>

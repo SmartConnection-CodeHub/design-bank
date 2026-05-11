@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>@smc/ui · Component federation</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { padding: 0; background: var(--bg); }
+  .app { max-width: 1240px; margin: 0 auto; padding: 32px 32px 80px; }
+  header.top { display:flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .brand { font-family: var(--font-mono); font-size: 22px; color: var(--fg-1); }
+  .brand b { color: var(--smc-navy); font-weight: 700; }
+  .brand .green { color: var(--smc-accent-700); }
+  .ver { font-family: var(--font-mono); font-size: 12px; color: var(--fg-2); background: var(--bg-sunk); padding: 4px 10px; border-radius: 100px; }
+
+  .lead { font-family: var(--font-display); font-size: 36px; letter-spacing: -0.02em; margin: 0 0 6px; color: var(--fg-1); }
+  .strap { font-size: 14px; color: var(--fg-2); margin: 0 0 24px; max-width: 580px; }
+  .install { background: var(--smc-navy); color: var(--smc-cream); padding: 12px 16px; border-radius: var(--radius-md); font: 13px var(--font-mono); display:inline-block; margin-bottom: 28px; }
+  .install .gn { color: var(--smc-accent); }
+
+  .panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 880px) { .panels { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .panels { grid-template-columns: 1fr; } }
+
+  .panel { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px; box-shadow: var(--shadow-rest); display:flex; flex-direction: column; gap: 12px; min-height: 200px; }
+  .panel .h { display:flex; align-items: center; justify-content: space-between; }
+  .panel .nm { font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-1); font-weight: 600; }
+  .panel .imp { font: 10px var(--font-mono); color: var(--fg-3); }
+
+  /* Button */
+  .btn { font: 600 13px var(--font-sans); padding: 0 16px; height: 40px; border-radius: var(--radius-md); border: 1px solid transparent; display:inline-flex; align-items:center; gap: 8px; cursor: pointer; box-shadow: var(--shadow-rest); }
+  .btn-primary { background: var(--smc-navy); color: var(--smc-cream); }
+  .btn-secondary { background: #fff; color: var(--fg-1); border-color: var(--border-default); }
+  .btn-gold { background: var(--smc-gold); color: var(--smc-navy-900); }
+  .btn-ghost { background: transparent; color: var(--fg-1); box-shadow: none; }
+
+  /* Card mini */
+  .mini-card { background: var(--bg-sunk); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; }
+  .mini-card .eb { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-3); font-weight: 600; }
+  .mini-card .ti { font-family: var(--font-display); font-size: 17px; line-height: 1.15; letter-spacing: -0.01em; margin-top: 2px; color: var(--fg-1); }
+  .mini-card .bd { font-size: 11.5px; color: var(--fg-2); margin-top: 4px; line-height: 1.45; }
+
+  /* Input */
+  .field { display:flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 11px; color: var(--fg-2); font-weight: 500; }
+  .field .input { background: #fff; border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 0 12px; height: 38px; font: 13px var(--font-sans); color: var(--fg-1); display:flex; align-items:center; }
+  .field .input.focus { box-shadow: var(--shadow-focus); border-color: var(--smc-accent); }
+
+  /* Badge */
+  .badges { display:flex; gap: 6px; flex-wrap: wrap; }
+  .b { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 100px; font-size: 11px; font-weight: 500; }
+  .b-ok  { background: var(--success-soft); color: var(--smc-accent-700); }
+  .b-w   { background: var(--warning-soft); color: var(--smc-gold-700); }
+  .b-e   { background: var(--danger-soft); color: #872A22; }
+  .b-info{ background: var(--info-soft); color: var(--smc-navy-700); }
+  .dot { width: 6px; height: 6px; border-radius: 99px; background: currentColor; }
+
+  /* Dialog */
+  .dialog { background: var(--smc-navy-900); border-radius: 8px; padding: 12px; position: relative; }
+  .dlg-card { background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 16px 40px rgba(0,0,0,.4); display:flex; flex-direction:column; gap: 8px; }
+  .dlg-card .t { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; margin: 0; }
+  .dlg-card .b { font-size: 12px; color: var(--fg-2); line-height: 1.45; }
+  .dlg-card .row { display:flex; gap: 6px; justify-content: flex-end; margin-top: 4px; }
+  .dlg-card .row .btn { height: 32px; padding: 0 12px; font-size: 12px; }
+
+  /* Toast */
+  .toast-stack { display:flex; flex-direction: column; gap: 8px; }
+  .toast-mini { background: #fff; box-shadow: var(--shadow-hover); border-radius: 8px; padding: 10px 12px; display:flex; gap: 10px; align-items: center; font-size: 12px; }
+  .toast-mini .ic { width: 20px; height: 20px; border-radius: 6px; background: var(--success-soft); color: var(--smc-accent-700); display: grid; place-items: center; font-size: 11px; flex-shrink: 0; }
+
+  /* Sidebar */
+  .side { background: var(--smc-navy); border-radius: 8px; padding: 8px 6px; display:flex; flex-direction:column; gap: 4px; width: 100%; max-width: 160px; }
+  .side .it { font-size: 11px; color: var(--smc-cream-300); padding: 5px 8px; border-radius: 6px; display:flex; gap: 6px; align-items: center; }
+  .side .it .ic { width: 12px; height: 12px; background: currentColor; opacity: .7; border-radius: 2px; }
+  .side .it.on { background: rgba(255,255,255,.10); color: var(--smc-cream); }
+  .side .it.on .ic { background: var(--smc-accent); opacity: 1; }
+</style></head>
+<body data-screen-label="@smc/ui">
+<div class="app">
+  <header class="top">
+    <div class="brand"><b>@smc/ui</b><span class="green">.</span></div>
+    <div class="ver">v0.4.2 · federated</div>
+  </header>
+
+  <h1 class="lead">7 componentes. 1 stack. Tipos estrictos.</h1>
+  <p class="strap">El paquete federado que mueve los 13 productos. Radix UI + Tailwind v4 + CVA. Sin emoji, sin gradientes raros, sin utility-soup.</p>
+  <div class="install">pnpm dlx <span class="gn">@smc/ui</span> add button card input badge dialog toast sidebar</div>
+
+  <div class="panels">
+    <!-- Button -->
+    <div class="panel">
+      <div class="h"><span class="nm">&lt;Button /&gt;</span><span class="imp">@smc/ui/button</span></div>
+      <div style="display:flex; gap: 8px; flex-wrap: wrap;">
+        <button class="btn btn-primary">Cotizar</button>
+        <button class="btn btn-secondary">Cancelar</button>
+        <button class="btn btn-gold">Pro</button>
+        <button class="btn btn-ghost">Volver</button>
+      </div>
+      <code style="font: 11px var(--font-mono); color: var(--fg-3); display:block; margin-top: 4px;">&lt;Button variant="primary" size="md"&gt;Cotizar&lt;/Button&gt;</code>
+    </div>
+
+    <!-- Card -->
+    <div class="panel">
+      <div class="h"><span class="nm">&lt;Card /&gt;</span><span class="imp">@smc/ui/card</span></div>
+      <div class="mini-card">
+        <div class="eb">Proyecto</div>
+        <div class="ti">VOY Cotizador</div>
+        <div class="bd">Cotiza en 12 dimensiones, sin reunión.</div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="panel">
+      <div class="h"><span class="nm">&lt;Input /&gt;</span><span class="imp">@smc/ui/input</span></div>
+      <div class="field"><label>Correo</label><div class="input">guillermo@smconnection.cl</div></div>
+      <div class="field"><label>RUT</label><div class="input focus">12.345.678-9</div></div>
+    </div>
+
+    <!-- Badge -->
+    <div class="panel">
+      <div class="h"><span class="nm">&lt;Badge /&gt;</span><span class="imp">@smc/ui/badge</span></div>
+      <div class="badges">
+        <span class="b b-ok"><span class="dot"></span>Conectado</span>
+        <span class="b b-w">Sync pendiente</span>
+        <span class="b b-e">Token expirado</span>
+        <span class="b b-info">Beta</span>
+      </div>
+    </div>
+
+    <!-- Dialog -->
+    <div class="panel">
+      <div class="h"><span class="nm">&lt;Dialog /&gt;</span><span class="imp">@smc/ui/dialog</span></div>
+      <div class="dialog">
+        <div class="dlg-card">
+          <h3 class="t">¿Eliminar proyecto?</h3>
+          <p class="b">No se puede deshacer. Se borra toda la data RLS asociada.</p>
+          <div class="row">
+            <button class="btn btn-secondary">Cancelar</button>
+            <button class="btn" style="background: var(--danger); color: #fff;">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="panel">
+      <div class="h"><span class="nm">&lt;Toast /&gt;</span><span class="imp">@smc/ui/toast</span></div>
+      <div class="toast-stack">
+        <div class="toast-mini"><div class="ic">✓</div><div>Conectado a <b>Bsale</b></div></div>
+        <div class="toast-mini"><div class="ic" style="background: var(--warning-soft); color: var(--smc-gold-700)">!</div><div>3 cambios sin guardar.</div></div>
+        <div class="toast-mini"><div class="ic" style="background: var(--info-soft); color: var(--smc-navy-700)">i</div><div>RADAR brief listo.</div></div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="panel">
+      <div class="h"><span class="nm">&lt;Sidebar /&gt;</span><span class="imp">@smc/ui/sidebar</span></div>
+      <div class="side">
+        <div class="it on"><div class="ic"></div>Panel</div>
+        <div class="it"><div class="ic"></div>Proyectos</div>
+        <div class="it"><div class="ic"></div>VOY</div>
+        <div class="it"><div class="ic"></div>Cerebro</div>
+        <div class="it"><div class="ic"></div>RADAR</div>
+      </div>
+    </div>
+
+    <!-- Tokens -->
+    <div class="panel">
+      <div class="h"><span class="nm">tokens</span><span class="imp">@smc/ui/tokens</span></div>
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+        <div style="aspect-ratio:1; background: var(--smc-cream); border: 1px solid var(--border-subtle); border-radius:6px;"></div>
+        <div style="aspect-ratio:1; background: var(--smc-navy); border-radius:6px;"></div>
+        <div style="aspect-ratio:1; background: var(--smc-gold); border-radius:6px;"></div>
+        <div style="aspect-ratio:1; background: var(--smc-accent); border-radius:6px;"></div>
+      </div>
+      <code style="font: 11px var(--font-mono); color: var(--fg-3);">import { tokens } from '@smc/ui'</code>
+    </div>
+
+    <!-- Use -->
+    <div class="panel" style="background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy);">
+      <div class="h"><span class="nm" style="color: var(--smc-accent)">★ Use this prompt</span></div>
+      <code style="font: 12px var(--font-mono); color: var(--smc-cream-300); line-height: 1.6; white-space: pre-wrap;">"Mock me a page con &lt;Card&gt;,
+&lt;Button&gt; y &lt;Badge&gt;,
+data dummy. Estilo @smc/ui,
+tokens canonicos, mobile-first."</code>
+      <button class="btn" style="background: var(--smc-accent); color: var(--smc-navy-900); align-self: flex-start;">Copiar prompt →</button>
+    </div>
+  </div>
+</div>
+</body></html>

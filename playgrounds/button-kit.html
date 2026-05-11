@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Button Kit · Calculator-Kit pattern · SMC Design System</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { background: var(--bg); padding: 0; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 32px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; display:flex; align-items:baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font:11px var(--font-mono); color: var(--fg-3); text-decoration:none; }
+header .back:hover { color: var(--smc-accent-700); }
+header h1 { margin:0; font:600 28px var(--font-sans); letter-spacing:-0.02em; }
+header .meta { font:11px var(--font-mono); color: var(--fg-3); margin-left:auto; }
+
+.playground {
+  display:grid; grid-template-columns: 1fr 320px; gap: 0;
+  background: var(--bg-elevated); border:1px solid var(--border-subtle);
+  border-radius: var(--radius-md); overflow:hidden;
+  min-height: 580px;
+}
+.stage {
+  padding: 48px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 32px;
+  background:
+    linear-gradient(135deg, transparent 49%, var(--smc-cream-200) 49.5%, var(--smc-cream-200) 50.5%, transparent 51%),
+    var(--bg-elevated);
+  background-size: 12px 12px;
+}
+.stage-label { font:600 10px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color: var(--fg-3); align-self:flex-start; }
+
+.controls {
+  background: var(--bg-sunk); padding: 20px; border-left:1px solid var(--border-subtle);
+  display:flex; flex-direction:column; gap: 18px; overflow-y:auto;
+}
+.ctrl-group {}
+.ctrl-label { font:600 10px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color: var(--fg-3); margin-bottom: 8px; display:flex; align-items:center; justify-content:space-between; }
+.ctrl-label .val { color: var(--smc-navy-500); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.ctrl-row { display:flex; gap:4px; flex-wrap:wrap; }
+.opt {
+  font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg-elevated);
+  border:1px solid var(--border-subtle); border-radius: var(--radius-sm);
+  cursor:pointer; transition: 160ms var(--ease-out); user-select:none;
+}
+.opt:hover { border-color: var(--smc-navy-500); }
+.opt.active { background: var(--smc-navy-500); color: var(--smc-cream); border-color: transparent; }
+
+.slider { width:100%; appearance: none; height: 4px; background: var(--smc-cream-300); border-radius: 2px; outline:none; }
+.slider::-webkit-slider-thumb { appearance:none; width:14px; height:14px; border-radius:50%; background: var(--smc-accent-500); cursor:pointer; transition: 160ms; }
+.slider::-webkit-slider-thumb:hover { background: var(--smc-accent-700); transform: scale(1.15); }
+
+/* DEMO BUTTON · todos sus props son data-* mutables */
+.demo-btn {
+  display:inline-flex; align-items:center; gap: var(--btn-gap, 8px);
+  padding: var(--btn-py, 9px) var(--btn-px, 18px);
+  border-radius: var(--btn-radius, 10px);
+  font-family: var(--font-sans);
+  font-size: var(--btn-fs, 13px);
+  font-weight: var(--btn-fw, 500);
+  letter-spacing: var(--btn-ls, 0);
+  border:1px solid transparent;
+  cursor: pointer;
+  transition: 160ms var(--ease-out);
+  text-transform: var(--btn-tt, none);
+  position: relative;
+  overflow: hidden;
+}
+[data-variant="primary"] .demo-btn { background: var(--smc-navy-500); color: var(--smc-cream); }
+[data-variant="primary"] .demo-btn:hover { background: var(--smc-navy-700); }
+[data-variant="gold"] .demo-btn { background: var(--smc-gold-500); color: var(--smc-navy-700); }
+[data-variant="gold"] .demo-btn:hover { background: var(--smc-gold-700); color: var(--smc-cream); }
+[data-variant="accent"] .demo-btn { background: var(--smc-accent-500); color: var(--smc-navy-700); }
+[data-variant="ghost"] .demo-btn { background: transparent; color: var(--fg-1); border-color: var(--border-default); }
+[data-variant="ghost"] .demo-btn:hover { background: var(--bg-sunk); }
+[data-variant="danger"] .demo-btn { background: #D9483A; color: white; }
+[data-variant="danger"] .demo-btn:hover { background: #B83A2E; }
+
+[data-state="hover"] .demo-btn { filter: brightness(.92); }
+[data-state="loading"] .demo-btn::after {
+  content:""; width:12px; height:12px; border:2px solid currentColor; border-right-color: transparent;
+  border-radius:50%; animation: spin .8s linear infinite; display:inline-block;
+}
+[data-state="disabled"] .demo-btn { opacity: .4; cursor: not-allowed; pointer-events:none; }
+
+[data-icon="leading"] .demo-btn::before { content: "✓"; font-weight:600; }
+[data-icon="trailing"] .demo-btn::after { content: "→"; font-weight:600; }
+[data-icon="only"] .demo-btn { padding: var(--btn-py, 9px); width: calc(var(--btn-py, 9px) * 2 + 16px); }
+[data-icon="only"] .demo-btn .btn-label { display:none; }
+
+[data-shape="pill"] .demo-btn { border-radius: 100px; }
+[data-shape="square"] .demo-btn { border-radius: 0; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* MATRIX preview · 5×3 = 15 botones (variant × size) */
+.matrix {
+  display:grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+  width: 100%; max-width: 720px;
+  padding: 24px; background: var(--bg-elevated); border:1px solid var(--border-subtle); border-radius: var(--radius-md);
+}
+.matrix-cell { display:flex; flex-direction:column; gap: 4px; align-items: center; }
+.matrix-cell .label { font:9px var(--font-mono); color: var(--fg-3); }
+
+/* OUTPUT CODE panel */
+.code-panel {
+  background: var(--smc-navy-900); color: var(--smc-cream); padding: 14px 16px; border-radius: var(--radius-md);
+  font: 12px var(--font-mono); line-height: 1.6; overflow-x: auto;
+  border:1px solid var(--smc-navy-700);
+  position:relative;
+  max-width: 720px; width:100%;
+}
+.code-panel .copy-btn {
+  position:absolute; top:10px; right:10px; padding:5px 12px; font:10px var(--font-mono);
+  background: var(--smc-accent-700); color: var(--smc-cream); border:none; border-radius: var(--radius-sm); cursor:pointer;
+}
+.code-panel .copy-btn:hover { background: var(--smc-accent-500); color: var(--smc-navy-700); }
+.code-panel .copy-btn.copied { background: var(--smc-gold-500); color: var(--smc-navy-700); }
+.code-panel .tag { color: var(--smc-accent-300); }
+.code-panel .attr { color: var(--smc-gold-300); }
+.code-panel .str { color: var(--smc-cream-300); }
+
+/* PROP SUMMARY */
+.props-summary {
+  font: 11.5px var(--font-mono); color: var(--fg-2); padding: 10px 14px;
+  background: var(--smc-cream-50); border:1px dashed var(--border-subtle);
+  border-radius: var(--radius-sm); max-width: 720px; width:100%;
+}
+.props-summary .k { color: var(--fg-3); }
+.props-summary .v { color: var(--smc-navy-500); font-weight:600; }
+
+.cta-row { display:flex; gap:8px; margin-top: 8px; flex-wrap:wrap; }
+.cta {
+  font:500 11px var(--font-sans); padding: 6px 12px; border-radius: 100px;
+  background: var(--smc-navy-500); color: var(--smc-cream); cursor:pointer; border:none;
+  transition: 160ms var(--ease-out);
+}
+.cta:hover { background: var(--smc-navy-700); }
+.cta.ghost { background: transparent; color: var(--smc-navy-500); border:1px solid var(--smc-navy-500); }
+.cta.ghost:hover { background: var(--smc-navy-500); color: var(--smc-cream); }
+
+@media (max-width: 900px) {
+  .playground { grid-template-columns: 1fr; }
+  .controls { border-left: none; border-top:1px solid var(--border-subtle); }
+  .stage { padding: 24px; }
+  .matrix { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v11</a>
+  <h1>🧮 Button Kit · Calculator pattern</h1>
+  <span class="meta">5 variants × 3 sizes × 4 states × 4 icons × 3 shapes = 720 combinaciones</span>
+</header>
+
+<div class="playground" id="pg" data-variant="primary" data-size="md" data-state="default" data-icon="none" data-shape="rounded">
+
+  <!-- STAGE · output real mutable -->
+  <div class="stage">
+    <span class="stage-label">▸ LIVE OUTPUT · clic los controles · todo muta real</span>
+
+    <!-- Single button principal -->
+    <button class="demo-btn" id="mainBtn">
+      <span class="btn-label">Conectar Bsale</span>
+    </button>
+
+    <!-- Matrix 5×3 -->
+    <div class="matrix" id="matrix"></div>
+
+    <!-- Props summary -->
+    <div class="props-summary" id="propsSummary"></div>
+
+    <!-- Generated code -->
+    <div class="code-panel" id="codePanel">
+      <button class="copy-btn" onclick="copyCode()">Copiar</button>
+      <pre id="generatedCode" style="margin:0; white-space: pre-wrap;"></pre>
+    </div>
+
+    <div class="cta-row">
+      <button class="cta" onclick="useInProject('intranet')">→ Usar en Intranet</button>
+      <button class="cta ghost" onclick="useInProject('marketing')">→ Marketing</button>
+      <button class="cta ghost" onclick="useInProject('kanki')">→ Kanki</button>
+      <button class="cta ghost" onclick="useInProject('voy')">→ VOY</button>
+    </div>
+  </div>
+
+  <!-- CONTROLS · cada uno cambia state.* y triggers render() -->
+  <div class="controls">
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Variant <span class="val" id="v-variant">primary</span></div>
+      <div class="ctrl-row" data-ctrl="variant">
+        <span class="opt active" data-val="primary">primary</span>
+        <span class="opt" data-val="gold">gold</span>
+        <span class="opt" data-val="accent">accent</span>
+        <span class="opt" data-val="ghost">ghost</span>
+        <span class="opt" data-val="danger">danger</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Size <span class="val" id="v-size">md</span></div>
+      <div class="ctrl-row" data-ctrl="size">
+        <span class="opt" data-val="sm">sm</span>
+        <span class="opt active" data-val="md">md</span>
+        <span class="opt" data-val="lg">lg</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">State <span class="val" id="v-state">default</span></div>
+      <div class="ctrl-row" data-ctrl="state">
+        <span class="opt active" data-val="default">default</span>
+        <span class="opt" data-val="hover">hover</span>
+        <span class="opt" data-val="loading">loading</span>
+        <span class="opt" data-val="disabled">disabled</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Icon <span class="val" id="v-icon">none</span></div>
+      <div class="ctrl-row" data-ctrl="icon">
+        <span class="opt active" data-val="none">none</span>
+        <span class="opt" data-val="leading">leading</span>
+        <span class="opt" data-val="trailing">trailing</span>
+        <span class="opt" data-val="only">only</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Shape <span class="val" id="v-shape">rounded</span></div>
+      <div class="ctrl-row" data-ctrl="shape">
+        <span class="opt active" data-val="rounded">rounded</span>
+        <span class="opt" data-val="pill">pill</span>
+        <span class="opt" data-val="square">square</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Label <span class="val" id="v-label">Conectar Bsale</span></div>
+      <input type="text" id="labelInput" value="Conectar Bsale"
+             style="width:100%; padding:7px 10px; border:1px solid var(--border-subtle); border-radius: var(--radius-sm); font:13px var(--font-sans); background: var(--bg-elevated); color: var(--fg-1);">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Font weight <span class="val" id="v-fw">500</span></div>
+      <input type="range" class="slider" id="fwSlider" min="300" max="700" step="100" value="500">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Letter spacing <span class="val" id="v-ls">0.00em</span></div>
+      <input type="range" class="slider" id="lsSlider" min="-2" max="10" step="1" value="0">
+    </div>
+
+    <div class="ctrl-group">
+      <div class="ctrl-label">Text transform <span class="val" id="v-tt">none</span></div>
+      <div class="ctrl-row" data-ctrl="tt">
+        <span class="opt active" data-val="none">none</span>
+        <span class="opt" data-val="uppercase">UPPER</span>
+        <span class="opt" data-val="capitalize">Capital</span>
+      </div>
+    </div>
+
+    <div class="ctrl-group" style="margin-top:auto; padding-top: 16px; border-top:1px solid var(--border-subtle);">
+      <div class="ctrl-label">Preset</div>
+      <div class="ctrl-row">
+        <span class="opt" onclick="loadPreset('smc-primary')">SMC Primary</span>
+        <span class="opt" onclick="loadPreset('cta-pill')">CTA Pill</span>
+        <span class="opt" onclick="loadPreset('brutal')">Brutal</span>
+        <span class="opt" onclick="loadPreset('reset')">Reset</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// STATE MACHINE · cualquier mutación re-renderiza
+// ============================================================
+const SIZE_TO_VARS = {
+  sm: { py: '6px', px: '12px', fs: '12px', gap: '6px' },
+  md: { py: '9px', px: '18px', fs: '13px', gap: '8px' },
+  lg: { py: '12px', px: '24px', fs: '14px', gap: '10px' }
+};
+
+const SHAPE_TO_RADIUS = {
+  rounded: '10px',
+  pill: '100px',
+  square: '0px'
+};
+
+const state = new Proxy({
+  variant: 'primary',
+  size: 'md',
+  state: 'default',
+  icon: 'none',
+  shape: 'rounded',
+  label: 'Conectar Bsale',
+  fw: 500,
+  ls: 0,
+  tt: 'none'
+}, {
+  set(t, k, v) {
+    t[k] = v;
+    render();
+    return true;
+  }
+});
+
+const pg = document.getElementById('pg');
+const mainBtn = document.getElementById('mainBtn');
+
+function render() {
+  // 1. data-* attrs on container (mutates CSS via [data-x="y"] selectors)
+  pg.dataset.variant = state.variant;
+  pg.dataset.size = state.size;
+  pg.dataset.state = state.state;
+  pg.dataset.icon = state.icon;
+  pg.dataset.shape = state.shape;
+
+  // 2. CSS variables for fluid props
+  const sz = SIZE_TO_VARS[state.size];
+  pg.style.setProperty('--btn-py', sz.py);
+  pg.style.setProperty('--btn-px', sz.px);
+  pg.style.setProperty('--btn-fs', sz.fs);
+  pg.style.setProperty('--btn-gap', sz.gap);
+  pg.style.setProperty('--btn-radius', SHAPE_TO_RADIUS[state.shape]);
+  pg.style.setProperty('--btn-fw', state.fw);
+  pg.style.setProperty('--btn-ls', (state.ls / 100) + 'em');
+  pg.style.setProperty('--btn-tt', state.tt);
+
+  // 3. Button label
+  mainBtn.querySelector('.btn-label').textContent = state.label;
+
+  // 4. Active pills
+  document.querySelectorAll('.ctrl-row').forEach(row => {
+    const ctrl = row.dataset.ctrl;
+    if (!ctrl) return;
+    row.querySelectorAll('.opt').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.val === state[ctrl]);
+    });
+  });
+
+  // 5. Value labels
+  document.getElementById('v-variant').textContent = state.variant;
+  document.getElementById('v-size').textContent = state.size;
+  document.getElementById('v-state').textContent = state.state;
+  document.getElementById('v-icon').textContent = state.icon;
+  document.getElementById('v-shape').textContent = state.shape;
+  document.getElementById('v-label').textContent = state.label;
+  document.getElementById('v-fw').textContent = state.fw;
+  document.getElementById('v-ls').textContent = (state.ls / 100).toFixed(2) + 'em';
+  document.getElementById('v-tt').textContent = state.tt;
+
+  // 6. Matrix preview
+  renderMatrix();
+
+  // 7. Generated code (JSX-like with current props)
+  const code = generateCode();
+  document.getElementById('generatedCode').innerHTML = code;
+
+  // 8. Props summary
+  document.getElementById('propsSummary').innerHTML =
+    `<span class="k">props:</span> ` +
+    `<span class="k">variant=</span><span class="v">"${state.variant}"</span> ` +
+    `<span class="k">size=</span><span class="v">"${state.size}"</span> ` +
+    `<span class="k">state=</span><span class="v">"${state.state}"</span> ` +
+    `<span class="k">icon=</span><span class="v">"${state.icon}"</span> ` +
+    `<span class="k">shape=</span><span class="v">"${state.shape}"</span>`;
+}
+
+function renderMatrix() {
+  const variants = ['primary', 'gold', 'accent', 'ghost', 'danger'];
+  const matrix = document.getElementById('matrix');
+  matrix.innerHTML = '';
+  variants.forEach(v => {
+    const cell = document.createElement('div');
+    cell.className = 'matrix-cell';
+    const wrapper = document.createElement('div');
+    wrapper.dataset.variant = v;
+    wrapper.dataset.size = state.size;
+    wrapper.dataset.state = state.state;
+    wrapper.dataset.icon = state.icon;
+    wrapper.dataset.shape = state.shape;
+    wrapper.style.setProperty('--btn-py', SIZE_TO_VARS[state.size].py);
+    wrapper.style.setProperty('--btn-px', SIZE_TO_VARS[state.size].px);
+    wrapper.style.setProperty('--btn-fs', SIZE_TO_VARS[state.size].fs);
+    wrapper.style.setProperty('--btn-gap', SIZE_TO_VARS[state.size].gap);
+    wrapper.style.setProperty('--btn-radius', SHAPE_TO_RADIUS[state.shape]);
+    wrapper.style.setProperty('--btn-fw', state.fw);
+    wrapper.style.setProperty('--btn-ls', (state.ls / 100) + 'em');
+    wrapper.style.setProperty('--btn-tt', state.tt);
+    wrapper.innerHTML = `<button class="demo-btn"><span class="btn-label">${state.label}</span></button>`;
+    cell.appendChild(wrapper);
+    const lbl = document.createElement('div');
+    lbl.className = 'label';
+    lbl.textContent = v;
+    cell.appendChild(lbl);
+    matrix.appendChild(cell);
+  });
+}
+
+function generateCode() {
+  return `<span class="tag">&lt;Button</span>\n` +
+    `  <span class="attr">variant</span>=<span class="str">"${state.variant}"</span>\n` +
+    `  <span class="attr">size</span>=<span class="str">"${state.size}"</span>\n` +
+    (state.state !== 'default' ? `  <span class="attr">state</span>=<span class="str">"${state.state}"</span>\n` : '') +
+    (state.icon !== 'none' ? `  <span class="attr">icon</span>=<span class="str">"${state.icon}"</span>\n` : '') +
+    (state.shape !== 'rounded' ? `  <span class="attr">shape</span>=<span class="str">"${state.shape}"</span>\n` : '') +
+    `<span class="tag">&gt;</span>\n` +
+    `  ${state.label}\n` +
+    `<span class="tag">&lt;/Button&gt;</span>`;
+}
+
+function copyCode() {
+  const cleanCode = `<Button\n  variant="${state.variant}"\n  size="${state.size}"\n` +
+    (state.state !== 'default' ? `  state="${state.state}"\n` : '') +
+    (state.icon !== 'none' ? `  icon="${state.icon}"\n` : '') +
+    (state.shape !== 'rounded' ? `  shape="${state.shape}"\n` : '') +
+    `>\n  ${state.label}\n</Button>`;
+  navigator.clipboard.writeText(cleanCode);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copiado';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 1600);
+}
+
+function useInProject(proj) {
+  const spec = `<Button variant="${state.variant}" size="${state.size}">${state.label}</Button>\n// → para ${proj}`;
+  navigator.clipboard.writeText(spec);
+  showToast('✓ Spec copiado para ' + proj);
+}
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;right:24px;padding:12px 18px;background:#1D1D1F;color:white;border-radius:12px;font:500 13px -apple-system,sans-serif;letter-spacing:-0.012em;z-index:9999;box-shadow:0 12px 32px rgba(0,0,0,.2);opacity:0;transform:translateY(8px);transition:220ms cubic-bezier(.22,1,.36,1)';
+  document.body.appendChild(t);
+  requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translateY(0)'; });
+  setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(8px)'; setTimeout(() => t.remove(), 240); }, 1800);
+}
+
+const PRESETS = {
+  'smc-primary': { variant: 'primary', size: 'md', shape: 'rounded', icon: 'none', label: 'Conectar Bsale', fw: 500, ls: 0, tt: 'none' },
+  'cta-pill': { variant: 'gold', size: 'lg', shape: 'pill', icon: 'trailing', label: 'Empezar ahora', fw: 600, ls: 0, tt: 'none' },
+  'brutal': { variant: 'danger', size: 'lg', shape: 'square', icon: 'none', label: 'BORRAR', fw: 700, ls: 8, tt: 'uppercase' },
+  'reset': { variant: 'primary', size: 'md', state: 'default', icon: 'none', shape: 'rounded', label: 'Conectar Bsale', fw: 500, ls: 0, tt: 'none' }
+};
+
+function loadPreset(name) {
+  const p = PRESETS[name];
+  if (!p) return;
+  Object.keys(p).forEach(k => state[k] = p[k]);
+  document.getElementById('labelInput').value = state.label;
+  document.getElementById('fwSlider').value = state.fw;
+  document.getElementById('lsSlider').value = state.ls;
+}
+
+// EVENT WIRING · pills
+document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+  const ctrl = row.dataset.ctrl;
+  row.addEventListener('click', e => {
+    if (!e.target.classList.contains('opt')) return;
+    const val = e.target.dataset.val;
+    if (val !== undefined) state[ctrl] = val;
+  });
+});
+
+// Inputs
+document.getElementById('labelInput').addEventListener('input', e => state.label = e.target.value);
+document.getElementById('fwSlider').addEventListener('input', e => state.fw = parseInt(e.target.value));
+document.getElementById('lsSlider').addEventListener('input', e => state.ls = parseInt(e.target.value));
+
+// Initial render
+render();
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

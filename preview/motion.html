@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Motion tokens</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 18px 24px; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .group { border:1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 14px; background: #fff; }
+  .gh { font-size: 11px; letter-spacing:.06em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 8px; font-weight:600; }
+  .row { display:flex; align-items:center; gap: 12px; padding: 6px 0; font-family: var(--font-mono); font-size: 11.5px; }
+  .nm { color: var(--fg-1); font-weight: 600; min-width: 130px; }
+  .vl { color: var(--fg-2); }
+  .track { height: 6px; flex:1; background: var(--bg-sunk); border-radius: 999px; overflow: hidden; position: relative; }
+  .ball { position: absolute; top: -3px; width: 12px; height: 12px; background: var(--smc-accent); border-radius: 50%; left: 0; animation: run 2s infinite; }
+  .ease-out  .ball { animation-timing-function: cubic-bezier(.22,1,.36,1); }
+  .ease-io   .ball { animation-timing-function: cubic-bezier(.65,0,.35,1); }
+  .ease-sp   .ball { animation-timing-function: cubic-bezier(.34,1.56,.64,1); }
+  @keyframes run { 0%,10% { left: 0 } 60%,100% { left: calc(100% - 12px) } }
+</style></head>
+<body>
+<div class="grid">
+  <div class="group">
+    <div class="gh">Easing</div>
+    <div class="row ease-out"><span class="nm">--ease-out</span><div class="track"><div class="ball"></div></div></div>
+    <div class="row ease-io"><span class="nm">--ease-in-out</span><div class="track"><div class="ball"></div></div></div>
+    <div class="row ease-sp"><span class="nm">--ease-spring</span><div class="track"><div class="ball"></div></div></div>
+  </div>
+  <div class="group">
+    <div class="gh">Duration</div>
+    <div class="row"><span class="nm">--dur-fast</span><span class="vl">120 ms · hover, tap</span></div>
+    <div class="row"><span class="nm">--dur-base</span><span class="vl">200 ms · layout, modal</span></div>
+    <div class="row"><span class="nm">--dur-slow</span><span class="vl">360 ms · scene change max</span></div>
+  </div>
+</div>
+</body></html>

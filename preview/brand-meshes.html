@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Mesh backgrounds</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 18px 24px; display:grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
+  .tile { aspect-ratio: 4/5; border-radius: var(--radius-md); border: 1px solid rgba(27,47,78,.08); display:flex; flex-direction: column; justify-content: flex-end; padding: 10px; color: var(--fg-1); overflow:hidden; position: relative; }
+  .nm { font-family: var(--font-mono); font-size: 11px; font-weight: 600; }
+  .vl { font-family: var(--font-mono); font-size: 10px; opacity: .8; }
+  .ocean { background:
+    radial-gradient(120% 80% at 10% 10%, #D6DEEA 0%, transparent 60%),
+    radial-gradient(120% 80% at 90% 90%, #BDF7E5 0%, transparent 55%),
+    var(--smc-cream); }
+  .sand  { background:
+    radial-gradient(120% 80% at 20% 0%, #F4E7C3 0%, transparent 65%),
+    radial-gradient(140% 100% at 100% 100%, #EEEEE8 0%, transparent 60%),
+    var(--smc-cream); }
+  .gold  { background:
+    radial-gradient(140% 80% at 0% 100%, #DCBC75 0%, transparent 55%),
+    radial-gradient(140% 100% at 100% 0%, #F4E7C3 0%, transparent 65%),
+    var(--smc-cream-200); }
+  .navy  { background:
+    radial-gradient(120% 80% at 20% 20%, #1B2F4E 0%, transparent 60%),
+    radial-gradient(160% 100% at 100% 100%, #131F35 0%, transparent 60%),
+    #0A1322; color: var(--smc-cream); }
+  .cream { background:
+    radial-gradient(120% 80% at 30% 20%, #FCFCFB 0%, transparent 60%),
+    radial-gradient(160% 100% at 90% 100%, #EEEEE8 0%, transparent 65%),
+    var(--smc-cream); }
+  .navy .vl { opacity: .7; }
+</style></head>
+<body>
+  <div class="tile ocean"><span class="nm">Ocean</span><span class="vl">cream · navy-100 · accent-100</span></div>
+  <div class="tile sand"><span class="nm">Sand</span><span class="vl">cream · gold-100 · cream-200</span></div>
+  <div class="tile gold"><span class="nm">Gold</span><span class="vl">cream-200 · gold-300 · gold-100</span></div>
+  <div class="tile navy"><span class="nm">Navy</span><span class="vl">navy-900 · navy-500 · navy-700</span></div>
+  <div class="tile cream"><span class="nm">Cream</span><span class="vl">cream · cream-50 · cream-200</span></div>
+</body></html>

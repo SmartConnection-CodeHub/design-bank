@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Badges & pills</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 22px 24px; display:flex; gap: 28px; flex-direction: column; }
+  .row { display:flex; gap: 8px; flex-wrap: wrap; align-items:center; }
+  .label { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); min-width: 80px; letter-spacing: .04em; text-transform: uppercase; font-weight:600; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 100px; font-size: 12px; font-weight: 500; border: 1px solid transparent; }
+  .b-soft-success { background: var(--success-soft); color: var(--smc-accent-700); }
+  .b-soft-warning { background: var(--warning-soft); color: var(--smc-gold-700); }
+  .b-soft-danger  { background: var(--danger-soft); color: #872A22; }
+  .b-soft-info    { background: var(--info-soft); color: var(--smc-navy-700); }
+  .b-solid-navy   { background: var(--smc-navy); color: var(--smc-cream); }
+  .b-outline      { border-color: var(--border-default); color: var(--fg-1); background: #fff; }
+  .b-mono         { font-family: var(--font-mono); font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--bg-sunk); color: var(--fg-1); }
+  .dot { width:6px; height:6px; border-radius: 999px; background: currentColor; }
+
+  .filter { background: #fff; border: 1px solid var(--border-default); padding: 6px 14px; border-radius: 100px; font-size: 13px; color: var(--fg-1); display:inline-flex; gap: 6px; align-items: center; }
+  .filter.on { background: var(--smc-navy); color: var(--smc-cream); border-color: var(--smc-navy); }
+  .filter.gold { background: var(--smc-gold); color: var(--smc-navy-900); border-color: var(--smc-gold); }
+</style></head>
+<body>
+  <div class="row"><span class="label">Status</span>
+    <span class="badge b-soft-success"><span class="dot"></span>Conectado</span>
+    <span class="badge b-soft-warning">Sync pendiente</span>
+    <span class="badge b-soft-danger">Token expirado</span>
+    <span class="badge b-soft-info">Beta</span>
+    <span class="badge b-solid-navy">Plan Pro</span>
+    <span class="badge b-outline">Free</span>
+    <span class="badge b-mono">v0.4.2</span>
+  </div>
+  <div class="row"><span class="label">Filtro pills</span>
+    <button class="filter on">Todos · 13</button>
+    <button class="filter">E-commerce</button>
+    <button class="filter">Integraciones</button>
+    <button class="filter">IA</button>
+    <button class="filter gold">★ Destacados</button>
+    <button class="filter">+ Más</button>
+  </div>
+</body></html>

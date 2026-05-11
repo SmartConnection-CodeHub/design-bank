@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Marketplace · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 380px; display:grid; grid-template-columns: 1fr 320px; gap: 14px; }
+  .mp-board { background: #fff; border-radius: 12px; padding: 18px; display:flex; flex-direction:column; gap: 14px; box-shadow: var(--shadow-rest); }
+  .mp-h { display:flex; justify-content: space-between; align-items: baseline; }
+  .mp-h h4 { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.025em; margin: 0; }
+  .mp-h .crumb { font: 11px var(--font-mono); color: var(--fg-3); }
+  .mp-strip { display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mp-strip .s { background: var(--bg-sunk); border-radius: 8px; padding: 12px; display:flex; flex-direction:column; gap: 4px; }
+  .mp-strip .s .lbl { font: 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+  .mp-strip .s .num { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.02em; color: var(--fg-1); font-variant-numeric: tabular-nums; }
+  .mp-strip .s .delta { font: 10px var(--font-mono); color: var(--smc-accent-700); }
+
+  .mp-table { display:flex; flex-direction:column; }
+  .mp-th { display:grid; grid-template-columns: 32px 1fr 90px 80px 90px 80px; gap: 10px; padding: 8px 12px; font: 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); border-bottom: 1px solid var(--border-subtle); }
+  .mp-row { display:grid; grid-template-columns: 32px 1fr 90px 80px 90px 80px; gap: 10px; padding: 12px; align-items: center; font-size: 12.5px; border-bottom: 1px solid var(--border-subtle); }
+  .mp-row:hover { background: var(--bg-sunk); }
+  .mp-row .thumb { width: 32px; height: 32px; border-radius: 5px; background: linear-gradient(135deg, var(--smc-navy), var(--smc-navy-500)); }
+  .mp-row .thumb.gold { background: linear-gradient(135deg, var(--smc-gold), var(--smc-gold-700)); }
+  .mp-row .nm { font-weight: 500; color: var(--fg-1); }
+  .mp-row .nm small { display:block; font: 10px var(--font-mono); color: var(--fg-3); margin-top: 1px; }
+  .mp-row .v { font: 12px var(--font-mono); color: var(--fg-2); }
+  .mp-row .badge { font: 9px var(--font-mono); padding: 4px 8px; border-radius: 99px; letter-spacing: .04em; text-transform: uppercase; text-align: center; }
+  .mp-row .badge.meli { background: #FFF159; color: #2D3277; }
+  .mp-row .badge.b2g { background: var(--smc-navy); color: var(--smc-cream); }
+  .mp-row .badge.both { background: var(--smc-accent-100); color: var(--smc-accent-700); }
+  .mp-row .stat { font: 9px var(--font-mono); padding: 4px 8px; border-radius: 99px; text-align: center; }
+  .mp-row .stat.ok { background: var(--smc-accent-100); color: var(--smc-accent-700); }
+  .mp-row .stat.warn { background: var(--smc-gold-100); color: var(--smc-gold-700); }
+
+  .mp-side { background: var(--smc-navy-900); color: var(--smc-cream); border-radius: 12px; padding: 18px; display:flex; flex-direction:column; gap: 12px; }
+  .mp-side .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent); }
+  .mp-side h5 { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.02em; margin: 0; }
+  .mp-feed { display:flex; flex-direction:column; gap: 10px; max-height: 220px; overflow:hidden; }
+  .mp-evt { display:flex; gap: 8px; padding: 8px; background: rgba(255,255,255,.04); border-radius: 6px; font-size: 11.5px; }
+  .mp-evt .when { font: 10px var(--font-mono); color: var(--smc-cream-400); width: 50px; flex-shrink: 0; }
+  .mp-evt .what { color: var(--smc-cream); line-height: 1.4; }
+  .mp-evt .what b { color: var(--smc-accent); font-weight: 600; }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Marketplace">
+<div class="hub">
+  <header class="hub-top"><div class="brand">Marketplace<span class="dot">.</span></div><div class="crumbs">proyectos · 06/13 · MeLi + B2G</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · integración MercadoLibre + B2G</div>
+  <h1 class="hub-title">Un publicación, dos marketplaces.</h1>
+  <p class="hub-strap">Hub de listings sincronizados a MercadoLibre y B2G. Stock unificado, precios por canal, feed de eventos vivo. Webhook retry con jitter cuando MeLi se cae.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Listings + sync feed</button>
+    <button class="pill"><span class="n">02</span>Publicación nueva</button>
+    <button class="pill"><span class="n">03</span>Mapping de variantes</button>
+    <button class="pill"><span class="n">04</span>Errores webhook</button>
+    <button class="pill"><span class="n">05</span>Reportes ventas</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 listings · webhook live · 384 publicados</div>
+      <h3 class="ttl">Listings sincronizados · ambos canales</h3>
+      <div class="stage">
+        <div class="mp-board">
+          <div class="mp-h"><h4>384 publicaciones vivas</h4><span class="crumb">Marketplace / listings · sincr. hace 4 s</span></div>
+          <div class="mp-strip">
+            <div class="s"><span class="lbl">MeLi activos</span><span class="num">312</span><span class="delta">↑ 8 hoy</span></div>
+            <div class="s"><span class="lbl">B2G activos</span><span class="num">142</span><span class="delta">↑ 2 hoy</span></div>
+            <div class="s"><span class="lbl">Stock sincronizado</span><span class="num">99.4%</span><span class="delta">3 dif</span></div>
+            <div class="s"><span class="lbl">Webhook retry</span><span class="num">04</span><span class="delta" style="color:var(--smc-gold-700)">3 MeLi</span></div>
+          </div>
+          <div class="mp-table">
+            <div class="mp-th"><span></span><span>Producto · SKU</span><span>Canal</span><span>Precio</span><span>Stock</span><span>Status</span></div>
+            <div class="mp-row"><div class="thumb"></div><span class="nm">Hoodie Andes verde<small>KS-04-H-VRD</small></span><span class="badge both">ambos</span><span class="v">$54.990</span><span class="v">42 u.</span><span class="stat ok">sync</span></div>
+            <div class="mp-row"><div class="thumb gold"></div><span class="nm">Cap K/S mostaza<small>KS-04-C-MST</small></span><span class="badge meli">MeLi</span><span class="v">$18.990</span><span class="v">7 u.</span><span class="stat warn">low stock</span></div>
+            <div class="mp-row"><div class="thumb"></div><span class="nm">Tee Andes negra<small>KS-04-T-NGR</small></span><span class="badge both">ambos</span><span class="v">$24.990</span><span class="v">180 u.</span><span class="stat ok">sync</span></div>
+            <div class="mp-row"><div class="thumb"></div><span class="nm">Cosequin DS 60<small>CSQ-DS-60</small></span><span class="badge b2g">B2G</span><span class="v">$38.990</span><span class="v">14 u.</span><span class="stat ok">sync</span></div>
+            <div class="mp-row"><div class="thumb gold"></div><span class="nm">Snack salmón<small>IP-SNK-001</small></span><span class="badge meli">MeLi</span><span class="v">$4.990</span><span class="v">240 u.</span><span class="stat warn">retry x3</span></div>
+          </div>
+        </div>
+        <div class="mp-side">
+          <span class="eb">● Feed webhook · vivo</span>
+          <h5>Eventos últimos 5 min</h5>
+          <div class="mp-feed">
+            <div class="mp-evt"><span class="when">00:04</span><span class="what">MeLi · venta <b>KS-04-T-NGR</b> · 2 u.</span></div>
+            <div class="mp-evt"><span class="when">00:18</span><span class="what">B2G · sync stock <b>CSQ-DS-60</b></span></div>
+            <div class="mp-evt"><span class="when">00:42</span><span class="what">MeLi · retry <b>IP-SNK-001</b> · 3/5</span></div>
+            <div class="mp-evt"><span class="when">01:12</span><span class="what">MeLi · venta <b>KS-04-C-MST</b> · 1 u.</span></div>
+            <div class="mp-evt"><span class="when">02:47</span><span class="what">B2G · publicación nueva <b>KS-04-H-VRD</b></span></div>
+            <div class="mp-evt"><span class="when">03:21</span><span class="what">MeLi · precio update <b>KS-04-T-NGR</b></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · listings</span></div>
+      <div class="dim"><span class="name">Canal filter</span><div class="opts"><span class="opt on">todos</span><span class="opt">MeLi</span><span class="opt">B2G</span></div></div>
+      <div class="dim"><span class="name">Sort</span><div class="opts"><span class="opt on">recientes</span><span class="opt">stock</span><span class="opt">precio</span></div></div>
+      <div class="dim"><span class="name">Feed lateral</span><div class="opts"><span class="opt on">dark</span><span class="opt">colapsado</span></div></div>
+      <div class="dim"><span class="name">Auto-retry</span><div class="opts"><span class="opt on">5x · jitter</span><span class="opt">manual</span></div></div>
+      <div class="dim"><span class="name">Densidad tabla</span><div class="opts"><span class="opt">compacta</span><span class="opt on">cómoda</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">Node + Bull queue. Webhook handlers MeLi SDK + B2G REST. Postgres + Supabase realtime. Sentry para alertas. SDK federado <b>@smc/marketplace-client</b>.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

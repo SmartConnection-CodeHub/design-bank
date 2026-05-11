@@ -1,0 +1,222 @@
+/* ============================================================================
+   SMC Design System — Canonical tokens
+   Consumed by every preview card, UI kit, and downstream product.
+   Tailwind v4 reads these via @theme inline in the monorepo;
+   here they live as plain CSS custom properties for portability.
+   ========================================================================= */
+
+/* ---- Webfont registration ------------------------------------------------ */
+/* Inter (body), Instrument Serif (editorial H1 — Anthropic Sans substitute),
+   JetBrains Mono (code).  Substitution flagged in README. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* ---- CANONICAL COLOR TOKENS ------------------------------------------- */
+  --smc-cream:        #F8F8F6;   /* background base */
+  --smc-navy:         #1B2F4E;   /* primary */
+  --smc-gold:         #C49A3A;   /* accent secundario */
+  --smc-accent:       #00E5B0;   /* SMC tech green */
+
+  /* ---- COLOR SCALE (derived) ------------------------------------------- */
+  --smc-cream-50:     #FCFCFB;
+  --smc-cream-100:    #F8F8F6;   /* = base */
+  --smc-cream-200:    #EEEEE8;
+  --smc-cream-300:    #DCDCD2;
+  --smc-cream-400:    #B8B8AB;
+
+  --smc-navy-50:      #EEF2F8;
+  --smc-navy-100:     #D6DEEA;
+  --smc-navy-300:     #6B7E9C;
+  --smc-navy-500:     #1B2F4E;   /* = base */
+  --smc-navy-700:     #131F35;
+  --smc-navy-900:     #0A1322;
+
+  --smc-gold-100:     #F4E7C3;
+  --smc-gold-300:     #DCBC75;
+  --smc-gold-500:     #C49A3A;   /* = base */
+  --smc-gold-700:     #8A6B23;
+
+  --smc-accent-100:   #BDF7E5;
+  --smc-accent-300:   #4DEBC4;
+  --smc-accent-500:   #00E5B0;   /* = base */
+  --smc-accent-700:   #009E78;
+
+  /* ---- SEMANTIC SURFACES ----------------------------------------------- */
+  --bg:               var(--smc-cream-100);
+  --bg-elevated:      #FFFFFF;
+  --bg-sunk:          var(--smc-cream-200);
+  --bg-inverse:       var(--smc-navy-500);
+
+  /* ---- SEMANTIC TEXT --------------------------------------------------- */
+  --fg-1:             var(--smc-navy-700);   /* primary copy */
+  --fg-2:             var(--smc-navy-300);   /* secondary copy */
+  --fg-3:             #8A95A8;               /* muted / hint */
+  --fg-inverse:       var(--smc-cream-50);
+  --fg-link:          var(--smc-navy-500);
+
+  /* ---- SEMANTIC STATUS ------------------------------------------------- */
+  --success:          var(--smc-accent-500);
+  --success-soft:     var(--smc-accent-100);
+  --warning:          var(--smc-gold-500);
+  --warning-soft:     var(--smc-gold-100);
+  --danger:           #D9483A;
+  --danger-soft:      #FAD9D5;
+  --info:             var(--smc-navy-500);
+  --info-soft:        var(--smc-navy-100);
+
+  /* ---- BORDERS / DIVIDERS --------------------------------------------- */
+  --border-subtle:    var(--smc-cream-300);
+  --border-default:   var(--smc-cream-400);
+  --border-strong:    var(--smc-navy-300);
+  --border-focus:     var(--smc-accent-500);
+
+  /* ---- RADIUS ---------------------------------------------------------- */
+  --radius-xs:        4px;
+  --radius-sm:        6px;
+  --radius-md:        10px;   /* CARDS — canonical */
+  --radius-lg:        14px;
+  --radius-pill:      100px;  /* FILTROS — canonical */
+  --radius-full:      9999px;
+
+  /* ---- SHADOW (flat system) ------------------------------------------- */
+  --shadow-rest:      0 1px 2px rgba(27,47,78,.08);
+  --shadow-hover:     0 8px 24px rgba(27,47,78,.12);
+  --shadow-pressed:   0 1px 1px rgba(27,47,78,.16) inset;
+  --shadow-focus:     0 0 0 3px rgba(0,229,176,.30);
+
+  /* ---- SPACING (4 px base) -------------------------------------------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* ---- MOTION (Framer Motion echo) ------------------------------------ */
+  --ease-out:         cubic-bezier(.22,1,.36,1);
+  --ease-in-out:      cubic-bezier(.65,0,.35,1);
+  --ease-spring:      cubic-bezier(.34,1.56,.64,1);
+  --dur-fast:         120ms;
+  --dur-base:         200ms;
+  --dur-slow:         360ms;
+
+  /* ---- TYPE STACKS ----------------------------------------------------- */
+  --font-sans:        "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display:     "Instrument Serif", "Anthropic Sans", "Tiempos Headline", Georgia, serif;
+  --font-mono:        "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* ---- TYPE SCALE (mobile-first; bump at md) -------------------------- */
+  --t-display:        clamp(40px, 6vw, 72px);
+  --t-h1:             clamp(32px, 4.4vw, 48px);
+  --t-h2:             clamp(24px, 3vw, 32px);
+  --t-h3:             20px;
+  --t-h4:             17px;
+  --t-body:           15px;
+  --t-small:          13px;
+  --t-micro:          11px;
+
+  --lh-tight:         1.08;
+  --lh-snug:          1.24;
+  --lh-base:          1.5;
+  --lh-loose:         1.7;
+
+  --tracking-tight:   -0.02em;
+  --tracking-snug:    -0.01em;
+  --tracking-base:    0;
+  --tracking-wide:    0.04em;
+}
+
+/* ============================================================================
+   SEMANTIC TYPE CLASSES — drop on raw tags or apply directly
+   ========================================================================= */
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 400;
+  color: var(--fg-1);
+}
+.t-h1, h1 {
+  font-family: var(--font-display);
+  font-size: var(--t-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 400;
+  color: var(--fg-1);
+}
+.t-h2, h2 {
+  font-family: var(--font-sans);
+  font-size: var(--t-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+  font-weight: 600;
+  color: var(--fg-1);
+}
+.t-h3, h3 {
+  font-family: var(--font-sans);
+  font-size: var(--t-h3);
+  line-height: var(--lh-snug);
+  font-weight: 600;
+  color: var(--fg-1);
+}
+.t-h4, h4 {
+  font-family: var(--font-sans);
+  font-size: var(--t-h4);
+  line-height: var(--lh-snug);
+  font-weight: 600;
+  color: var(--fg-1);
+}
+.t-body, p {
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-base);
+  color: var(--fg-1);
+}
+.t-secondary {
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-base);
+  color: var(--fg-2);
+}
+.t-small {
+  font-family: var(--font-sans);
+  font-size: var(--t-small);
+  line-height: var(--lh-base);
+  color: var(--fg-2);
+}
+.t-micro {
+  font-family: var(--font-sans);
+  font-size: var(--t-micro);
+  line-height: var(--lh-base);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--fg-3);
+  font-weight: 500;
+}
+.t-code, code, pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: var(--lh-base);
+  color: var(--fg-1);
+}
+
+/* ============================================================================
+   GLOBAL RESET — minimal, opt-in
+   ========================================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

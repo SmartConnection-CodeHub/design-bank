@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SAP CPI Parque Arauco · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 380px; display:flex; flex-direction:column; gap: 14px; }
+  .pa-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .pa-flow { background: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px; display:flex; flex-direction:column; gap: 4px; box-shadow: var(--shadow-rest); cursor: pointer; }
+  .pa-flow:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .pa-flow .nm { font: 600 11px var(--font-sans); color: var(--fg-1); }
+  .pa-flow .sub { font: 9px var(--font-mono); color: var(--fg-3); letter-spacing: .04em; }
+  .pa-flow .dot { width: 6px; height: 6px; border-radius: 99px; align-self: flex-start; }
+  .pa-flow.ok .dot { background: var(--smc-accent); box-shadow: 0 0 0 3px rgba(0,229,176,.25); }
+  .pa-flow.warn .dot { background: var(--smc-gold); }
+  .pa-flow.err .dot { background: #E04D3D; }
+  .pa-flow.off .dot { background: var(--fg-4); }
+  .pa-flow.off { opacity: .55; }
+
+  .pa-detail { display:grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
+  .pa-iflow { background: var(--smc-navy-900); color: var(--smc-cream); border-radius: 10px; padding: 18px; display:flex; flex-direction:column; gap: 12px; }
+  .pa-iflow .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent); }
+  .pa-iflow h5 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.025em; margin: 0; color: var(--smc-cream); }
+  .pa-step { display:flex; gap: 10px; padding: 9px 12px; background: rgba(255,255,255,.04); border-radius: 6px; align-items: center; font: 12px var(--font-mono); }
+  .pa-step .ix { color: var(--smc-cream-400); width: 16px; }
+  .pa-step .nm { color: var(--smc-cream); flex: 1; }
+  .pa-step .tm { color: var(--smc-cream-400); font-size: 10px; }
+  .pa-step.ok::before { content: "✓"; color: var(--smc-accent); margin-right: 4px; }
+  .pa-side2 { background: #fff; border-radius: 10px; padding: 14px; display:flex; flex-direction:column; gap: 10px; box-shadow: var(--shadow-rest); }
+  .pa-side2 .eb { font: 600 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+  .pa-side2 .row { display:flex; justify-content: space-between; font-size: 12px; padding: 6px 0; border-bottom: 1px solid var(--border-subtle); }
+  .pa-side2 .row .l { color: var(--fg-3); }
+  .pa-side2 .row .v { font: 600 11px var(--font-mono); color: var(--fg-1); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="SAP CPI Parque Arauco">
+<div class="hub">
+  <header class="hub-top"><div class="brand">SAP CPI · Parque Arauco<span class="dot">.</span></div><div class="crumbs">proyectos · 10/13 · mall ops</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · integración mall · 18 iflows</div>
+  <h1 class="hub-title">18 iflows manteniendo el mall en sincro.</h1>
+  <p class="hub-strap">SAP Cloud Integration tenant dedicado para Parque Arauco. Locatarios, contratos, facturación, asistencia, BTW. Verde es bueno. Naranjo es revisar mañana.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Grid 18 iflows</button>
+    <button class="pill"><span class="n">02</span>iflow detalle</button>
+    <button class="pill"><span class="n">03</span>Mensajes hoy</button>
+    <button class="pill"><span class="n">04</span>Roles + acceso</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 + 02 grid + detalle iflow · live</div>
+      <h3 class="ttl">Tenant: SMC-PAR-PROD · 18 iflows · 14 vivos</h3>
+      <div class="stage">
+        <div class="pa-grid">
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-LOC-001</span><span class="sub">locatarios sync</span></div>
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-LOC-002</span><span class="sub">contratos</span></div>
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-INV-001</span><span class="sub">facturación arriendo</span></div>
+          <div class="pa-flow warn"><span class="dot"></span><span class="nm">ZPAR-INV-002</span><span class="sub">facturación GLA · 3 err</span></div>
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-ASI-001</span><span class="sub">asistencia diaria</span></div>
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-VTA-001</span><span class="sub">ventas locatario</span></div>
+
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-VTA-002</span><span class="sub">ventas consolidado</span></div>
+          <div class="pa-flow err"><span class="dot"></span><span class="nm">ZPAR-BTW-001</span><span class="sub">BTW · falla auth</span></div>
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-EST-001</span><span class="sub">estacionamiento</span></div>
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-PRO-001</span><span class="sub">proveedores BP</span></div>
+          <div class="pa-flow off"><span class="dot"></span><span class="nm">ZPAR-DEV-001</span><span class="sub">dev sandbox</span></div>
+          <div class="pa-flow ok"><span class="dot"></span><span class="nm">ZPAR-CAM-001</span><span class="sub">campañas mkt</span></div>
+        </div>
+
+        <div class="pa-detail">
+          <div class="pa-iflow">
+            <span class="eb">★ Seleccionado · ZPAR-INV-001</span>
+            <h5>Facturación arriendo · sender → IDoc</h5>
+            <div class="pa-step ok"><span class="ix">01</span><span class="nm">SF Adapter · receive</span><span class="tm">0.14 s</span></div>
+            <div class="pa-step ok"><span class="ix">02</span><span class="nm">Content Modifier · headers</span><span class="tm">0.02 s</span></div>
+            <div class="pa-step ok"><span class="ix">03</span><span class="nm">Splitter · por contrato</span><span class="tm">0.21 s</span></div>
+            <div class="pa-step ok"><span class="ix">04</span><span class="nm">Mapping · INVOIC02</span><span class="tm">0.18 s</span></div>
+            <div class="pa-step ok"><span class="ix">05</span><span class="nm">IDoc Adapter · send</span><span class="tm">0.84 s</span></div>
+          </div>
+          <div class="pa-side2">
+            <span class="eb">Hoy</span>
+            <div class="row"><span class="l">Mensajes procesados</span><span class="v">14.842</span></div>
+            <div class="row"><span class="l">p95 latencia</span><span class="v">1.2 s</span></div>
+            <div class="row"><span class="l">Errores</span><span class="v">3</span></div>
+            <div class="row"><span class="l">Dead-letter</span><span class="v">0</span></div>
+            <div class="row"><span class="l">Tenant uptime</span><span class="v">99.94%</span></div>
+            <div class="row"><span class="l">Próx mant.</span><span class="v">05 may</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · iflows</span></div>
+      <div class="dim"><span class="name">Vista grid</span><div class="opts"><span class="opt on">6 cols</span><span class="opt">4 cols</span><span class="opt">tabla</span></div></div>
+      <div class="dim"><span class="name">Filtro estado</span><div class="opts"><span class="opt on">todos</span><span class="opt">solo ok</span><span class="opt">solo issues</span></div></div>
+      <div class="dim"><span class="name">Detalle iflow</span><div class="opts"><span class="opt on">dark steps</span><span class="opt">flowchart</span></div></div>
+      <div class="dim"><span class="name">Auto-select</span><div class="opts"><span class="opt on">primer err</span><span class="opt">último click</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">SAP Cloud Integration · tenant dedicado SMC-PAR-PROD. Mapping Groovy + XSLT. Receivers IDoc + REST. Dashboard custom Next.js sobre CPI API.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

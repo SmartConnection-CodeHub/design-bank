@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>RADAR · Brief semanal</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { padding: 0; background: var(--bg); }
+  .app { max-width: 920px; margin: 0 auto; padding: 32px 28px 80px; }
+
+  /* Cover masthead */
+  .masthead { background:
+    radial-gradient(120% 80% at 10% 10%, #D6DEEA 0%, transparent 60%),
+    radial-gradient(140% 100% at 100% 100%, #BDF7E5 0%, transparent 55%),
+    var(--smc-cream-200);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    padding: 28px 32px;
+    display:flex; flex-direction:column; gap: 8px;
+    margin-bottom: 24px;
+  }
+  .masthead .row { display:flex; align-items: center; justify-content: space-between; }
+  .masthead .nm { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.03em; color: var(--smc-navy); }
+  .masthead .nm .green { color: var(--smc-accent-700); }
+  .masthead .meta { font-family: var(--font-mono); font-size: 12px; color: var(--fg-2); }
+  .masthead h1 { font-family: var(--font-display); font-size: 48px; line-height: 1.05; letter-spacing: -0.025em; margin: 12px 0 0; color: var(--fg-1); }
+  .masthead h1 em { color: var(--smc-gold); font-style: italic; }
+  .masthead .read { font-size: 13px; color: var(--fg-2); font-family: var(--font-sans); margin-top: 6px; }
+
+  /* TOC */
+  .toc { display:grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 28px; }
+  .toc .t-it { background: #fff; border: 1px solid var(--border-subtle); border-radius: 100px; padding: 8px 14px; display:flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-1); }
+  .toc .t-it .n { font: 600 11px var(--font-mono); color: var(--smc-accent-700); }
+
+  /* Section */
+  .sec { background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 22px 26px; margin-bottom: 16px; }
+  .sec .eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--smc-accent-700); font-weight: 600; }
+  .sec h2 { font-family: var(--font-display); font-size: 30px; line-height: 1.1; letter-spacing: -0.02em; margin: 4px 0 8px; color: var(--fg-1); }
+  .sec .lede { font-size: 15px; color: var(--fg-2); margin: 0 0 14px; line-height: 1.55; }
+
+  /* Section 1 — top devs */
+  .devs { display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .dev { padding: 12px; border: 1px solid var(--border-subtle); border-radius: 8px; display:flex; flex-direction:column; gap: 4px; }
+  .dev .rank { font: 600 10px var(--font-mono); color: var(--fg-3); letter-spacing: .06em; }
+  .dev .nm { font-size: 13.5px; font-weight: 600; color: var(--fg-1); }
+  .dev .meta { font: 11px var(--font-mono); color: var(--fg-2); }
+  .dev .stars { color: var(--smc-gold); font-size: 11px; }
+
+  /* Section 2 — motion picks */
+  .mtn { display:flex; flex-direction: column; gap: 10px; }
+  .mtn-row { display:flex; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border-subtle); align-items: center; }
+  .mtn-row:last-child { border-bottom: 0; }
+  .mtn .thumb { width: 80px; aspect-ratio: 4/5; border-radius: 6px; flex-shrink: 0; }
+  .mtn .thumb.a { background: radial-gradient(circle at 30% 30%, var(--smc-gold-300), var(--smc-navy-700)); }
+  .mtn .thumb.b { background: radial-gradient(circle at 70% 20%, var(--smc-accent-300), var(--smc-navy-900)); }
+  .mtn .thumb.c { background: radial-gradient(circle at 50% 50%, var(--smc-cream-300), var(--smc-gold-700)); }
+  .mtn .info .ti { font-size: 14px; font-weight: 600; color: var(--fg-1); }
+  .mtn .info .hd { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 2px; }
+  .mtn .why { font-size: 12px; color: var(--fg-2); margin-top: 4px; line-height: 1.45; }
+
+  /* Section 3 — sources */
+  .src { display:grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .src .s { background: var(--bg-sunk); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px 12px; display:flex; flex-direction: column; gap: 2px; }
+  .src .s .h { display:flex; justify-content: space-between; align-items: center; }
+  .src .s .h .nm { font: 600 12px var(--font-mono); color: var(--fg-1); }
+  .src .s .h .cn { font: 10px var(--font-mono); color: var(--fg-3); }
+  .src .s .d { font-size: 11.5px; color: var(--fg-2); line-height: 1.4; }
+
+  /* Section 4 — pull quote */
+  .pull { background: var(--smc-navy); color: var(--smc-cream); }
+  .pull .eyebrow { color: var(--smc-accent); }
+  .pull h2 { color: var(--smc-cream); }
+  .pull blockquote { font-family: var(--font-display); font-size: 26px; line-height: 1.25; letter-spacing: -0.01em; margin: 0; font-style: italic; color: var(--smc-cream); border-left: 3px solid var(--smc-gold); padding-left: 18px; }
+  .pull .att { font: 600 11px var(--font-mono); color: var(--smc-cream-300); margin-top: 12px; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Section 5 — checklist */
+  .check { display:flex; flex-direction:column; gap: 8px; margin-top: 6px; }
+  .check .ck { display:flex; align-items: flex-start; gap: 10px; padding: 8px 12px; border: 1px solid var(--border-subtle); border-radius: 8px; }
+  .check .ck .box { width: 16px; height: 16px; border: 1.5px solid var(--border-default); border-radius: 4px; flex-shrink:0; margin-top: 1px; }
+  .check .ck.done .box { background: var(--smc-navy); border-color: var(--smc-navy); position: relative; }
+  .check .ck.done .box::after { content: "✓"; color: #fff; font-size: 10px; position: absolute; inset: 0; display:grid; place-items: center; }
+  .check .ck .lbl { font-size: 13px; color: var(--fg-1); }
+  .check .ck.done .lbl { text-decoration: line-through; color: var(--fg-3); }
+
+  .footer { display:flex; align-items: center; justify-content: space-between; margin-top: 22px; padding: 14px 0; border-top: 1px solid var(--border-subtle); font: 12px var(--font-mono); color: var(--fg-3); }
+</style></head>
+<body data-screen-label="RADAR Brief">
+<div class="app">
+
+  <div class="masthead">
+    <div class="row">
+      <div class="nm">RADAR<span class="green">.</span></div>
+      <div class="meta">N° 47 · Lun 11 May · 2 min lectura</div>
+    </div>
+    <h1>Esta semana: Cerebro <em>aprende</em><br/>de tus tickets.</h1>
+    <p class="read">Brief federado SMC — 5 secciones, escogidas por Cerebro, filtradas por Guillermo. Cero ruido, cero copy-paste de Twitter.</p>
+  </div>
+
+  <div class="toc">
+    <div class="t-it"><span class="n">01</span>Brief lunes</div>
+    <div class="t-it"><span class="n">02</span>Top devs cloud</div>
+    <div class="t-it"><span class="n">03</span>Motion IG</div>
+    <div class="t-it"><span class="n">04</span>Cita semana</div>
+    <div class="t-it"><span class="n">05</span>Checklist</div>
+  </div>
+
+  <!-- 01 -->
+  <section class="sec">
+    <div class="eyebrow">01 · Brief Lunes</div>
+    <h2>Resumen de la semana</h2>
+    <p class="lede">VOY pasó a producción en 4 cuentas (+2 vs. semana anterior). Cerebro empezó a leer tickets de Intranet — primer experimento de RAG sobre Supabase RLS. Kanki sold-out drop 03 en 6 h.</p>
+    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap: 12px;">
+      <div><div style="font: 11px var(--font-mono); color: var(--fg-3); letter-spacing:.06em; text-transform:uppercase;">VOY signups</div><div style="font-family: var(--font-display); font-size: 28px; color: var(--fg-1); letter-spacing:-0.01em">+24</div></div>
+      <div><div style="font: 11px var(--font-mono); color: var(--fg-3); letter-spacing:.06em; text-transform:uppercase;">Tickets Cerebro</div><div style="font-family: var(--font-display); font-size: 28px; color: var(--fg-1)">142</div></div>
+      <div><div style="font: 11px var(--font-mono); color: var(--fg-3); letter-spacing:.06em; text-transform:uppercase;">Kanki GMV</div><div style="font-family: var(--font-display); font-size: 28px; color: var(--smc-gold)">$3.2M</div></div>
+      <div><div style="font: 11px var(--font-mono); color: var(--fg-3); letter-spacing:.06em; text-transform:uppercase;">Uptime federado</div><div style="font-family: var(--font-display); font-size: 28px; color: var(--smc-accent-700)">99.97%</div></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="sec">
+    <div class="eyebrow">02 · Top Devs Cloud</div>
+    <h2>Tres devs LATAM que mirar</h2>
+    <div class="devs">
+      <div class="dev"><div class="rank">★ 01</div><div class="nm">Camila Ortiz</div><div class="meta">Supabase + Edge</div><div class="stars">★★★★★</div></div>
+      <div class="dev"><div class="rank">★ 02</div><div class="nm">Diego Acuña</div><div class="meta">React Server Components</div><div class="stars">★★★★☆</div></div>
+      <div class="dev"><div class="rank">★ 03</div><div class="nm">Joaquín Vera</div><div class="meta">Framer Motion · Lottie</div><div class="stars">★★★★☆</div></div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="sec">
+    <div class="eyebrow">03 · Top Motion IG</div>
+    <h2>Estética de la semana</h2>
+    <div class="mtn">
+      <div class="mtn-row">
+        <div class="thumb a"></div>
+        <div class="info">
+          <div class="ti">Curtain reveal · @studio-mate</div>
+          <div class="hd">@studiomate · IG · 14 May</div>
+          <div class="why">Hero text revelado por una "cortina" navy → gold. Útil para Kanki Drop 04 launch.</div>
+        </div>
+      </div>
+      <div class="mtn-row">
+        <div class="thumb b"></div>
+        <div class="info">
+          <div class="ti">Number tick-up tabular · @vercel</div>
+          <div class="hd">@vercel · X · 12 May</div>
+          <div class="why">Métricas que cuentan hacia arriba con tabular-nums. Drop directo en el dashboard VOY.</div>
+        </div>
+      </div>
+      <div class="mtn-row">
+        <div class="thumb c"></div>
+        <div class="info">
+          <div class="ti">Stamped serif headlines · @rauno</div>
+          <div class="hd">@rauno · X · 10 May</div>
+          <div class="why">Tracking-tight serif sobre cream. Match exacto con la dirección de marca SMC.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="sec pull">
+    <div class="eyebrow">04 · Cita</div>
+    <h2>Lo que dijo Guillermo</h2>
+    <blockquote>"Si tu stack no aguanta un lunes a las 9, no es stack. Es deuda con interés compuesto."</blockquote>
+    <div class="att">— Guillermo González · standup interno · 11 May 2026</div>
+  </section>
+
+  <!-- 05 -->
+  <section class="sec">
+    <div class="eyebrow">05 · Motion Sources</div>
+    <h2>Esta semana en feeds</h2>
+    <div class="src">
+      <div class="s"><div class="h"><span class="nm">@rauno</span><span class="cn">2 piezas</span></div><div class="d">Tracking-tight serif heroes</div></div>
+      <div class="s"><div class="h"><span class="nm">@studio-mate</span><span class="cn">3 piezas</span></div><div class="d">Curtain reveals · motion sources</div></div>
+      <div class="s"><div class="h"><span class="nm">@vercel</span><span class="cn">1 pieza</span></div><div class="d">Number tick-up tabular</div></div>
+      <div class="s"><div class="h"><span class="nm">@once-ui</span><span class="cn">4 piezas</span></div><div class="d">Card hover lifts y focus rings</div></div>
+    </div>
+    <div class="check" style="margin-top: 14px;">
+      <div class="ck done"><div class="box"></div><div class="lbl">Aplicar curtain hero a Kanki Drop 04</div></div>
+      <div class="ck done"><div class="box"></div><div class="lbl">Probar tabular-nums en VOY breakdown</div></div>
+      <div class="ck"><div class="box"></div><div class="lbl">Migrar Toast a Framer spring (.34, 1.56, .64, 1)</div></div>
+      <div class="ck"><div class="box"></div><div class="lbl">Cerebro: agregar las 3 fuentes de motion al RAG</div></div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span>RADAR N° 47 · enviado a 312 suscriptores</span>
+    <span>← N° 46 &nbsp;|&nbsp; N° 48 →</span>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,150 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Tokens Glossary hub</title>
+<link rel="stylesheet" href="../colors_and_type.css"><link rel="stylesheet" href="hub.css">
+<style>
+.tk { flex: 1; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: #fff; padding: 22px; overflow: hidden; min-height: 0; }
+.tk[data-t] { display: none; }
+.tk[data-t][data-active] { display: flex; flex-direction: column; gap: 12px; }
+
+/* Colors */
+.tk-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.sw { display:flex; flex-direction: column; gap: 4px; }
+.sw .ch { aspect-ratio: 1; border-radius: 8px; border: 1px solid rgba(0,0,0,0.05); }
+.sw .nm { font: 600 11px var(--font-mono); color: var(--fg-1); }
+.sw .hx { font: 10px var(--font-mono); color: var(--fg-3); }
+
+/* Typography */
+.ty-row { display:flex; flex-direction: column; gap: 16px; }
+.ty-line { display:flex; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px dashed var(--border-subtle); }
+.ty-line .nm { width: 80px; font: 600 11px var(--font-mono); color: var(--fg-3); flex-shrink: 0; }
+.ty-line .spec { font-family: var(--font-display); color: var(--fg-1); letter-spacing: -0.02em; }
+
+/* Spacing */
+.sp-row { display:flex; flex-direction: column; gap: 8px; }
+.sp { display:flex; align-items: center; gap: 12px; }
+.sp .nm { width: 56px; font: 600 11px var(--font-mono); color: var(--fg-3); }
+.sp .bar { height: 12px; background: var(--smc-navy); border-radius: 3px; }
+.sp .v { font: 11px var(--font-mono); color: var(--fg-2); }
+
+/* Shadows */
+.sh-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 16px; }
+.sh-card { aspect-ratio: 5/3; background: #fff; border-radius: 12px; display:flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font: 600 12px var(--font-mono); color: var(--fg-1); }
+.sh-card .lbl { font-size: 10px; color: var(--fg-3); }
+.sh-card.rest { box-shadow: var(--shadow-rest); }
+.sh-card.hover { box-shadow: var(--shadow-hover); }
+.sh-card.focus { box-shadow: var(--shadow-focus); }
+.sh-card.inset { box-shadow: var(--shadow-inset); background: var(--bg-sunk); }
+
+/* Radii */
+.ra-row { display:flex; gap: 16px; align-items: flex-end; padding: 20px; flex-wrap: wrap; justify-content: center; flex: 1; }
+.ra-card { width: 80px; aspect-ratio: 1; background: var(--smc-navy); display: grid; place-items: center; color: var(--smc-cream); font: 600 11px var(--font-mono); }
+.ra-card.r4 { border-radius: 4px; }
+.ra-card.r8 { border-radius: 8px; }
+.ra-card.r10 { border-radius: 10px; background: var(--smc-gold); }
+.ra-card.r16 { border-radius: 16px; }
+.ra-card.r100 { border-radius: 100px; aspect-ratio: 16/9; width: 140px; background: var(--smc-accent-700); }
+.ra-cap { display:flex; flex-direction: column; align-items: center; gap: 6px; font: 11px var(--font-mono); color: var(--fg-2); }
+</style></head>
+<body data-screen-label="Tokens Glossary hub">
+<div class="hub">
+  <div class="hub-head">
+    <div><span class="crumb">Foundations</span><span class="crumb">Tokens Glossary</span></div>
+    <div class="meta"><span>5 familias</span><span class="live">live</span></div>
+  </div>
+  <div class="hub-scene">
+    <h1 class="hub-scene-title">Las decisiones, <em>nombradas</em>.</h1>
+    <p class="hub-scene-sub">Cada token tiene un solo nombre canónico y vive en una sola línea de <code style="font:600 12px var(--font-mono); color:var(--smc-accent-700)">tokens/*.css</code>. Cero magic numbers en componentes.</p>
+    <div class="tk" data-t="colors" data-active>
+      <div class="tk-grid">
+        <div class="sw"><div class="ch" style="background:var(--smc-cream)"></div><div class="nm">cream</div><div class="hx">#F8F8F6</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-navy)"></div><div class="nm">navy</div><div class="hx">#1B2F4E</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-gold)"></div><div class="nm">gold</div><div class="hx">#C49A3A</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-accent)"></div><div class="nm">accent</div><div class="hx">#00E5B0</div></div>
+        <div class="sw"><div class="ch" style="background:#FFFFFF; box-shadow: inset 0 0 0 1px var(--border-default)"></div><div class="nm">white</div><div class="hx">#FFFFFF</div></div>
+        <div class="sw"><div class="ch" style="background:#0F1B2D"></div><div class="nm">ink</div><div class="hx">#0F1B2D</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-navy-300)"></div><div class="nm">navy-300</div><div class="hx">#8FA0BD</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-navy-700)"></div><div class="nm">navy-700</div><div class="hx">#14253F</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-gold-300)"></div><div class="nm">gold-300</div><div class="hx">#E5C988</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-gold-700)"></div><div class="nm">gold-700</div><div class="hx">#8B6D29</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-accent-300)"></div><div class="nm">accent-300</div><div class="hx">#7DF5DA</div></div>
+        <div class="sw"><div class="ch" style="background:var(--smc-accent-700)"></div><div class="nm">accent-700</div><div class="hx">#00997B</div></div>
+      </div>
+    </div>
+    <div class="tk" data-t="type">
+      <div class="ty-row">
+        <div class="ty-line"><span class="nm">h1</span><span class="spec" style="font-size: 36px;">Editorial display</span></div>
+        <div class="ty-line"><span class="nm">h2</span><span class="spec" style="font-size: 26px;">Section title in serif</span></div>
+        <div class="ty-line"><span class="nm">body</span><span class="spec" style="font-family: var(--font-sans); font-size: 14px; letter-spacing: 0;">Body copy uses Inter at 14/1.55.</span></div>
+        <div class="ty-line"><span class="nm">mono</span><span class="spec" style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0;">monospace.tokens — 12px</span></div>
+        <div class="ty-line"><span class="nm">micro</span><span class="spec" style="font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase;">MICRO LABEL · 10/UPPER</span></div>
+      </div>
+    </div>
+    <div class="tk" data-t="spacing">
+      <div class="sp-row">
+        <div class="sp"><span class="nm">--s-1</span><div class="bar" style="width:4px"></div><span class="v">4 px</span></div>
+        <div class="sp"><span class="nm">--s-2</span><div class="bar" style="width:8px"></div><span class="v">8 px</span></div>
+        <div class="sp"><span class="nm">--s-3</span><div class="bar" style="width:12px"></div><span class="v">12 px</span></div>
+        <div class="sp"><span class="nm">--s-4</span><div class="bar" style="width:16px"></div><span class="v">16 px</span></div>
+        <div class="sp"><span class="nm">--s-5</span><div class="bar" style="width:24px"></div><span class="v">24 px</span></div>
+        <div class="sp"><span class="nm">--s-6</span><div class="bar" style="width:32px"></div><span class="v">32 px</span></div>
+        <div class="sp"><span class="nm">--s-7</span><div class="bar" style="width:48px"></div><span class="v">48 px</span></div>
+        <div class="sp"><span class="nm">--s-8</span><div class="bar" style="width:64px"></div><span class="v">64 px</span></div>
+      </div>
+    </div>
+    <div class="tk" data-t="shadow">
+      <div class="sh-grid">
+        <div class="sh-card rest">shadow-rest<span class="lbl">0 1px 2px rgba(0,0,0,.06)</span></div>
+        <div class="sh-card hover">shadow-hover<span class="lbl">0 8px 24px rgba(0,0,0,.08)</span></div>
+        <div class="sh-card focus">shadow-focus<span class="lbl">0 0 0 3px accent-300</span></div>
+        <div class="sh-card inset">shadow-inset<span class="lbl">inset 0 1px 2px rgba(0,0,0,.06)</span></div>
+      </div>
+    </div>
+    <div class="tk" data-t="radii">
+      <div class="ra-row">
+        <div class="ra-cap"><div class="ra-card r4">4</div>r-xs · chips</div>
+        <div class="ra-cap"><div class="ra-card r8">8</div>r-sm · inputs</div>
+        <div class="ra-cap"><div class="ra-card r10">10</div>r-md · cards ★</div>
+        <div class="ra-cap"><div class="ra-card r16">16</div>r-lg · panels</div>
+        <div class="ra-cap"><div class="ra-card r100">100</div>r-pill · pills ★</div>
+      </div>
+    </div>
+  </div>
+  <div class="hub-ctrls">
+    <div class="grp"><span class="lbl">Familia</span><span class="val" id="fn">Colors</span></div>
+    <div class="grp"><span class="lbl">Stats</span>
+      <div class="row"><span class="k">Tokens</span><span class="v" id="fc">12</span></div>
+      <div class="row"><span class="k">Aliases</span><span class="v" id="fa">8</span></div>
+      <div class="row"><span class="k">File</span><span class="v" id="ff">colors.css</span></div>
+    </div>
+    <div class="grp"><span class="lbl">Source</span><span class="val">tokens/index.css · 4.2 KB</span></div>
+    <div class="grp"><span class="lbl">Export</span><span class="val">CSS · JSON · Style Dict</span></div>
+  </div>
+  <div class="hub-pills">
+    <div class="row" id="pills">
+      <button class="pill" aria-pressed="true" data-t="colors"><span class="n">01</span>Colors</button>
+      <button class="pill" data-t="type"><span class="n">02</span>Typography</button>
+      <button class="pill" data-t="spacing"><span class="n">03</span>Spacing</button>
+      <button class="pill" data-t="shadow"><span class="n">04</span>Shadows</button>
+      <button class="pill" data-t="radii"><span class="n">05</span>Radii</button>
+    </div>
+    <a class="cta" href="#">Descargar tokens <span class="arrow">→</span></a>
+  </div>
+</div>
+<script>
+const META = {
+  colors: ['Colors', '12', '8', 'colors.css'],
+  type:   ['Typography', '5 ramps', '3 families', 'typography.css'],
+  spacing:['Spacing', '8 steps', '4 px base', 'spacing.css'],
+  shadow: ['Shadows', '4', '0 aliases', 'shadows.css'],
+  radii:  ['Radii', '5', '2 ★ canónicos', 'radii.css']
+};
+document.getElementById('pills').addEventListener('click', e => {
+  const b = e.target.closest('.pill'); if (!b) return;
+  document.querySelectorAll('#pills .pill').forEach(p => p.setAttribute('aria-pressed', p === b));
+  const t = b.dataset.t;
+  document.querySelectorAll('.tk').forEach(el => el.removeAttribute('data-active'));
+  document.querySelector('.tk[data-t="'+t+'"]').setAttribute('data-active','');
+  const m = META[t];
+  fn.textContent = m[0]; fc.textContent = m[1]; fa.textContent = m[2]; ff.textContent = m[3];
+});
+</script>
+</body></html>

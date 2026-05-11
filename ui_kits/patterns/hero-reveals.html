@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Hero Reveals · Patrón federado</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex: 1; display: grid; place-items: center; background: var(--bg-sunk); border-radius: 10px; position: relative; overflow: hidden; min-height: 340px; }
+  .phone { width: 230px; height: 460px; background: #000; border-radius: 32px; padding: 7px; position: relative; box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+  .phone::before { content:""; position:absolute; top:12px; left:50%; transform:translateX(-50%); width:60px; height:16px; background:#000; border-radius:99px; z-index:3; }
+  .phone-inner { width:100%; height:100%; background: var(--smc-cream); border-radius: 26px; overflow:hidden; position:relative; }
+  .hero-bg { position:absolute; inset:0; background:
+    radial-gradient(120% 80% at 20% 20%, #2E4769 0%, transparent 60%),
+    radial-gradient(140% 100% at 100% 100%, #131F35 0%, transparent 65%),
+    var(--smc-navy-700);
+  }
+  .hero-bg .ws {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 70%; opacity: .25;
+    background: radial-gradient(ellipse at 50% 100%, #DCBC75 0%, transparent 60%);
+  }
+  .hero-copy { position:absolute; left: 14px; right: 14px; bottom: 24px; color: var(--smc-cream); font-family: var(--font-display); font-size: 28px; line-height: 1.05; letter-spacing: -0.025em; text-transform: uppercase; }
+  .hero-copy .acc { color: var(--smc-gold); font-style: italic; }
+  .hero-eb { position: absolute; top: 70px; left: 14px; font: 600 9px var(--font-mono); color: var(--smc-cream); letter-spacing: .12em; text-transform: uppercase; background: rgba(255,255,255,.15); padding: 4px 9px; border-radius: 99px; backdrop-filter: blur(6px); }
+
+  /* Pinch zoom — hero image lives in a "lens" that grows */
+  .pinch .hero-bg { animation: pinch 4s var(--ease-out) infinite; transform-origin: 50% 60%; }
+  @keyframes pinch { 0%, 30% { transform: scale(1.18); filter: blur(0); } 60%, 100% { transform: scale(1); filter: blur(0); } }
+
+  /* Mask wipe */
+  .wipe .hero-bg { clip-path: inset(0 0 0 0); animation: wipe 3.5s var(--ease-out) infinite; }
+  @keyframes wipe { 0% { clip-path: inset(0 100% 0 0); } 60%, 100% { clip-path: inset(0 0 0 0); } }
+
+  /* Mirror split */
+  .mirror .hero-bg { display:none; }
+  .mirror::after, .mirror::before { content:""; position:absolute; inset:0; }
+  .mirror-l, .mirror-r { position:absolute; top:0; bottom:0; width:50%;
+    background: radial-gradient(120% 80% at 30% 30%, #2E4769 0%, transparent 60%), var(--smc-navy-700);
+  }
+  .mirror-l { left:0; animation: ml 3s var(--ease-out) infinite; }
+  .mirror-r { right:0; animation: mr 3s var(--ease-out) infinite; background: radial-gradient(120% 80% at 70% 30%, #DCBC75 0%, transparent 60%), var(--smc-navy-900); }
+  @keyframes ml { 0% { transform: translateX(-100%); } 50%,100% { transform: translateX(0); } }
+  @keyframes mr { 0% { transform: translateX(100%); } 50%,100% { transform: translateX(0); } }
+
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Hero Reveals">
+<div class="hub">
+  <header class="hub-top">
+    <div class="brand">Hero Reveals<span class="dot">.</span></div>
+    <div class="crumbs">patterns · cross-project · 5 variantes</div>
+  </header>
+  <div class="hub-eyebrow">Patrón federado · @smc/ui</div>
+  <h1 class="hub-title">Mostrar el héroe.</h1>
+  <p class="hub-strap">Cinco formas distintas de revelar la imagen-héroe de una página. Mobile-first, 60 fps, sin parpadeos. Pinch Zoom es el default para Kanki Drop launches; Mask Wipe se usa en VOY al cargar la cotización.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Pinch Zoom</button>
+    <button class="pill"><span class="n">02</span>Card Stack</button>
+    <button class="pill"><span class="n">03</span>Mask Wipe</button>
+    <button class="pill"><span class="n">04</span>Mirror Split</button>
+    <button class="pill"><span class="n">05</span>Crystallize</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 Pinch Zoom · 4 s loop · ease-out</div>
+      <h3 class="ttl">Drop 04 · Kanki Street</h3>
+      <div class="stage">
+        <div class="phone"><div class="phone-inner pinch">
+          <div class="hero-bg"><div class="ws"></div></div>
+          <div class="hero-eb">Drop 04 · Otoño 26</div>
+          <div class="hero-copy">Llega<br>el <span class="acc">frío.</span></div>
+        </div></div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles</span></div>
+      <div class="dim"><div class="row"><span class="name">Duración (ms)</span><span class="val">4000</span></div><input type="range" min="800" max="8000" step="100" value="4000"></div>
+      <div class="dim"><div class="row"><span class="name">Scale inicial</span><span class="val">1.18×</span></div><input type="range" min="1" max="2" step="0.01" value="1.18"></div>
+      <div class="dim"><span class="name">Origen del zoom</span><div class="opts"><span class="opt">centro</span><span class="opt on">50/60</span><span class="opt">producto</span></div></div>
+      <div class="dim"><span class="name">Easing</span><div class="opts"><span class="opt on">ease-out</span><span class="opt">in-out</span><span class="opt">spring</span></div></div>
+      <div class="dim"><span class="name">Trigger</span><div class="opts"><span class="opt on">on-load</span><span class="opt">scroll</span><span class="opt">tap</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Use this in</span>
+        <span class="where"><b>Kanki Street</b> · home hero + drop launch<br><b>InfoPet</b> · productos destacados<br><b>Marketing SMC</b> · hero principal</span>
+        <button class="btn">Copiar prompt →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Intranet · Login flow</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { padding: 0; background: var(--bg); }
+  .app { max-width: 1320px; margin: 0 auto; padding: 28px 24px 60px; }
+  header.top { display:flex; align-items:center; justify-content: space-between; margin-bottom: 22px; }
+  .brand { font-family: var(--font-display); font-size: 26px; letter-spacing: -0.03em; }
+  .brand .green { color: var(--smc-accent); }
+  .crumbs { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+
+  .flow { display: grid; grid-template-columns: repeat(5, 240px); gap: 18px; align-items: start; overflow-x: auto; padding-bottom: 16px; }
+  .screen { display:flex; flex-direction: column; gap: 8px; align-items: center; }
+  .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); letter-spacing: .06em; text-transform: uppercase; font-weight: 600; }
+
+  /* Phone frame */
+  .phone { width: 240px; height: 500px; background: #000; border-radius: 36px; padding: 8px; box-shadow: 0 12px 40px rgba(27,47,78,.12); position: relative; }
+  .phone::before { content: ""; position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; background: #000; border-radius: 99px; z-index: 2; }
+  .ph-inner { width: 100%; height: 100%; background: var(--bg); border-radius: 30px; overflow: hidden; position: relative; padding: 36px 16px 16px; display:flex; flex-direction:column; gap: 12px; }
+
+  .status { position: absolute; top: 8px; left: 16px; right: 16px; display:flex; justify-content: space-between; font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--fg-1); z-index: 3; }
+
+  /* Common bits */
+  .h1 { font-family: var(--font-display); font-size: 22px; line-height: 1.1; letter-spacing: -0.02em; margin: 0; color: var(--fg-1); }
+  .strap { font-size: 12px; color: var(--fg-2); line-height: 1.45; }
+  .input { background: #fff; border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 0 12px; height: 44px; font: 13px var(--font-sans); color: var(--fg-1); display:flex; align-items:center; }
+  .input .ph { color: var(--fg-3); }
+  .btn { background: var(--smc-navy); color: var(--smc-cream); height: 44px; border-radius: var(--radius-md); display:grid; place-items:center; font-size: 13px; font-weight: 600; }
+  .ghost { background: transparent; color: var(--fg-1); }
+  .row { display:flex; gap: 8px; }
+  .spacer { flex: 1; }
+  .micro { font-size: 10px; color: var(--fg-3); letter-spacing: .04em; text-transform: uppercase; font-weight: 600; }
+
+  /* Screen-specific */
+  .hero-mesh {
+    height: 130px;
+    border-radius: 12px;
+    background:
+      radial-gradient(120% 80% at 10% 10%, #D6DEEA 0%, transparent 60%),
+      radial-gradient(120% 80% at 90% 90%, #BDF7E5 0%, transparent 55%),
+      var(--smc-cream-200);
+    display: grid; place-items: center;
+    font-family: var(--font-display); font-size: 28px; color: var(--smc-navy);
+    letter-spacing: -0.02em;
+  }
+  .hero-mesh .green { color: var(--smc-accent-700); }
+
+  .code-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .code-grid .cell { aspect-ratio: 1; border: 1px solid var(--border-default); border-radius: 8px; background: #fff; display:grid; place-items:center; font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: var(--fg-1); }
+  .code-grid .cell.on { border-color: var(--smc-accent); box-shadow: var(--shadow-focus); }
+  .code-grid .cell.empty { color: var(--fg-3); }
+  .resend { font-size: 11px; color: var(--fg-2); text-align: center; }
+  .resend a { color: var(--fg-1); font-weight: 500; }
+
+  .avatar { width: 56px; height: 56px; background: var(--smc-navy); border-radius: 999px; display:grid; place-items:center; color: var(--smc-cream); font-family: var(--font-display); font-size: 22px; margin: 0 auto; }
+  .field-lbl { font-size: 11px; color: var(--fg-2); margin-bottom: 4px; font-weight: 500; }
+
+  .plan { background: #fff; border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 12px; display:flex; gap: 10px; align-items: flex-start; }
+  .plan.on { border-color: var(--smc-navy); box-shadow: var(--shadow-rest); }
+  .plan .check { width: 18px; height: 18px; border-radius: 999px; border: 1.5px solid var(--border-default); flex-shrink: 0; margin-top: 2px; }
+  .plan.on .check { background: var(--smc-navy); border-color: var(--smc-navy); position: relative; }
+  .plan.on .check::after { content: "✓"; color: #fff; font-size: 10px; position: absolute; inset: 0; display:grid; place-items:center; }
+  .plan .body { flex: 1; }
+  .plan .nm { font-size: 13px; font-weight: 600; color: var(--fg-1); }
+  .plan .price { font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); margin-top: 2px; }
+  .plan .pill { background: var(--smc-gold-100); color: var(--smc-gold-700); font-size: 10px; padding: 2px 7px; border-radius: 100px; align-self: flex-start; font-weight: 500; }
+
+  .back { font-size: 18px; color: var(--fg-2); cursor: pointer; align-self: flex-start; padding-top: 4px; }
+
+  .progress-dots { display:flex; gap: 4px; justify-content: center; margin-top: 4px; }
+  .progress-dots .pd { width: 5px; height: 5px; border-radius: 99px; background: var(--smc-cream-300); }
+  .progress-dots .pd.on { background: var(--smc-navy); width: 14px; border-radius: 99px; }
+</style></head>
+<body data-screen-label="Intranet Login Flow">
+<div class="app">
+  <header class="top">
+    <div class="brand">Intranet<span class="green">.</span></div>
+    <div class="crumbs">login flow · 5 pantallas · 375 px</div>
+  </header>
+
+  <div class="flow">
+    <!-- 01 Welcome -->
+    <div class="screen">
+      <span class="lbl">01 · Welcome</span>
+      <div class="phone"><div class="status"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <div class="hero-mesh">SMC<span class="green">.</span></div>
+          <h1 class="h1">Monday + IA real.</h1>
+          <p class="strap">El panel federado que mueve tus 13 proyectos sin que se caigan los lunes.</p>
+          <div class="spacer"></div>
+          <div class="btn">Entrar con correo</div>
+          <div class="btn ghost">Continuar con Google</div>
+          <div class="progress-dots"><div class="pd on"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Email -->
+    <div class="screen">
+      <span class="lbl">02 · Email</span>
+      <div class="phone"><div class="status"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <div class="back">←</div>
+          <h1 class="h1">Tu correo de trabajo.</h1>
+          <p class="strap">Te enviamos un código de 6 dígitos. Sin contraseñas.</p>
+          <div style="height: 12px"></div>
+          <div class="field-lbl">Correo</div>
+          <div class="input"><span>guillermo@smconnection.cl</span></div>
+          <p class="strap" style="font-size: 11px;">Solo correos corporativos. Si tu dominio no está habilitado, te avisamos.</p>
+          <div class="spacer"></div>
+          <div class="btn">Enviar código</div>
+          <div class="progress-dots"><div class="pd"></div><div class="pd on"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 Code -->
+    <div class="screen">
+      <span class="lbl">03 · Código</span>
+      <div class="phone"><div class="status"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <div class="back">←</div>
+          <h1 class="h1">Pega tu código.</h1>
+          <p class="strap">Lo enviamos a <strong style="color:var(--fg-1)">guillermo@smconnection.cl</strong></p>
+          <div style="height: 8px"></div>
+          <div class="code-grid">
+            <div class="cell">4</div>
+            <div class="cell">8</div>
+            <div class="cell">2</div>
+            <div class="cell on">1</div>
+            <div class="cell empty">—</div>
+            <div class="cell empty">—</div>
+          </div>
+          <p class="resend">¿No te llegó? <a>Reenviar en 0:14</a></p>
+          <div class="spacer"></div>
+          <div class="btn" style="opacity:.4">Verificar</div>
+          <div class="progress-dots"><div class="pd"></div><div class="pd"></div><div class="pd on"></div><div class="pd"></div><div class="pd"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 Profile -->
+    <div class="screen">
+      <span class="lbl">04 · Perfil</span>
+      <div class="phone"><div class="status"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <h1 class="h1">Cuéntanos quién eres.</h1>
+          <p class="strap">Toma 30 segundos. Lo usamos para armar tu panel.</p>
+          <div style="height: 4px"></div>
+          <div class="avatar">G</div>
+          <div>
+            <div class="field-lbl">Nombre</div>
+            <div class="input"><span>Guillermo González</span></div>
+          </div>
+          <div>
+            <div class="field-lbl">Rol</div>
+            <div class="input"><span>Founder / CTO</span></div>
+          </div>
+          <div>
+            <div class="field-lbl">Empresa</div>
+            <div class="input"><span>SMC SpA</span></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="btn">Siguiente</div>
+          <div class="progress-dots"><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd on"></div><div class="pd"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 Plan -->
+    <div class="screen">
+      <span class="lbl">05 · Plan</span>
+      <div class="phone"><div class="status"><span>9:41</span><span>●●●● 5G</span></div>
+        <div class="ph-inner">
+          <h1 class="h1">Elige tu plan.</h1>
+          <p class="strap" style="font-size: 11px;">Empieza gratis. Sube cuando lo necesites.</p>
+          <div class="plan">
+            <div class="check"></div>
+            <div class="body">
+              <div class="nm">Free</div>
+              <div class="price">$0 · 1 proyecto · 1 usuario</div>
+            </div>
+          </div>
+          <div class="plan on">
+            <div class="check"></div>
+            <div class="body">
+              <div class="nm">Pro <span class="pill">popular</span></div>
+              <div class="price">$49.000/mes · 5 proyectos · IA Cerebro</div>
+            </div>
+          </div>
+          <div class="plan">
+            <div class="check"></div>
+            <div class="body">
+              <div class="nm">Studio</div>
+              <div class="price">$149.000/mes · ilimitado</div>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <div class="btn">Crear cuenta</div>
+          <div class="progress-dots"><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd on"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Spacing — 4 px grid</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 20px 24px; }
+  .row { display:flex; align-items:center; gap: 14px; padding: 5px 0; }
+  .label { font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); min-width: 80px; }
+  .bar { background: var(--smc-navy); height: 14px; border-radius: 3px; }
+  .val { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+</style></head>
+<body>
+  <div class="row"><span class="label">--space-1</span><div class="bar" style="width:4px"></div><span class="val">4 px</span></div>
+  <div class="row"><span class="label">--space-2</span><div class="bar" style="width:8px"></div><span class="val">8 px</span></div>
+  <div class="row"><span class="label">--space-3</span><div class="bar" style="width:12px"></div><span class="val">12 px</span></div>
+  <div class="row"><span class="label">--space-4</span><div class="bar" style="width:16px"></div><span class="val">16 px</span></div>
+  <div class="row"><span class="label">--space-5</span><div class="bar" style="width:20px"></div><span class="val">20 px</span></div>
+  <div class="row"><span class="label">--space-6 ★</span><div class="bar" style="width:24px;background:var(--smc-accent-700)"></div><span class="val">24 px · card padding default</span></div>
+  <div class="row"><span class="label">--space-8</span><div class="bar" style="width:32px"></div><span class="val">32 px</span></div>
+  <div class="row"><span class="label">--space-10</span><div class="bar" style="width:40px"></div><span class="val">40 px</span></div>
+  <div class="row"><span class="label">--space-12</span><div class="bar" style="width:48px"></div><span class="val">48 px · desktop gutter</span></div>
+  <div class="row"><span class="label">--space-16 ★</span><div class="bar" style="width:64px;background:var(--smc-accent-700)"></div><span class="val">64 px · section rhythm</span></div>
+  <div class="row"><span class="label">--space-20</span><div class="bar" style="width:80px"></div><span class="val">80 px</span></div>
+</body></html>

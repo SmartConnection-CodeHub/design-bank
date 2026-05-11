@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Valmer · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 380px; display:grid; grid-template-columns: 1fr 280px; gap: 14px; }
+  .vm-panel { background: var(--smc-navy-900); color: var(--smc-cream); border-radius: 12px; padding: 18px; display:flex; flex-direction:column; gap: 14px; }
+  .vm-h { display:flex; justify-content: space-between; align-items: baseline; }
+  .vm-h h4 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.025em; margin: 0; color: var(--smc-cream); }
+  .vm-h .crumb { font: 11px var(--font-mono); color: var(--smc-cream-400); }
+  .vm-chart { background: rgba(255,255,255,.04); border-radius: 8px; padding: 14px; height: 200px; position: relative; }
+  .vm-chart svg { width:100%; height:100%; }
+  .vm-chart .y { position: absolute; left: 8px; top: 0; bottom: 0; display:flex; flex-direction:column; justify-content: space-between; font: 9px var(--font-mono); color: var(--smc-cream-400); padding: 8px 0; }
+  .vm-strip { display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .vm-strip .s { background: rgba(255,255,255,.04); border-radius: 6px; padding: 10px; }
+  .vm-strip .lbl { font: 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-cream-400); }
+  .vm-strip .num { font-family: var(--font-display); font-size: 22px; color: var(--smc-cream); font-variant-numeric: tabular-nums; }
+  .vm-strip .num.green { color: var(--smc-accent); }
+  .vm-strip .num.red { color: #FF7A6B; }
+  .vm-strip .delta { font: 10px var(--font-mono); color: var(--smc-cream-400); }
+
+  .vm-side { background: #fff; border-radius: 12px; padding: 16px; display:flex; flex-direction:column; gap: 10px; box-shadow: var(--shadow-rest); }
+  .vm-side .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent-700); }
+  .vm-side h5 { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.02em; margin: 0; }
+  .vm-feed { display:flex; flex-direction:column; gap: 5px; max-height: 240px; overflow: hidden; }
+  .vm-row { display:grid; grid-template-columns: 1fr 70px 60px; gap: 6px; padding: 6px 8px; border-radius: 5px; align-items: center; font: 11px var(--font-mono); }
+  .vm-row:nth-child(odd) { background: var(--bg-sunk); }
+  .vm-row .tk { color: var(--fg-1); font-weight: 600; }
+  .vm-row .pr { color: var(--fg-2); }
+  .vm-row .dl { text-align: right; }
+  .vm-row .dl.up { color: var(--smc-accent-700); }
+  .vm-row .dl.dn { color: #E04D3D; }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Valmer">
+<div class="hub">
+  <header class="hub-top"><div class="brand">Valmer<span class="dot">.</span></div><div class="crumbs">proyectos · 09/13 · ETL financiero</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · CPI · data financiera</div>
+  <h1 class="hub-title">Valoraciones diarias, sin manos humanas.</h1>
+  <p class="hub-strap">ETL nocturno con SAP CPI para valoración de instrumentos financieros. Pricing matrix de Valmer México → portfolio de bancos chilenos. 8.400 instrumentos/noche.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Curva diaria CLP</button>
+    <button class="pill"><span class="n">02</span>Tabla instrumentos</button>
+    <button class="pill"><span class="n">03</span>Calidad de datos</button>
+    <button class="pill"><span class="n">04</span>Jobs CPI</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 curva · 8.400 inst · job 03:14 a.m.</div>
+      <h3 class="ttl">Curva soberana CLP · cierre 22-04</h3>
+      <div class="stage">
+        <div class="vm-panel">
+          <div class="vm-h"><h4>Curva soberana CLP · BCP/BCU</h4><span class="crumb">cierre 22 abr · job ZVMR-DLY-001</span></div>
+          <div class="vm-chart">
+            <div class="y"><span>6.4%</span><span>6.0%</span><span>5.6%</span><span>5.2%</span></div>
+            <svg viewBox="0 0 100 50" preserveAspectRatio="none">
+              <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00E5B0" stop-opacity=".4"/><stop offset="100%" stop-color="#00E5B0" stop-opacity="0"/></linearGradient></defs>
+              <path d="M 0 30 L 10 28 L 20 24 L 30 22 L 40 20 L 50 18 L 60 17 L 70 16 L 80 15 L 90 14 L 100 13 L 100 50 L 0 50 Z" fill="url(#g)"/>
+              <path d="M 0 30 L 10 28 L 20 24 L 30 22 L 40 20 L 50 18 L 60 17 L 70 16 L 80 15 L 90 14 L 100 13" fill="none" stroke="#00E5B0" stroke-width="0.8"/>
+              <path d="M 0 32 L 10 30 L 20 27 L 30 25 L 40 23 L 50 21 L 60 20 L 70 19 L 80 18 L 90 17 L 100 16" fill="none" stroke="#DCBC75" stroke-width="0.6" stroke-dasharray="1.5 1"/>
+            </svg>
+          </div>
+          <div class="vm-strip">
+            <div class="s"><span class="lbl">Instrumentos</span><span class="num">8.412</span><span class="delta">↑ 12 vs ayer</span></div>
+            <div class="s"><span class="lbl">Job duration</span><span class="num green">04:22</span><span class="delta">target &lt; 06:00</span></div>
+            <div class="s"><span class="lbl">Excepciones</span><span class="num red">3</span><span class="delta">3 illiquid · ok</span></div>
+          </div>
+        </div>
+        <div class="vm-side">
+          <span class="eb">● Top movers · cierre</span>
+          <h5>Instrumentos movidos</h5>
+          <div class="vm-feed">
+            <div class="vm-row"><span class="tk">BCP-0427</span><span class="pr">98.42</span><span class="dl up">+0.34</span></div>
+            <div class="vm-row"><span class="tk">BCU-0530</span><span class="pr">101.18</span><span class="dl up">+0.21</span></div>
+            <div class="vm-row"><span class="tk">BCP-0631</span><span class="pr">96.74</span><span class="dl dn">−0.18</span></div>
+            <div class="vm-row"><span class="tk">BCU-0834</span><span class="pr">102.42</span><span class="dl up">+0.14</span></div>
+            <div class="vm-row"><span class="tk">BTP-0124</span><span class="pr">99.88</span><span class="dl dn">−0.12</span></div>
+            <div class="vm-row"><span class="tk">BCP-0228</span><span class="pr">97.12</span><span class="dl up">+0.08</span></div>
+            <div class="vm-row"><span class="tk">BCU-0432</span><span class="pr">100.04</span><span class="dl up">+0.06</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · curva</span></div>
+      <div class="dim"><span class="name">Curva</span><div class="opts"><span class="opt on">BCP</span><span class="opt">BCU</span><span class="opt">BTP</span></div></div>
+      <div class="dim"><span class="name">Comparar vs</span><div class="opts"><span class="opt">ayer</span><span class="opt on">L7</span><span class="opt">L30</span></div></div>
+      <div class="dim"><span class="name">Theme</span><div class="opts"><span class="opt on">dark · trading</span><span class="opt">light</span></div></div>
+      <div class="dim"><span class="name">Refresh</span><div class="opts"><span class="opt on">post-cierre</span><span class="opt">intradía</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">SAP CPI iflows + S/4 HANA target. Source Valmer México REST. Visualización Next.js + Recharts con tema dark de <b>@smc/ui</b>. Jobs orquestados Airflow.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

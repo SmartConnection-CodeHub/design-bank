@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scroll Stories · 5 patterns · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 32px; background: var(--bg-warm); display: flex; align-items: center; justify-content: center; }
+
+.phone { width: 320px; aspect-ratio: 9/16; background: #0A1322; border: 8px solid #000; border-radius: 36px; overflow: hidden; position: relative; box-shadow: 0 24px 64px rgba(0,0,0,.5); }
+.phone .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 22px; background: #000; border-radius: 0 0 14px 14px; z-index: 20; }
+.scroll-area { width: 100%; height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; position: relative; }
+.scroll-area::-webkit-scrollbar { display: none; }
+
+/* === Snap === */
+.snap .panel { scroll-snap-align: start; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; color: white; font-family: var(--font-display); padding: 24px; }
+.snap .panel.p1 { background: linear-gradient(135deg, #1B2F4E, #00E5B0); }
+.snap .panel.p2 { background: linear-gradient(135deg, #C49A3A, #8A6B23); }
+.snap .panel.p3 { background: linear-gradient(135deg, #0066CC, #003D7A); }
+.snap .panel .num { font-size: 96px; font-weight: 600; line-height: 1; letter-spacing: -0.022em; }
+.snap .panel .lbl { font: 600 14px var(--font-text); opacity: 0.85; }
+
+/* === Pinned === */
+.pinned { height: 300%; position: relative; }
+.pinned .pin-stage { position: sticky; top: 0; width: 100%; height: 33.33%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1B2F4E, #0066CC); color: white; font-family: var(--font-display); font-size: 64px; font-weight: 600; letter-spacing: -0.022em; }
+
+/* === Parallax 2-layer === */
+.parallax { height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; }
+.parallax::-webkit-scrollbar { display: none; }
+.parallax .layer-bg { height: 100%; position: relative; background: radial-gradient(at 30% 20%, #00E5B0, transparent 50%), #0A1322; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; color: white; font-family: var(--font-display); font-size: 48px; font-weight: 600; letter-spacing: -0.022em; }
+.parallax .layer-bg .stars { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 30%, white 1px, transparent 1px), radial-gradient(circle at 70% 60%, white 1px, transparent 1px), radial-gradient(circle at 40% 80%, white 1px, transparent 1px); background-size: 80px 80px, 120px 120px, 60px 60px; opacity: 0.3; }
+
+/* === Reels === */
+.reels .reel { height: 100%; scroll-snap-align: start; display: flex; align-items: flex-end; justify-content: flex-start; padding: 20px; color: white; position: relative; font-family: var(--font-text); }
+.reels .reel.r1 { background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%), linear-gradient(135deg, #1B2F4E, #00E5B0); }
+.reels .reel.r2 { background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%), linear-gradient(135deg, #C49A3A, #5C4716); }
+.reels .reel.r3 { background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%), linear-gradient(135deg, #0066CC, #003D7A); }
+.reels .reel-content { display: flex; flex-direction: column; gap: 6px; }
+.reels .reel-content .h { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.012em; }
+.reels .reel-content .meta { font-size: 12px; opacity: 0.85; }
+.reels .reel-side { position: absolute; right: 12px; bottom: 80px; display: flex; flex-direction: column; gap: 14px; align-items: center; color: white; }
+.reels .reel-side .ic { width: 36px; height: 36px; background: rgba(255,255,255,0.15); border-radius: 50%; backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+
+/* === Concentric === */
+.concentric { height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; }
+.concentric::-webkit-scrollbar { display: none; }
+.concentric .ring-stage { height: 100%; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; background: #0A1322; position: relative; overflow: hidden; }
+.concentric .ring { position: absolute; border: 1.5px solid rgba(0,229,176,0.3); border-radius: 50%; animation: ring-pulse 3s ease-in-out infinite; }
+.concentric .ring:nth-child(1) { width: 100px; height: 100px; animation-delay: 0s; }
+.concentric .ring:nth-child(2) { width: 200px; height: 200px; animation-delay: 0.3s; }
+.concentric .ring:nth-child(3) { width: 300px; height: 300px; animation-delay: 0.6s; }
+.concentric .ring:nth-child(4) { width: 400px; height: 400px; animation-delay: 0.9s; }
+@keyframes ring-pulse { 0%, 100% { opacity: 0.3; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); border-color: rgba(0,229,176,0.6); } }
+.concentric .center-label { position: relative; z-index: 1; color: white; font-family: var(--font-display); font-size: 28px; font-weight: 600; letter-spacing: -0.012em; text-align: center; }
+
+.scroll-hint { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); color: white; font: 10px var(--font-mono); opacity: 0.5; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 980px; z-index: 30; pointer-events: none; }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.fx-list { display: flex; flex-direction: column; gap: 6px; }
+.fx-opt { padding: 12px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 10px; cursor: pointer; }
+.fx-opt:hover { border-color: var(--accent); }
+.fx-opt.active { background: var(--text); color: white; border-color: transparent; }
+.fx-opt .nm { font: 600 13px var(--font-text); letter-spacing: -0.012em; }
+.fx-opt .ds { font: 11px var(--font-mono); opacity: 0.6; margin-top: 2px; }
+.fx-opt.active .ds { opacity: 0.85; }
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; margin-top: auto; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+@media (max-width: 900px) { .playground { grid-template-columns: 1fr; } .controls { border-left: none; border-top: 1px solid var(--border-soft); } .phone { width: 240px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v14</a>
+  <h1>📜 Scroll Stories · 5 patterns</h1>
+  <span class="meta">Scroll-Snap · Pinned · Parallax · Reels · Concentric Ring</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="scroll-area" id="scrollArea"></div>
+      <div class="scroll-hint">↕ scroll dentro del phone</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Pattern <span class="val" id="v-fx">scroll-snap</span></div>
+      <div class="fx-list">
+        <div class="fx-opt active" data-fx="snap"><span class="nm">1 · Scroll-Snap</span><span class="ds">scroll-snap-type: y mandatory</span></div>
+        <div class="fx-opt" data-fx="pinned"><span class="nm">2 · Pinned Reveal</span><span class="ds">position: sticky · 300% height</span></div>
+        <div class="fx-opt" data-fx="parallax"><span class="nm">3 · Parallax 2-layer</span><span class="ds">bg slower · fg normal</span></div>
+        <div class="fx-opt" data-fx="reels"><span class="nm">4 · Reels Stack</span><span class="ds">Instagram/TikTok vertical</span></div>
+        <div class="fx-opt" data-fx="concentric"><span class="nm">5 · Concentric Ring</span><span class="ds">4 anillos pulsando · radio</span></div>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Use case · proyecto</div>
+      <div class="fx-list">
+        <div class="fx-opt" onclick="setUC('kanki')"><span class="nm">🏄 Kanki Reels</span><span class="ds">looks B2C · scroll vertical</span></div>
+        <div class="fx-opt" onclick="setUC('infopet')"><span class="nm">🐾 InfoPet chat</span><span class="ds">scroll snap messages</span></div>
+        <div class="fx-opt" onclick="setUC('mkt')"><span class="nm">💡 Marketing landing</span><span class="ds">parallax sections</span></div>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyCSS()">📋 Copy scroll CSS</button>
+  </div>
+</div>
+
+</div>
+<script>
+const PATTERNS = {
+  snap: { name: 'Scroll-Snap', html: '<div class="snap"><div class="panel p1"><div class="num">01</div><div class="lbl">SCROLL SNAP</div></div><div class="panel p2"><div class="num">02</div><div class="lbl">PERFECT ALIGN</div></div><div class="panel p3"><div class="num">03</div><div class="lbl">MANDATORY</div></div></div>', css: '.scroll-area {\n  scroll-snap-type: y mandatory;\n  overflow-y: auto;\n}\n.panel {\n  scroll-snap-align: start;\n  width: 100%;\n  height: 100%;\n}' },
+  pinned: { name: 'Pinned Reveal', html: '<div class="pinned"><div class="pin-stage">PIN</div></div>', css: '.pinned {\n  height: 300%;\n}\n.pin-stage {\n  position: sticky;\n  top: 0;\n  height: 33.33%;\n}' },
+  parallax: { name: 'Parallax', html: '<div class="parallax"><div class="layer-bg"><div class="stars"></div>FOREGROUND</div><div class="layer-bg" style="background:radial-gradient(at 70% 80%, #C49A3A, transparent 50%), #0A1322;"><div class="stars"></div>STARS</div></div>', css: '.bg-layer { transform: translateY(calc(var(--scroll) * 0.3)); }\n.fg-layer { transform: translateY(calc(var(--scroll) * 1)); }' },
+  reels: { name: 'Reels Stack', html: '<div class="reels scroll-area" style="scroll-snap-type: y mandatory; overflow-y: auto;"><div class="reel r1"><div class="reel-content"><div class="h">Kanki FW24</div><div class="meta">@kanki.surf · 2h</div></div><div class="reel-side"><div class="ic">♡</div><div class="ic">💬</div><div class="ic">↗</div></div></div><div class="reel r2"><div class="reel-content"><div class="h">Grizzly drop</div><div class="meta">@kanki.surf · 1d</div></div><div class="reel-side"><div class="ic">♡</div><div class="ic">💬</div><div class="ic">↗</div></div></div><div class="reel r3"><div class="reel-content"><div class="h">Essential collab</div><div class="meta">@kanki.surf · 3d</div></div><div class="reel-side"><div class="ic">♡</div><div class="ic">💬</div><div class="ic">↗</div></div></div></div>', css: '.reels {\n  scroll-snap-type: y mandatory;\n  overflow-y: auto;\n}\n.reel {\n  height: 100vh;\n  scroll-snap-align: start;\n  scroll-snap-stop: always;\n}' },
+  concentric: { name: 'Concentric Ring', html: '<div class="concentric"><div class="ring-stage"><div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="center-label">SMC<br>OS</div></div></div>', css: '.ring {\n  border-radius: 50%;\n  animation: ring-pulse 3s ease-in-out infinite;\n}\n@keyframes ring-pulse {\n  50% { transform: scale(1); opacity: 1; }\n}' }
+};
+
+const state = { fx: 'snap' };
+const area = document.getElementById('scrollArea');
+
+function render() {
+  area.innerHTML = PATTERNS[state.fx].html;
+  document.getElementById('v-fx').textContent = PATTERNS[state.fx].name;
+  document.querySelectorAll('.fx-opt[data-fx]').forEach(o => o.classList.toggle('active', o.dataset.fx === state.fx));
+}
+document.querySelectorAll('.fx-opt[data-fx]').forEach(o => o.addEventListener('click', () => { state.fx = o.dataset.fx; render(); }));
+
+function setUC(key) { /* visual feedback only */ }
+
+function copyCSS() {
+  const code = '/* SMC Scroll Story · ' + PATTERNS[state.fx].name + ' */\n\n' + PATTERNS[state.fx].css;
+  navigator.clipboard.writeText(code);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copy'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copy scroll CSS'; btn.classList.remove('copied'); }, 1600);
+}
+render();
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

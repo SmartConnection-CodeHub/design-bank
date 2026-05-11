@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>DUOC UC · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 380px; display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .du-card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: var(--shadow-rest); display:flex; flex-direction:column; gap: 12px; }
+  .du-card h4 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.025em; margin: 0; }
+  .du-card .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent-700); }
+  .du-flow { display:flex; gap: 8px; align-items: center; padding: 12px; background: var(--bg-sunk); border-radius: 8px; }
+  .du-node { background: #fff; border: 1px solid var(--border-default); border-radius: 6px; padding: 8px 10px; flex: 1; font-size: 11.5px; }
+  .du-node .nm { font-weight: 600; }
+  .du-node .sub { font: 9px var(--font-mono); color: var(--fg-3); margin-top: 2px; }
+  .du-arrow { color: var(--fg-3); font: 14px var(--font-mono); }
+  .du-list { display:flex; flex-direction:column; gap: 6px; }
+  .du-li { display:grid; grid-template-columns: 1fr 80px 60px; gap: 10px; padding: 8px 12px; border-radius: 6px; align-items: center; font-size: 12px; background: var(--bg-sunk); }
+  .du-li .nm { font-weight: 600; color: var(--fg-1); }
+  .du-li .nm small { display:block; font: 9px var(--font-mono); color: var(--fg-3); margin-top: 1px; }
+  .du-li .v { font: 11px var(--font-mono); color: var(--fg-2); text-align: right; }
+  .du-li .st { font: 9px var(--font-mono); padding: 3px 8px; border-radius: 99px; text-align: center; letter-spacing: .04em; text-transform: uppercase; }
+  .du-li .st.ok { background: var(--smc-accent-100); color: var(--smc-accent-700); }
+  .du-li .st.warn { background: var(--smc-gold-100); color: var(--smc-gold-700); }
+
+  .du-pi { background: var(--smc-navy-900); color: var(--smc-cream); border-radius: 10px; padding: 12px; font-family: var(--font-mono); font-size: 10px; line-height: 1.7; overflow:hidden; max-height: 140px; }
+  .du-pi .ts { color: var(--smc-cream-400); }
+  .du-pi .ok { color: var(--smc-accent); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="DUOC UC">
+<div class="hub">
+  <header class="hub-top"><div class="brand">DUOC UC · PI 7.5<span class="dot">.</span></div><div class="crumbs">proyectos · 11/13 · educación</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · integración educacional · SAP PI 7.5</div>
+  <h1 class="hub-title">Matrícula, notas, financiero. En un solo bus.</h1>
+  <p class="hub-strap">SAP Process Integration 7.5 legacy. 12 escenarios entre SAP SLcM (Student Lifecycle), Banner académico, y CFOs. 64k mensajes por temporada de admisión.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Mapa de escenarios</button>
+    <button class="pill"><span class="n">02</span>Escenario detalle</button>
+    <button class="pill"><span class="n">03</span>Audit log PI</button>
+    <button class="pill"><span class="n">04</span>Reporte temporada</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 mapa · 12 escenarios · admisión 26-Q1</div>
+      <h3 class="ttl">Integración SLcM ↔ Banner ↔ Tesorería</h3>
+      <div class="stage">
+        <div class="du-card">
+          <span class="eb">Escenarios activos · 12</span>
+          <h4>Top 5 por volumen</h4>
+          <div class="du-list">
+            <div class="du-li"><span class="nm">ZDUO-MAT-001<small>matrícula nueva → Banner</small></span><span class="v">18.402</span><span class="st ok">ok</span></div>
+            <div class="du-li"><span class="nm">ZDUO-PAG-001<small>pagos arancel → SAP FI</small></span><span class="v">14.118</span><span class="st ok">ok</span></div>
+            <div class="du-li"><span class="nm">ZDUO-NOT-001<small>notas semestre → SLcM</small></span><span class="v">12.847</span><span class="st ok">ok</span></div>
+            <div class="du-li"><span class="nm">ZDUO-BEC-001<small>becas CAE → contraparte</small></span><span class="v">8.241</span><span class="st warn">retry</span></div>
+            <div class="du-li"><span class="nm">ZDUO-EGR-001<small>egresados → certificados</small></span><span class="v">2.184</span><span class="st ok">ok</span></div>
+          </div>
+        </div>
+        <div class="du-card">
+          <span class="eb">★ Diagrama · ZDUO-MAT-001</span>
+          <h4>Matrícula nueva</h4>
+          <div class="du-flow">
+            <div class="du-node"><div class="nm">Banner</div><div class="sub">ws-stu-create</div></div>
+            <div class="du-arrow">→</div>
+            <div class="du-node"><div class="nm">PI 7.5</div><div class="sub">ICO_MAT_001</div></div>
+            <div class="du-arrow">→</div>
+            <div class="du-node"><div class="nm">SAP SLcM</div><div class="sub">BAPI_STU_CREATE</div></div>
+          </div>
+          <div class="du-pi">
+<span class="ts">[14:32:11]</span> <span class="ok">MSG-IN</span> Banner.STU_CREATE id=304221<br>
+<span class="ts">[14:32:11]</span> mapping ICO_MAT_001 · 0.18s<br>
+<span class="ts">[14:32:12]</span> <span class="ok">MSG-OUT</span> BAPI_STU_CREATE id=PA_001284<br>
+<span class="ts">[14:32:14]</span> <span class="ok">ACK</span> 200 OK · committed PD
+          </div>
+          <div style="display:flex; gap: 6px; flex-wrap: wrap;">
+            <span style="font: 10px var(--font-mono); padding: 4px 8px; border-radius: 99px; background: var(--smc-accent-100); color: var(--smc-accent-700)">● vivo</span>
+            <span style="font: 10px var(--font-mono); padding: 4px 8px; border-radius: 99px; background: var(--bg-sunk); color: var(--fg-2)">p95 2.4 s</span>
+            <span style="font: 10px var(--font-mono); padding: 4px 8px; border-radius: 99px; background: var(--bg-sunk); color: var(--fg-2)">SLA 99.5%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · escenarios</span></div>
+      <div class="dim"><span class="name">Filtro temporada</span><div class="opts"><span class="opt on">admisión 26-Q1</span><span class="opt">L30</span><span class="opt">todo</span></div></div>
+      <div class="dim"><span class="name">Vista</span><div class="opts"><span class="opt on">top 5</span><span class="opt">los 12</span></div></div>
+      <div class="dim"><span class="name">Diagrama</span><div class="opts"><span class="opt on">flow</span><span class="opt">swim-lane</span></div></div>
+      <div class="dim"><span class="name">Audit log</span><div class="opts"><span class="opt on">PI raw</span><span class="opt">parsed</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">SAP Process Integration 7.5 (legacy, on-prem). Banner Ellucian + SAP SLcM + SAP FI. Dashboard Next.js que consume PI Monitoring API. Migración a CPI planeada Q3.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

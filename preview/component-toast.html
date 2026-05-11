@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Toast & dialog</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 22px 24px; display:grid; grid-template-columns: 1fr 1fr; gap: 18px; background: var(--bg); }
+  .toast { display:flex; gap: 12px; align-items: center; padding: 12px 16px; border-radius: var(--radius-md); background: #fff; box-shadow: var(--shadow-hover); border-left: 0; min-height: 56px; }
+  .icon { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; font-size: 14px; flex-shrink: 0; }
+  .toast.ok .icon { background: var(--success-soft); color: var(--smc-accent-700); }
+  .toast.warn .icon { background: var(--warning-soft); color: var(--smc-gold-700); }
+  .toast.err .icon { background: var(--danger-soft); color: #872A22; }
+  .toast.info .icon { background: var(--info-soft); color: var(--smc-navy-700); }
+  .t-body { display:flex; flex-direction:column; gap: 2px; }
+  .t-body strong { font-size: 14px; color: var(--fg-1); font-weight: 600; }
+  .t-body span { font-size: 12px; color: var(--fg-2); }
+  .x { margin-left: auto; color: var(--fg-3); cursor: pointer; padding: 4px; }
+</style></head>
+<body>
+  <div class="toast ok"><div class="icon">✓</div><div class="t-body"><strong>Conectado a Bsale</strong><span>Sincronizando 248 productos…</span></div><div class="x">×</div></div>
+  <div class="toast warn"><div class="icon">!</div><div class="t-body"><strong>Sync pendiente</strong><span>3 cambios sin guardar.</span></div><div class="x">×</div></div>
+  <div class="toast err"><div class="icon">!</div><div class="t-body"><strong>Token expirado</strong><span>Vuelve a iniciar sesión.</span></div><div class="x">×</div></div>
+  <div class="toast info"><div class="icon">i</div><div class="t-body"><strong>RADAR brief listo</strong><span>5 secciones · lectura 2 min.</span></div><div class="x">×</div></div>
+</body></html>

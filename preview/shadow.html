@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Shadow & elevation</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 30px 28px; display:grid; grid-template-columns: repeat(4,1fr); gap: 20px; background: var(--bg); }
+  .demo { display:flex; flex-direction: column; align-items:center; gap: 10px; }
+  .card { width: 132px; height: 84px; background: var(--bg-elevated); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
+  .rest    { box-shadow: var(--shadow-rest); }
+  .hover   { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .pressed { box-shadow: var(--shadow-pressed); }
+  .focus   { box-shadow: var(--shadow-focus); }
+  .nm  { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--fg-1); }
+  .vl  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); text-align:center; }
+</style></head>
+<body>
+  <div class="demo"><div class="card rest"></div><div class="nm">rest</div><div class="vl">0 1px 2px navy/.08</div></div>
+  <div class="demo"><div class="card hover"></div><div class="nm">hover</div><div class="vl">0 8px 24px navy/.12 · −1 px lift</div></div>
+  <div class="demo"><div class="card pressed"></div><div class="nm">pressed</div><div class="vl">inset 0 1px 1px navy/.16</div></div>
+  <div class="demo"><div class="card focus"></div><div class="nm">focus</div><div class="vl">0 0 0 3px accent/.30</div></div>
+</body></html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Claude Design Gallery · Referencia</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 20px; min-height: 420px; display:flex; flex-direction:column; gap: 14px; }
+  .ref-meta { display:flex; gap: 12px; font: 11.5px var(--font-mono); color: var(--fg-3); align-items: center; flex-wrap: wrap; }
+  .ref-meta .url { background: #fff; border: 1px solid var(--border-default); border-radius: 5px; padding: 5px 9px; color: var(--fg-1); }
+  .ref-meta b { color: var(--smc-accent-700); }
+  .ref-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .ref-card { background: #fff; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 12px; display:flex; flex-direction:column; gap: 7px; cursor: pointer; transition: 200ms var(--ease-out); }
+  .ref-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .ref-thumb { aspect-ratio: 4/3; border-radius: 6px; position: relative; overflow: hidden; }
+  .ref-thumb .lbl { position: absolute; bottom: 6px; left: 6px; font: 600 9px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.5); padding: 3px 7px; border-radius: 99px; }
+  .ref-card .nm { font: 600 12.5px var(--font-sans); color: var(--fg-1); margin: 0; }
+  .ref-card .src { font: 10px var(--font-mono); color: var(--fg-3); }
+  .ref-card .tags { display:flex; gap: 4px; flex-wrap: wrap; }
+  .ref-card .tags span { font: 9px var(--font-mono); padding: 2px 7px; border-radius: 99px; background: var(--bg-sunk); color: var(--fg-2); letter-spacing: .04em; }
+  .ref-card .tags span.fed { background: var(--smc-accent-100); color: var(--smc-accent-700); }
+
+  /* thumbnails - SMC-styled */
+  .th-curtain { background:
+    linear-gradient(180deg, var(--smc-navy-900) 50%, var(--smc-cream) 50%);
+  }
+  .th-counter { background: var(--smc-cream); display:grid; place-items: center; font-family: var(--font-display); color: var(--smc-navy); font-size: 36px; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+  .th-serif { background: var(--smc-navy-900); display:grid; place-items: center; font-family: var(--font-display); color: var(--smc-gold); font-style: italic; font-size: 32px; }
+  .th-mesh { background:
+    radial-gradient(60% 50% at 30% 30%, var(--smc-accent) 0%, transparent 60%),
+    radial-gradient(70% 60% at 80% 80%, var(--smc-gold) 0%, transparent 60%),
+    var(--smc-navy-900); }
+  .th-bento { background: var(--bg-sunk); display:grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; padding: 6px; }
+  .th-bento span { background: var(--smc-navy); border-radius: 3px; }
+  .th-bento span:nth-child(1) { grid-row: 1/3; background: var(--smc-navy-900); }
+  .th-bento span:nth-child(3) { background: var(--smc-gold); }
+  .th-bento span:nth-child(5) { background: var(--smc-accent); }
+  .th-pinch { background:
+    radial-gradient(40% 40% at 50% 50%, var(--smc-accent) 0%, transparent 60%),
+    var(--smc-navy-900); }
+  .th-stack { background: var(--smc-cream); display:grid; place-items: center; padding: 10px; }
+  .th-stack div { width: 60%; height: 80%; background: var(--smc-navy-900); border-radius: 6px; box-shadow: -8px 8px 0 var(--smc-gold); }
+  .th-tilt { background: var(--smc-cream-100); display:grid; place-items: center; }
+  .th-tilt div { width: 70%; height: 70%; background: linear-gradient(135deg, var(--smc-navy), var(--smc-navy-700)); border-radius: 8px; transform: perspective(200px) rotateX(15deg) rotateY(-20deg); box-shadow: -12px 12px 24px rgba(0,0,0,.18); }
+  .th-glow { background: var(--smc-navy-900); display:grid; place-items: center; }
+  .th-glow div { width: 60%; height: 50%; background: var(--smc-navy-900); border: 2px solid var(--smc-accent); border-radius: 6px; box-shadow: 0 0 18px rgba(0,229,176,.5); }
+  .th-mirror { background: linear-gradient(90deg, var(--smc-navy-700) 50%, var(--smc-gold) 50%); }
+  .th-pinned { background: var(--smc-cream); padding: 8px; display:flex; flex-direction:column; gap: 4px; }
+  .th-pinned span { height: 4px; background: var(--smc-navy); border-radius: 99px; }
+  .th-pinned span:nth-child(2) { width: 70%; background: var(--smc-gold); }
+  .th-pinned span:nth-child(3) { width: 50%; background: var(--smc-accent); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Claude Design Gallery">
+<div class="hub">
+  <header class="hub-top"><div class="brand">Claude Design Gallery<span class="dot">.</span></div><div class="crumbs">referencia · north-star</div></header>
+  <div class="hub-eyebrow">Referencia externa · north-star del banco</div>
+  <h1 class="hub-title">El banco que queremos ser cuando crezcamos.</h1>
+  <p class="hub-strap">Claude Design Gallery es la referencia directa para este banco SMC. Cada tarjeta es una escena real (no gradient slop) + pills de variante + tweak panel + "Use this prompt" CTA. Acá vive el mapeo de qué patrón nuestro corresponde a qué tarjeta de ahí.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">▣</span>12 tarjetas mapeadas</button>
+    <button class="pill"><span class="n">○</span>Anatomía de una tarjeta</button>
+    <button class="pill"><span class="n">△</span>Diff vs SMC bank</button>
+    <button class="pill"><span class="n">★</span>Inspiraciones pendientes</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 mapping · 12 patrones traducidos a SMC</div>
+      <h3 class="ttl">Claude Gallery → SMC bank · mapeo 1:1</h3>
+      <div class="stage">
+        <div class="ref-meta">
+          <span>fuente</span>
+          <span class="url">claude.com/design-gallery</span>
+          <span>·</span>
+          <span>capturado <b>22 abr 26</b></span>
+          <span>·</span>
+          <span>12 tarjetas mapeadas a patrones SMC</span>
+          <span>·</span>
+          <span>4 pendientes</span>
+        </div>
+        <div class="ref-grid">
+          <div class="ref-card">
+            <div class="ref-thumb th-curtain"><span class="lbl">curtain reveal</span></div>
+            <h6 class="nm">Hero Curtain Reveal</h6>
+            <span class="src">studio-mate · @claude-gallery #03</span>
+            <div class="tags"><span class="fed">→ Hero Reveals</span><span>Kanki</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-counter">142</div>
+            <h6 class="nm">Number Tick-up Mono</h6>
+            <span class="src">vercel.com · @claude-gallery #07</span>
+            <div class="tags"><span class="fed">→ VOY breakdown</span><span>Intranet</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-serif"><em>Sí.</em></div>
+            <h6 class="nm">Stamped Serif Italic</h6>
+            <span class="src">rauno.me · @claude-gallery #12</span>
+            <div class="tags"><span class="fed">→ RADAR + Marketing</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-mesh"><span class="lbl">mesh navy + dorado</span></div>
+            <h6 class="nm">Mesh Background</h6>
+            <span class="src">stripe.com · @claude-gallery #18</span>
+            <div class="tags"><span class="fed">→ Marketing hero</span></div>
+          </div>
+
+          <div class="ref-card">
+            <div class="ref-thumb th-bento"><span></span><span></span><span></span><span></span><span></span></div>
+            <h6 class="nm">Apple Vision Bento</h6>
+            <span class="src">apple.com/vision · #21</span>
+            <div class="tags"><span class="fed">→ Bento Grids</span><span>Marketing</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-pinch"><span class="lbl">pinch zoom</span></div>
+            <h6 class="nm">Pinch Zoom Hero</h6>
+            <span class="src">arc.net · @claude-gallery #25</span>
+            <div class="tags"><span class="fed">→ Hero Reveals 01</span><span>Kanki</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-stack"><div></div></div>
+            <h6 class="nm">Card Stack 3-deep</h6>
+            <span class="src">linear.app · @claude-gallery #29</span>
+            <div class="tags"><span>pending</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-tilt"><div></div></div>
+            <h6 class="nm">3D Tilt Card</h6>
+            <span class="src">once-ui · @claude-gallery #31</span>
+            <div class="tags"><span class="fed">→ Hover Magic 01</span></div>
+          </div>
+
+          <div class="ref-card">
+            <div class="ref-thumb th-glow"><div></div></div>
+            <h6 class="nm">Border Glow</h6>
+            <span class="src">vercel.com · @claude-gallery #34</span>
+            <div class="tags"><span class="fed">→ Hover Magic 02</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-mirror"><span class="lbl">mirror split</span></div>
+            <h6 class="nm">Mirror Split Hero</h6>
+            <span class="src">brand.dev · #37</span>
+            <div class="tags"><span class="fed">→ Hero Reveals 04</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb th-pinned"><span></span><span></span><span></span></div>
+            <h6 class="nm">Pinned Scroll Reveal</h6>
+            <span class="src">stripe.com/atlas · #42</span>
+            <div class="tags"><span class="fed">→ Scroll Stories 03</span><span>Discovery</span></div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-thumb" style="background: var(--smc-cream); padding: 10px; display:grid; place-items: end; font: 600 28px var(--font-mono); color: var(--smc-navy); justify-content: end; align-content: end;">$<span style="color: var(--smc-accent-700)">1.4M</span></div>
+            <h6 class="nm">Calculator Pricing</h6>
+            <span class="src">calculator-kit · #45</span>
+            <div class="tags"><span class="fed">→ VOY · home</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · referencia</span></div>
+      <div class="dim"><span class="name">Vista</span><div class="opts"><span class="opt on">grid 4</span><span class="opt">timeline</span><span class="opt">tabla mapping</span></div></div>
+      <div class="dim"><span class="name">Filtro</span><div class="opts"><span class="opt on">mapeadas</span><span class="opt">pendientes</span><span class="opt">todas</span></div></div>
+      <div class="dim"><span class="name">Mostrar fuente</span><div class="opts"><span class="opt on">inline src</span><span class="opt">tooltip</span></div></div>
+      <div class="dim"><span class="name">Comparar SMC ↔</span><div class="opts"><span class="opt on">side by side</span><span class="opt">solo Claude</span><span class="opt">solo SMC</span></div></div>
+      <div class="dim"><span class="name">Indicador estado</span><div class="opts"><span class="opt on">pill verde</span><span class="opt">checkmark</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Cómo usar esta hub</span>
+        <span class="where">Cuando armes una pieza nueva, mirá acá primero. Si tu pieza pertenece a uno de los 12 patrones mapeados, hay un hub SMC equivalente (pill verde). Si no, queda en <b>pendientes</b> y vale levantarlo en RADAR.</span>
+        <button class="btn">Abrir gallery →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

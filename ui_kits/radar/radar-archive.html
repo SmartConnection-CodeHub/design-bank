@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>RADAR Archive · 47 ediciones</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--smc-cream); border-radius: 10px; padding: 22px; min-height: 380px; display:flex; flex-direction:column; gap: 14px; }
+  .ar-h { display:flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid var(--border-default); }
+  .ar-h h4 { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.025em; margin: 0; }
+  .ar-h .meta { font: 11px var(--font-mono); color: var(--fg-3); }
+  .ar-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .ar-cell { background: #fff; border: 1px solid var(--border-subtle); border-radius: 6px; padding: 10px; display:flex; flex-direction:column; gap: 3px; cursor: pointer; transition: 200ms var(--ease-out); }
+  .ar-cell:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .ar-cell .n { font-family: var(--font-display); font-size: 20px; line-height: 1; letter-spacing: -0.025em; color: var(--smc-navy); }
+  .ar-cell .d { font: 9px var(--font-mono); color: var(--fg-3); }
+  .ar-cell .t { font: 600 10px var(--font-sans); color: var(--fg-1); line-height: 1.3; }
+  .ar-cell.hi { background: var(--smc-navy-900); color: var(--smc-cream); border-color: var(--smc-navy-900); }
+  .ar-cell.hi .n { color: var(--smc-gold); }
+  .ar-cell.hi .d, .ar-cell.hi .t { color: var(--smc-cream); }
+  .ar-cell.cur { background: var(--smc-accent); border-color: var(--smc-accent); }
+  .ar-cell.cur .n { color: var(--smc-navy-900); }
+  .ar-cell.cur .d, .ar-cell.cur .t { color: var(--smc-navy-900); }
+  .ar-tag { display:flex; gap: 4px; margin-top: 4px; }
+  .ar-tag span { width: 6px; height: 6px; border-radius: 99px; background: var(--border-default); }
+  .ar-tag span.on.pat { background: var(--smc-accent); }
+  .ar-tag span.on.peo { background: var(--smc-gold); }
+  .ar-tag span.on.num { background: var(--smc-navy); }
+
+  .ar-strip { display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 14px; background: #fff; border-radius: 8px; border: 1px solid var(--border-default); }
+  .ar-strip .s .lbl { font: 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+  .ar-strip .s .num { font-family: var(--font-display); font-size: 26px; line-height: 1; letter-spacing: -0.025em; color: var(--smc-navy); }
+  .ar-strip .s .delta { font: 10px var(--font-mono); color: var(--smc-accent-700); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="RADAR Archive">
+<div class="hub">
+  <header class="hub-top"><div class="brand">RADAR · Archivo<span class="dot">.</span></div><div class="crumbs">radar · 47 ediciones</div></header>
+  <div class="hub-eyebrow">RADAR · vista archivo · explorable</div>
+  <h1 class="hub-title">47 ediciones, 11 meses de stack.</h1>
+  <p class="hub-strap">Vista archivo del RADAR semanal desde la N°1 (jun 25). Cada celda es un brief enviado el lunes 9:00. Verde = patrones, oro = gente, navy = números. Hover muestra resumen.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">▣</span>Grid 47</button>
+    <button class="pill"><span class="n">▤</span>Timeline lista</button>
+    <button class="pill"><span class="n">★</span>Solo destacadas (12)</button>
+    <button class="pill"><span class="n">●</span>Con # de tickets</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 grid archivo · 47 ediciones · jun 25 → abr 26</div>
+      <h3 class="ttl">47 RADARs · todo el stack histórico</h3>
+      <div class="stage">
+        <div class="ar-h"><h4>Archivo RADAR · todas las ediciones</h4><span class="meta">jun 25 → abr 26 · 47 envíos · 0 saltos</span></div>
+        <div class="ar-strip">
+          <div class="s"><span class="lbl">Ediciones enviadas</span><span class="num">47</span><span class="delta">0 lunes perdidos</span></div>
+          <div class="s"><span class="lbl">Patrones citados</span><span class="num">214</span><span class="delta">↑ 12 este mes</span></div>
+          <div class="s"><span class="lbl">Destinatarios</span><span class="num">13</span><span class="delta">open rate 92%</span></div>
+          <div class="s"><span class="lbl">Edición destacada</span><span class="num">N°23</span><span class="delta">drop Kanki 01 launch</span></div>
+        </div>
+        <div class="ar-grid">
+          <!-- 47 cells -->
+          <div class="ar-cell"><span class="n">N°01</span><span class="d">02 jun 25</span><span class="t">Stack federado · v1</span><div class="ar-tag"><span class="on pat"></span><span class="on num"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">02</span><span class="d">09 jun</span><span class="t">VOY MVP en cliente</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">03</span><span class="d">16 jun</span><span class="t">Hoku composer beta</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">04</span><span class="d">23 jun</span><span class="t">Cerebro v0 vivo</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">05</span><span class="d">30 jun</span><span class="t">Bsale stock real-time</span><div class="ar-tag"><span></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">06</span><span class="d">07 jul</span><span class="t">InfoPet chat RAG</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+
+          <div class="ar-cell"><span class="n">07</span><span class="d">14 jul</span><span class="t">Marketplace v1 MeLi</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">08</span><span class="d">21 jul</span><span class="t">CEM Cencosud kickoff</span><div class="ar-tag"><span></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">09</span><span class="d">28 jul</span><span class="t">VOY Webpay live</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">10</span><span class="d">04 ago</span><span class="t">Intranet panel v1</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">11</span><span class="d">11 ago</span><span class="t">DUOC PI 7.5 migración</span><div class="ar-tag"><span></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">12</span><span class="d">18 ago</span><span class="t">Valmer curva diaria</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+
+          <div class="ar-cell"><span class="n">13</span><span class="d">25 ago</span><span class="t">AlPaso last-mile</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">14</span><span class="d">01 sep</span><span class="t">Parque Arauco iflow #1</span><div class="ar-tag"><span></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">15</span><span class="d">08 sep</span><span class="t">Discovery v0 piloto</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">16</span><span class="d">15 sep</span><span class="t">@smc/ui v0.1 publicado</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">17</span><span class="d">22 sep</span><span class="t">SMC tagline pivot</span><div class="ar-tag"><span></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">18</span><span class="d">29 sep</span><span class="t">Cerebro RAG estable</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+
+          <div class="ar-cell"><span class="n">19</span><span class="d">06 oct</span><span class="t">Kanki Drop 01 anuncio</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">20</span><span class="d">13 oct</span><span class="t">Bento Marketing landing</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">21</span><span class="d">20 oct</span><span class="t">Cencosud SF prod live</span><div class="ar-tag"><span></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">22</span><span class="d">27 oct</span><span class="t">VOY 1k cotizaciones/d</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell hi"><span class="n">★23</span><span class="d">03 nov</span><span class="t">Kanki Drop 01 launch · sold out 11 min</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">24</span><span class="d">10 nov</span><span class="t">InfoPet 22k MAU</span><div class="ar-tag"><span></span><span></span><span class="on num"></span></div></div>
+
+          <div class="ar-cell"><span class="n">25</span><span class="d">17 nov</span><span class="t">RADAR re-design serif</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">26</span><span class="d">24 nov</span><span class="t">Marketplace B2G live</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">27</span><span class="d">01 dic</span><span class="t">DUOC matricula 24-Q1</span><div class="ar-tag"><span></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">28</span><span class="d">08 dic</span><span class="t">Cerebro citas inline</span><div class="ar-tag"><span class="on pat"></span><span></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">29</span><span class="d">15 dic</span><span class="t">Discovery 1ra propuesta cerrada</span><div class="ar-tag"><span></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">30</span><span class="d">22 dic</span><span class="t">Stack year-in-review</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span class="on num"></span></div></div>
+
+          <div class="ar-cell"><span class="n">31</span><span class="d">05 ene 26</span><span class="t">Kanki Drop 02 anuncio</span><div class="ar-tag"><span class="on pat"></span><span></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">32</span><span class="d">12 ene</span><span class="t">Hoku composer v2</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">33</span><span class="d">19 ene</span><span class="t">Cencosud iflow #18</span><div class="ar-tag"><span></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">34</span><span class="d">26 ene</span><span class="t">VOY pricing matrix v3</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">35</span><span class="d">02 feb</span><span class="t">@smc/ui v0.4 · dark</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">36</span><span class="d">09 feb</span><span class="t">Valmer 8.4k inst/noche</span><div class="ar-tag"><span></span><span></span><span class="on num"></span></div></div>
+
+          <div class="ar-cell"><span class="n">37</span><span class="d">16 feb</span><span class="t">Intranet dark default</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">38</span><span class="d">23 feb</span><span class="t">Kanki Drop 02 sold out 8 min</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">39</span><span class="d">02 mar</span><span class="t">AlPaso 240 entregas/d</span><div class="ar-tag"><span></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">40</span><span class="d">09 mar</span><span class="t">Discovery 5 clientes cerr.</span><div class="ar-tag"><span></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">41</span><span class="d">16 mar</span><span class="t">DUOC migración a CPI</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">42</span><span class="d">23 mar</span><span class="t">Marketplace dead-letter v2</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+
+          <div class="ar-cell"><span class="n">43</span><span class="d">30 mar</span><span class="t">Kanki Drop 03 launch</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">44</span><span class="d">06 abr</span><span class="t">Cerebro processed 100 tk</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell"><span class="n">45</span><span class="d">13 abr</span><span class="t">SMC tagline v2 final</span><div class="ar-tag"><span></span><span class="on peo"></span><span></span></div></div>
+          <div class="ar-cell"><span class="n">46</span><span class="d">20 abr</span><span class="t">MeLi outage · postmortem</span><div class="ar-tag"><span class="on pat"></span><span></span><span class="on num"></span></div></div>
+          <div class="ar-cell cur"><span class="n">★47</span><span class="d">22 abr · hoy</span><span class="t">142 tickets · drop 04</span><div class="ar-tag"><span class="on pat"></span><span class="on peo"></span><span class="on num"></span></div></div>
+          <div class="ar-cell" style="opacity: .4; border-style: dashed;"><span class="n" style="color: var(--fg-4)">N°48</span><span class="d">29 abr · próx</span><span class="t">pending</span><div class="ar-tag"><span></span><span></span><span></span></div></div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · archivo</span></div>
+      <div class="dim"><span class="name">Layout</span><div class="opts"><span class="opt on">grid 6 cols</span><span class="opt">timeline</span><span class="opt">lista</span></div></div>
+      <div class="dim"><span class="name">Color tags</span><div class="opts"><span class="opt on">verde · oro · navy</span><span class="opt">monocolor</span></div></div>
+      <div class="dim"><span class="name">Mostrar destacadas</span><div class="opts"><span class="opt on">resaltadas</span><span class="opt">solo ellas</span></div></div>
+      <div class="dim"><span class="name">Resumen estadísticas</span><div class="opts"><span class="opt on">strip 4</span><span class="opt">off</span></div></div>
+      <div class="dim"><span class="name">Future placeholder</span><div class="opts"><span class="opt on">dashed</span><span class="opt">oculto</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Format del archivo</span>
+        <span class="where">Web mirror del email. Compilado por <b>Cerebro</b>. Cada celda linkea al MJML original + métricas open/click. Hospedaje S3 + Cloudfront, ruta <code>/radar/&lt;N&gt;</code>.</span>
+        <button class="btn">Abrir archivo →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

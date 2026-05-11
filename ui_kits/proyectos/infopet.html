@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>InfoPet · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 380px; display:grid; grid-template-columns: 280px 1fr; gap: 16px; }
+  .ip-chat { background: #fff; border-radius: 12px; padding: 16px; display:flex; flex-direction:column; gap: 10px; box-shadow: var(--shadow-rest); position: relative; overflow: hidden; }
+  .ip-chat-h { display:flex; gap: 8px; align-items: center; padding-bottom: 10px; border-bottom: 1px solid var(--border-subtle); }
+  .ip-avatar { width: 32px; height: 32px; border-radius: 99px; background: linear-gradient(135deg, var(--smc-navy), var(--smc-accent)); display:grid; place-items:center; color: var(--smc-cream); font: 700 14px var(--font-display); }
+  .ip-chat-h .nm { font: 600 13px var(--font-sans); color: var(--fg-1); }
+  .ip-chat-h .st { font: 10px var(--font-mono); color: var(--smc-accent-700); }
+  .ip-msgs { display:flex; flex-direction:column; gap: 8px; flex: 1; overflow: hidden; }
+  .ip-bub { padding: 9px 12px; border-radius: 12px; max-width: 90%; font-size: 12.5px; line-height: 1.4; }
+  .ip-bub.me { background: var(--smc-navy); color: var(--smc-cream); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .ip-bub.bot { background: var(--bg-sunk); color: var(--fg-1); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .ip-input { background: var(--bg-sunk); border-radius: 99px; padding: 10px 14px; font: 12px var(--font-sans); color: var(--fg-3); border: 1px solid var(--border-default); }
+
+  .ip-detail { background: #fff; border-radius: 12px; padding: 22px; display:flex; flex-direction:column; gap: 14px; box-shadow: var(--shadow-rest); }
+  .ip-eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent-700); }
+  .ip-detail h4 { font-family: var(--font-display); font-size: 26px; letter-spacing: -0.025em; margin: 0; line-height: 1.08; }
+  .ip-meta { display:flex; gap: 8px; font: 11px var(--font-mono); color: var(--fg-3); }
+  .ip-thumb { aspect-ratio: 16/9; border-radius: 10px; background:
+    radial-gradient(120% 80% at 30% 30%, #DCBC75, transparent 60%),
+    var(--smc-gold-100);
+    display:grid; place-items: center; }
+  .ip-thumb .label { font: 600 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-navy-700); }
+  .ip-row { display:flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border-subtle); }
+  .ip-row .l { color: var(--fg-3); }
+  .ip-row .v { font: 600 12px var(--font-mono); color: var(--fg-1); }
+  .ip-stock { display:inline-flex; gap: 6px; align-items: center; font: 11px var(--font-mono); color: var(--smc-accent-700); background: var(--smc-accent-100); padding: 5px 10px; border-radius: 99px; align-self: flex-start; }
+  .ip-cta { background: var(--smc-navy); color: var(--smc-cream); padding: 14px; border-radius: 8px; font: 600 13px var(--font-sans); text-align: center; }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="InfoPet">
+<div class="hub">
+  <header class="hub-top"><div class="brand">InfoPet<span class="dot">.</span></div><div class="crumbs">proyectos · 03/13 · Bsale + Jumpseller + IA</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · pet retail · stack federado</div>
+  <h1 class="hub-title">Una vet, una tienda, un chat.</h1>
+  <p class="hub-strap">Stack pet-retail completo. Catálogo Jumpseller, stock Bsale, chat IA con RAG sobre fichas veterinarias. Una sola URL, tres productos juntos.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Chat + producto</button>
+    <button class="pill"><span class="n">02</span>Catálogo</button>
+    <button class="pill"><span class="n">03</span>Ficha veterinaria</button>
+    <button class="pill"><span class="n">04</span>Mi mascota perfil</button>
+    <button class="pill"><span class="n">05</span>Checkout suscripción</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 chat + producto contextual</div>
+      <h3 class="ttl">Conversación · Lola · golden 4 años</h3>
+      <div class="stage">
+        <div class="ip-chat">
+          <div class="ip-chat-h">
+            <div class="ip-avatar">IP</div>
+            <div><div class="nm">InfoPet · asistente</div><div class="st">● en línea · veterinaria</div></div>
+          </div>
+          <div class="ip-msgs">
+            <div class="ip-bub me">A Lola le está costando saltar al sofá últimamente. Tiene 4 años.</div>
+            <div class="ip-bub bot">Puede ser displasia leve o sobrepeso. ¿Cuánto pesa hoy?</div>
+            <div class="ip-bub me">32 kg. Es una golden.</div>
+            <div class="ip-bub bot">Está 3-4 kg sobre lo ideal. Te recomiendo agregar condroprotector + revisar dieta. Mira →</div>
+          </div>
+          <div class="ip-input">Escribí tu consulta...</div>
+        </div>
+        <div class="ip-detail">
+          <span class="ip-eb">Recomendado por InfoPet · ★ 4.8</span>
+          <h4>Cosequin DS · 60 cápsulas</h4>
+          <div class="ip-meta"><span>SKU CSQ-DS-60</span><span>·</span><span>Bsale stock real-time</span></div>
+          <div class="ip-thumb"><span class="label">imagen producto</span></div>
+          <div class="ip-row"><span class="l">Stock CASA MATRIZ</span><span class="v">14 unidades</span></div>
+          <div class="ip-row"><span class="l">Stock LAS CONDES</span><span class="v">7 unidades</span></div>
+          <div class="ip-row"><span class="l">Dosis Lola (32 kg)</span><span class="v">2 cáps/día · 30 d</span></div>
+          <div class="ip-stock">● despacho 24 h Santiago</div>
+          <div class="ip-cta">Agregar al carro · $38.990</div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · chat + producto</span></div>
+      <div class="dim"><span class="name">Producto se abre</span><div class="opts"><span class="opt on">lateral</span><span class="opt">modal</span><span class="opt">inline burbuja</span></div></div>
+      <div class="dim"><span class="name">RAG sources</span><div class="opts"><span class="opt on">veterinaria + catálogo</span><span class="opt">solo catálogo</span></div></div>
+      <div class="dim"><span class="name">Streaming</span><div class="opts"><span class="opt on">on · 30 tok/s</span><span class="opt">off</span></div></div>
+      <div class="dim"><span class="name">Trust badge</span><div class="opts"><span class="opt">off</span><span class="opt on">★ rating + stock</span></div></div>
+      <div class="dim"><span class="name">Suscribir vs comprar</span><div class="opts"><span class="opt on">ambas</span><span class="opt">solo comprar</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">Jumpseller catalog + Bsale stock + <b>Cerebro</b> agente vet (RAG sobre 2.400 fichas). Webhook MercadoPago. Despacho 24h Santiago vía AlPaso.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

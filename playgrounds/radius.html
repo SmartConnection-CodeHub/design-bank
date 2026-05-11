@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Radius · 4 → pill · SMC</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); margin-bottom: 32px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font: 12px var(--font-mono); color: var(--text-muted); text-decoration: none; }
+header h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -0.012em; }
+header .meta { font: 11px var(--font-mono); color: var(--text-muted); margin-left: auto; }
+.playground { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 22px; overflow: hidden; min-height: 720px; }
+.stage { padding: 40px; background: var(--bg-warm); display: flex; flex-direction: column; gap: 24px; }
+
+.swatch-row { background: var(--bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 24px; }
+.swatch-row .ttl { font: 600 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
+.swatches { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-end; }
+.swatch-block { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: 180ms; }
+.swatch-block:hover { transform: translateY(-3px); }
+.swatch-block .box { width: 72px; height: 72px; background: var(--smc-navy); transition: 280ms var(--ease-out); }
+.swatch-block.canon .box { background: var(--smc-accent); box-shadow: 0 0 0 3px rgba(0,229,176,0.2); }
+.swatch-block .lbl { font: 11px var(--font-mono); color: var(--text-muted); }
+.swatch-block .lbl strong { color: var(--text); display: block; font-size: 13px; }
+.swatch-block .star { font-size: 10px; color: var(--smc-gold); margin-top: -4px; }
+
+.demo-area { background: var(--bg); border: 1px solid var(--border-soft); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.demo-area .lbl { font: 600 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.demo-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.demo-card2 { background: linear-gradient(135deg, var(--smc-navy), var(--smc-accent)); color: white; padding: 22px; width: 200px; aspect-ratio: 4/3; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--r, 18px); transition: 280ms var(--ease-out); }
+.demo-card2 .eb { font: 600 9px var(--font-mono); letter-spacing: 0.1em; opacity: 0.8; }
+.demo-card2 .ti { font: 600 18px var(--font-text); letter-spacing: -0.012em; }
+.demo-btn { padding: 12px 24px; background: var(--accent); color: white; border: none; font: 500 14px var(--font-text); cursor: pointer; border-radius: var(--r, 980px); transition: 220ms; }
+.demo-input { padding: 10px 14px; background: var(--bg); border: 1px solid var(--border-soft); width: 200px; font: 14px var(--font-text); border-radius: var(--r, 10px); }
+.demo-badge { padding: 4px 12px; background: rgba(0,229,176,0.15); color: #009E78; font: 600 12px var(--font-text); display: inline-flex; align-items: center; gap: 6px; border-radius: var(--r, 980px); }
+.demo-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #00E5B0; }
+
+.controls { background: var(--bg-soft); padding: 24px; border-left: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.ctrl-group .ctrl-label { font: 600 10px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.ctrl-group .val { color: var(--accent); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.slider { width: 100%; appearance: none; height: 4px; background: var(--border-soft); border-radius: 2px; outline: none; }
+.slider::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+.opt { font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 6px; cursor: pointer; }
+.opt.active { background: var(--text); color: white; border-color: transparent; }
+.ctrl-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.copy-btn { padding: 8px 14px; font: 500 12px var(--font-text); background: var(--text); color: white; border: none; border-radius: 980px; cursor: pointer; margin-top: auto; }
+.copy-btn.copied { background: var(--smc-accent); color: var(--text); }
+@media (max-width: 900px) { .playground { grid-template-columns: 1fr; } .controls { border-left: none; border-top: 1px solid var(--border-soft); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v15</a>
+  <h1>⌒ Radius · 4 → pill canon</h1>
+  <span class="meta">Apple-grade · 10px cards (★) · 980px pill total (★) · 6px inputs</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage">
+
+    <div class="swatch-row">
+      <div class="ttl">SCALE · click cualquiera para preview live</div>
+      <div class="swatches" id="swatches">
+        <div class="swatch-block" data-r="0"><div class="box" style="border-radius:0;"></div><div class="lbl"><strong>0</strong>none</div></div>
+        <div class="swatch-block" data-r="4"><div class="box" style="border-radius:4px;"></div><div class="lbl"><strong>4</strong>xs</div></div>
+        <div class="swatch-block canon" data-r="6"><div class="box" style="border-radius:6px;"></div><div class="star">★</div><div class="lbl"><strong>6</strong>inputs</div></div>
+        <div class="swatch-block" data-r="8"><div class="box" style="border-radius:8px;"></div><div class="lbl"><strong>8</strong>sm</div></div>
+        <div class="swatch-block canon" data-r="12"><div class="box" style="border-radius:12px;"></div><div class="star">★</div><div class="lbl"><strong>12</strong>md</div></div>
+        <div class="swatch-block canon" data-r="18"><div class="box" style="border-radius:18px;"></div><div class="star">★</div><div class="lbl"><strong>18</strong>cards</div></div>
+        <div class="swatch-block" data-r="22"><div class="box" style="border-radius:22px;"></div><div class="lbl"><strong>22</strong>big</div></div>
+        <div class="swatch-block" data-r="36"><div class="box" style="border-radius:36px;"></div><div class="lbl"><strong>36</strong>phone</div></div>
+        <div class="swatch-block canon" data-r="980"><div class="box" style="border-radius:980px;"></div><div class="star">★</div><div class="lbl"><strong>pill</strong>980px</div></div>
+        <div class="swatch-block" data-r="50%"><div class="box" style="border-radius:50%;"></div><div class="lbl"><strong>50%</strong>full</div></div>
+      </div>
+    </div>
+
+    <div class="demo-area">
+      <div class="lbl">PREVIEW · todos los componentes con tu radius live</div>
+      <div class="demo-row">
+        <div class="demo-card2"><div class="eb">CARD</div><div><div class="ti">SMC Pro</div></div></div>
+        <button class="demo-btn">Conectar →</button>
+        <input class="demo-input" placeholder="Email">
+        <span class="demo-badge">Conectado</span>
+        <div style="width:48px; height:48px; background:var(--smc-gold); border-radius:var(--r, 980px); display:flex; align-items:center; justify-content:center; color:#1B2F4E; font:600 14px var(--font-mono);">SC</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-label">Radius global <span class="val" id="v-r">18px</span></div>
+      <input type="range" class="slider" id="rSlider" min="0" max="100" value="18" step="1">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Preset · @smc/ui canon</div>
+      <div class="ctrl-row">
+        <span class="opt" onclick="setR(6)">inputs · 6</span>
+        <span class="opt" onclick="setR(12)">md · 12</span>
+        <span class="opt active" onclick="setR(18)">cards · 18</span>
+        <span class="opt" onclick="setR(36)">phone · 36</span>
+        <span class="opt" onclick="setR(980)">pill · 980</span>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">CSS tokens canon</div>
+      <pre style="background:var(--text); color:var(--bg-warm); padding:12px 14px; border-radius:10px; font:11px var(--font-mono); line-height:1.6; margin:0;">--radius-sm: 6px;
+--radius-md: 12px;
+--radius-card: 18px;
+--radius-pill: 980px;</pre>
+    </div>
+    <button class="copy-btn" onclick="copyCSS()">📋 Copy tokens</button>
+  </div>
+</div>
+
+</div>
+<script>
+function applyR(r) {
+  document.querySelectorAll('.demo-card2, .demo-btn, .demo-input, .demo-badge, .demo-area > div > div:last-child').forEach(el => {
+    el.style.setProperty('--r', isNaN(r) ? r : r + 'px');
+  });
+  document.getElementById('v-r').textContent = r + (isNaN(r) ? '' : 'px');
+}
+function setR(r) { document.getElementById('rSlider').value = r; applyR(r); }
+document.getElementById('rSlider').addEventListener('input', e => applyR(parseInt(e.target.value)));
+document.querySelectorAll('.swatch-block').forEach(s => s.addEventListener('click', () => {
+  const r = s.dataset.r;
+  if (r === '50%') applyR('50%'); else setR(parseInt(r) || 0);
+}));
+function copyCSS() {
+  navigator.clipboard.writeText('--radius-sm: 6px;\n--radius-md: 12px;\n--radius-card: 18px;\n--radius-pill: 980px;');
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✓ Copy'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '📋 Copy tokens'; btn.classList.remove('copied'); }, 1600);
+}
+applyR(18);
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>SMC · Logo lockups</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 22px 24px; display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .card { display:flex; flex-direction:column; gap: 8px; align-items: center; justify-content: center; padding: 24px 12px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
+  .lcream { background: var(--smc-cream); }
+  .lnavy  { background: var(--smc-navy); }
+  .lwhite { background: #fff; }
+  .wordmark { font-family: var(--font-display); font-size: 38px; line-height: 1; letter-spacing: -0.04em; font-weight: 400; display:inline-flex; align-items: baseline; }
+  .lnavy .wordmark { color: var(--smc-cream); }
+  .lcream .wordmark, .lwhite .wordmark { color: var(--smc-navy); }
+  .dot { color: var(--smc-accent); }
+  .vlabel { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-3); }
+  .lnavy .vlabel { color: var(--smc-cream-300); }
+  .mark { width: 56px; height: 56px; background: var(--smc-navy); border-radius: 14px; display:grid; place-items:center; color: var(--smc-cream); font-family: var(--font-display); font-size: 30px; letter-spacing: -0.04em; }
+  .mark .dot { color: var(--smc-accent); }
+  .mark.inverse { background: var(--smc-cream); color: var(--smc-navy); }
+</style></head>
+<body>
+  <div class="card lcream">
+    <div class="wordmark">SMC<span class="dot">.</span></div>
+    <span class="vlabel">Wordmark · navy on cream</span>
+  </div>
+  <div class="card lnavy">
+    <div class="wordmark">SMC<span class="dot">.</span></div>
+    <span class="vlabel">Wordmark · cream on navy</span>
+  </div>
+  <div class="card lwhite">
+    <div class="wordmark">SMC<span class="dot">.</span></div>
+    <span class="vlabel">Wordmark · navy on white</span>
+  </div>
+  <div class="card lcream">
+    <div class="mark">S<span class="dot">.</span></div>
+    <span class="vlabel">Mark · navy</span>
+  </div>
+  <div class="card lnavy">
+    <div class="mark inverse">S<span class="dot">.</span></div>
+    <span class="vlabel">Mark · inverse</span>
+  </div>
+  <div class="card lcream" style="border: 2px dashed var(--border-default); background: var(--bg-sunk);">
+    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); text-align:center;">REAL LOGO<br/>PENDING</span>
+    <span class="vlabel" style="text-align:center">Drop SVG / PNG in /assets</span>
+  </div>
+</body></html>

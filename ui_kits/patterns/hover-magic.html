@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Hover Magic · Patrón federado</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex: 1; display:grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 22px; background: var(--bg-sunk); border-radius: 10px; min-height: 340px; }
+  .magic { background: #fff; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 18px; display:flex; flex-direction:column; gap: 10px; transition: 300ms var(--ease-out); position: relative; overflow: hidden; }
+
+  .magic.tilt { transform: perspective(800px) rotateX(8deg) rotateY(-12deg); box-shadow: -20px 20px 40px rgba(27,47,78,.18); }
+  .magic.tilt::after { content:""; position:absolute; inset:0; background: linear-gradient(120deg, rgba(255,255,255,.4), transparent 50%); pointer-events: none; }
+
+  .magic.glow { border: 1px solid transparent; background-clip: padding-box; box-shadow: 0 0 0 1px var(--smc-accent), 0 0 24px rgba(0,229,176,.4); }
+  .magic.glow::before { content:""; position:absolute; inset:-2px; border-radius: 14px; background: conic-gradient(from 0deg, var(--smc-accent), var(--smc-gold), var(--smc-accent)); z-index:-1; animation: spin 4s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .magic .eb { font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
+  .magic .ti { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.02em; margin: 0; line-height: 1.1; }
+  .magic .bd { font-size: 12px; color: var(--fg-2); line-height: 1.5; margin: 0; }
+  .magic .num { font-family: var(--font-display); font-size: 36px; letter-spacing: -0.02em; color: var(--smc-navy); font-variant-numeric: tabular-nums; }
+
+  .mag-btn-wrap { grid-column: 1 / -1; background: var(--smc-navy-900); border-radius: 12px; padding: 26px; display:flex; gap: 14px; align-items:center; justify-content: center; position: relative; overflow:hidden; }
+  .mag-btn-wrap::before { content:""; position:absolute; inset:-40%; background: radial-gradient(circle at 30% 50%, rgba(0,229,176,.18), transparent 50%); animation: cursor 6s ease-in-out infinite; }
+  @keyframes cursor { 50% { transform: translate(40%, 10%); } }
+  .mag-btn { background: var(--smc-accent); color: var(--smc-navy-900); padding: 14px 26px; border-radius: 100px; font: 600 14px var(--font-sans); position: relative; z-index:2; animation: magnet 3.5s ease-in-out infinite; }
+  @keyframes magnet { 50% { transform: translate(6px, -3px) scale(1.04); } }
+  .cursor { position: absolute; width: 24px; height: 24px; border-radius: 99px; border: 2px solid var(--smc-accent); top: 50%; left: 30%; transform: translate(-50%,-50%); animation: cmove 4s ease-in-out infinite; }
+  @keyframes cmove { 50% { left: 70%; top: 60%; } }
+
+  .reveal-text { position: relative; overflow: hidden; line-height: 1.1; }
+  .reveal-text span { display: inline-block; animation: rev 2.2s var(--ease-out) infinite; }
+  @keyframes rev { 0%, 30% { transform: translateY(100%); } 60%, 100% { transform: translateY(0); } }
+
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="Hover Magic">
+<div class="hub">
+  <header class="hub-top">
+    <div class="brand">Hover Magic<span class="dot">.</span></div>
+    <div class="crumbs">patterns · 5 variantes · desktop-first</div>
+  </header>
+  <div class="hub-eyebrow">Patrón federado · @smc/ui · micro-interactions</div>
+  <h1 class="hub-title">Lo que reacciona al cursor.</h1>
+  <p class="hub-strap">Cinco micro-interacciones que premian al usuario de desktop. 3D Tilt para tarjetas de proyectos en Intranet. Magnetic Button para CTAs de Marketing. Border Glow para featured cards en RADAR.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>3D Tilt</button>
+    <button class="pill"><span class="n">02</span>Border Glow</button>
+    <button class="pill"><span class="n">03</span>Magnetic Button</button>
+    <button class="pill"><span class="n">04</span>Cursor Follow</button>
+    <button class="pill"><span class="n">05</span>Text Reveal</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>4 efectos · todos animan en loop para preview</div>
+      <h3 class="ttl">Live preview · Intranet cards</h3>
+      <div class="stage">
+        <div class="magic tilt">
+          <span class="eb">01 · 3D Tilt</span>
+          <h4 class="ti">VOY Cotizador</h4>
+          <p class="bd">+24 signups esta semana. Total estimado promedio $18M.</p>
+          <div class="num">+24</div>
+        </div>
+        <div class="magic glow">
+          <span class="eb">02 · Border Glow</span>
+          <h4 class="ti">Cerebro · destacado</h4>
+          <p class="bd">142 tickets procesados. RAG sobre Supabase RLS estable.</p>
+          <div class="num" style="color: var(--smc-accent-700)">142</div>
+        </div>
+        <div class="mag-btn-wrap">
+          <div class="cursor"></div>
+          <span style="font: 600 9px var(--font-mono); letter-spacing:.08em; color: var(--smc-cream-300); text-transform: uppercase;">03 Magnetic · 04 Cursor follow</span>
+          <button class="mag-btn">Cotizar ahora →</button>
+          <span style="font: 600 9px var(--font-mono); letter-spacing:.08em; color: var(--smc-cream-300); text-transform: uppercase;">05 Text reveal</span>
+          <div class="reveal-text" style="font-family: var(--font-display); font-size: 18px; color: var(--smc-cream); letter-spacing: -0.02em;"><span>Monday + IA real.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · 3D tilt</span></div>
+      <div class="dim"><div class="row"><span class="name">Max rotación</span><span class="val">12°</span></div><input type="range" min="2" max="20" value="12"></div>
+      <div class="dim"><div class="row"><span class="name">Perspective</span><span class="val">800 px</span></div><input type="range" min="400" max="1600" value="800"></div>
+      <div class="dim"><span class="name">Glare overlay</span><div class="opts"><span class="opt">off</span><span class="opt on">soft</span><span class="opt">strong</span></div></div>
+      <div class="dim"><span class="name">Reset easing</span><div class="opts"><span class="opt">ease-out</span><span class="opt on">spring</span></div></div>
+      <div class="dim"><span class="name">Touch mobile</span><div class="opts"><span class="opt on">off</span><span class="opt">gyro</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Use this in</span>
+        <span class="where"><b>Intranet SMC</b> · agent cards en dark dashboard<br><b>Marketing SMC</b> · feature CTAs primarias<br><b>RADAR</b> · featured weekly cards<br><b>Discovery Cliente</b> · infografía interactiva</span>
+        <button class="btn">Copiar prompt →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

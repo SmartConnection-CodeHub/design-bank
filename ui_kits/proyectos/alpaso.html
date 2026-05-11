@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>AlPaso · Proyecto</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../hub-card.css">
+<style>
+  .stage { flex:1; background: var(--bg-sunk); border-radius: 10px; padding: 18px; min-height: 380px; display:grid; grid-template-columns: 1fr 280px; gap: 14px; }
+  .ap-map { background: linear-gradient(135deg, var(--smc-cream-100), var(--smc-cream)); border-radius: 12px; padding: 18px; display:flex; flex-direction:column; gap: 12px; box-shadow: var(--shadow-rest); position: relative; overflow: hidden; }
+  .ap-h { display:flex; justify-content: space-between; align-items: baseline; }
+  .ap-h h4 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.025em; margin: 0; }
+  .ap-h .crumb { font: 11px var(--font-mono); color: var(--fg-3); }
+
+  /* simulated map */
+  .ap-canvas { background:
+    linear-gradient(transparent 49%, var(--border-subtle) 50%, transparent 51%) 0 0 / 30px 30px,
+    linear-gradient(90deg, transparent 49%, var(--border-subtle) 50%, transparent 51%) 0 0 / 30px 30px,
+    var(--smc-cream);
+    border: 1px solid var(--border-default); border-radius: 8px; height: 240px; position: relative; }
+  .ap-route { position:absolute; inset: 20px; }
+  .ap-route svg { width:100%; height:100%; }
+  .ap-pin { position: absolute; width: 32px; height: 32px; border-radius: 99px; display:grid; place-items: center; font: 700 11px var(--font-mono); transform: translate(-50%, -50%); }
+  .ap-pin.start { background: var(--smc-navy); color: var(--smc-cream); top: 20%; left: 15%; }
+  .ap-pin.end { background: var(--smc-gold); color: var(--smc-navy-900); top: 75%; left: 85%; }
+  .ap-pin.driver { background: var(--smc-accent); color: var(--smc-navy-900); top: 45%; left: 55%; box-shadow: 0 0 0 6px rgba(0,229,176,.25); animation: ping 2s ease-in-out infinite; }
+  @keyframes ping { 50% { box-shadow: 0 0 0 12px rgba(0,229,176,.1); } }
+
+  .ap-strip { display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .ap-strip .s { background: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 11px; display:flex; flex-direction:column; gap: 2px; }
+  .ap-strip .s .lbl { font: 9px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+  .ap-strip .s .num { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.02em; color: var(--smc-navy); font-variant-numeric: tabular-nums; }
+
+  .ap-side { background: #fff; border-radius: 12px; padding: 16px; display:flex; flex-direction:column; gap: 10px; box-shadow: var(--shadow-rest); }
+  .ap-side .eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent-700); }
+  .ap-side h5 { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.02em; margin: 0; }
+  .ap-row { display:flex; gap: 10px; padding: 10px; border-radius: 8px; background: var(--bg-sunk); }
+  .ap-row .ic { width: 28px; height: 28px; border-radius: 6px; background: var(--smc-navy); color: var(--smc-cream); display:grid; place-items: center; font: 600 12px var(--font-mono); flex-shrink: 0; }
+  .ap-row .body .nm { font-size: 12.5px; font-weight: 600; color: var(--fg-1); }
+  .ap-row .body small { display:block; font: 10px var(--font-mono); color: var(--fg-3); margin-top: 1px; }
+  .ap-row .body .progress { height: 4px; margin-top: 5px; background: var(--bg-sunk); border-radius: 99px; overflow: hidden; }
+  .ap-row .body .progress .fill { height:100%; background: var(--smc-accent); }
+  .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+</style></head>
+<body data-screen-label="AlPaso">
+<div class="hub">
+  <header class="hub-top"><div class="brand">AlPaso<span class="dot">.</span></div><div class="crumbs">proyectos · 07/13 · logística last-mile</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · logística + delivery</div>
+  <h1 class="hub-title">Despacho 24 h Santiago.</h1>
+  <p class="hub-strap">App de operación logística last-mile. Mapa vivo, rutas optimizadas, pedidos sincronizados desde Jumpseller + InfoPet + Kanki. Driver POV en mobile.</p>
+
+  <div class="pill-row">
+    <button class="pill on"><span class="n">01</span>Mapa operación</button>
+    <button class="pill"><span class="n">02</span>Ruta del driver</button>
+    <button class="pill"><span class="n">03</span>Cliente tracking</button>
+    <button class="pill"><span class="n">04</span>Asignar pedidos</button>
+    <button class="pill"><span class="n">05</span>Reportes diarios</button>
+  </div>
+
+  <div class="hub-kit">
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 mapa · 4 drivers activos · 12 pedidos</div>
+      <h3 class="ttl">Operación · martes 14:32</h3>
+      <div class="stage">
+        <div class="ap-map">
+          <div class="ap-h"><h4>Drivers en ruta · Santiago Centro</h4><span class="crumb">12 pedidos · 4 drivers · ETA prom 38 min</span></div>
+          <div class="ap-canvas">
+            <div class="ap-route">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M 15 20 Q 30 30, 35 50 T 55 45 Q 70 60, 85 75" fill="none" stroke="#1B2F4E" stroke-width="0.6" stroke-dasharray="2 1.5"/></svg>
+            </div>
+            <div class="ap-pin start">A</div>
+            <div class="ap-pin driver">M</div>
+            <div class="ap-pin end">B</div>
+          </div>
+          <div class="ap-strip">
+            <div class="s"><span class="lbl">En ruta</span><span class="num">04</span></div>
+            <div class="s"><span class="lbl">Entregados hoy</span><span class="num">38</span></div>
+            <div class="s"><span class="lbl">ETA promedio</span><span class="num">38 m</span></div>
+          </div>
+        </div>
+        <div class="ap-side">
+          <span class="eb">● Driver activos</span>
+          <h5>4 en ruta</h5>
+          <div class="ap-row">
+            <div class="ic">M</div>
+            <div class="body" style="flex:1"><span class="nm">Matías · van 12</span><small>3 / 5 entregas · Las Condes</small><div class="progress"><div class="fill" style="width: 60%"></div></div></div>
+          </div>
+          <div class="ap-row">
+            <div class="ic" style="background: var(--smc-gold); color: var(--smc-navy-900);">F</div>
+            <div class="body" style="flex:1"><span class="nm">Fran · moto 08</span><small>2 / 4 entregas · Providencia</small><div class="progress"><div class="fill" style="width: 50%; background: var(--smc-gold)"></div></div></div>
+          </div>
+          <div class="ap-row">
+            <div class="ic">C</div>
+            <div class="body" style="flex:1"><span class="nm">Cami · van 05</span><small>0 / 2 entregas · Ñuñoa</small><div class="progress"><div class="fill" style="width: 0%"></div></div></div>
+          </div>
+          <div class="ap-row">
+            <div class="ic">J</div>
+            <div class="body" style="flex:1"><span class="nm">Joaquín · moto 11</span><small>1 / 1 entrega · vuelta</small><div class="progress"><div class="fill" style="width: 100%; background: var(--smc-accent-700)"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="panel-h"><span class="dot"></span><span class="lbl">controles · operación</span></div>
+      <div class="dim"><span class="name">Vista mapa</span><div class="opts"><span class="opt on">satellite-light</span><span class="opt">dark</span><span class="opt">esquema</span></div></div>
+      <div class="dim"><span class="name">Zoom comuna</span><div class="opts"><span class="opt">RM</span><span class="opt on">Stgo Centro</span><span class="opt">manual</span></div></div>
+      <div class="dim"><span class="name">Optimización ruta</span><div class="opts"><span class="opt on">VRP greedy</span><span class="opt">manual</span></div></div>
+      <div class="dim"><span class="name">Refresh ETA</span><div class="opts"><span class="opt on">30 s</span><span class="opt">60 s</span><span class="opt">manual</span></div></div>
+      <div class="dim"><span class="name">Panel driver</span><div class="opts"><span class="opt on">cards</span><span class="opt">tabla</span></div></div>
+      <div class="divider"></div>
+      <div class="use-cta">
+        <span class="lbl">Stack del proyecto</span>
+        <span class="where">React Native + Expo (driver app). Backend Fastify + PostGIS para VRP. Mapas Mapbox light. Pedidos vienen de Jumpseller + InfoPet vía <b>@smc/orders-bus</b>.</span>
+        <button class="btn">Abrir proyecto →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body></html>

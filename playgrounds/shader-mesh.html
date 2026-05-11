@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shader Mesh · 5 backgrounds reactivos · SMC</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 32px; }
+header { padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; display:flex; align-items:baseline; gap: 18px; flex-wrap: wrap; }
+header .back { font:11px var(--font-mono); color: var(--fg-3); text-decoration:none; }
+header h1 { margin:0; font:600 28px var(--font-sans); letter-spacing:-0.02em; }
+header .meta { font:11px var(--font-mono); color: var(--fg-3); margin-left:auto; }
+
+.playground {
+  display:grid; grid-template-columns: 1fr 320px; gap: 0;
+  background: var(--bg-elevated); border:1px solid var(--border-subtle);
+  border-radius: var(--radius-md); overflow:hidden;
+  min-height: 580px;
+}
+.stage { position:relative; min-height: 520px; }
+canvas#shader { display:block; width:100%; height:100%; cursor: crosshair; }
+
+.stage-overlay {
+  position:absolute; top:16px; left:16px; right:16px;
+  display:flex; justify-content:space-between; align-items:flex-start;
+  pointer-events:none;
+  z-index:2;
+}
+.stage-overlay .badge {
+  background: rgba(10,19,34,.6); backdrop-filter: blur(10px);
+  color: var(--smc-cream); padding: 6px 12px; border-radius: 100px;
+  font: 500 11px var(--font-mono); letter-spacing:.08em;
+}
+
+.variant-toggle {
+  position:absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  display:flex; gap: 4px; background: rgba(10,19,34,.7); backdrop-filter: blur(20px);
+  padding: 5px; border-radius: 100px; z-index: 5;
+}
+.variant-toggle button {
+  background: transparent; border:none; color: var(--smc-cream-300);
+  font: 500 11px var(--font-mono); letter-spacing:.08em;
+  padding: 7px 14px; border-radius: 100px; cursor:pointer; transition: 200ms;
+}
+.variant-toggle button:hover { color: var(--smc-cream); }
+.variant-toggle button.active { background: var(--smc-cream); color: var(--smc-navy-700); }
+
+.cursor-counter {
+  position:absolute; bottom: 24px; right: 24px;
+  background: rgba(10,19,34,.7); backdrop-filter: blur(10px);
+  color: var(--smc-cream); padding: 6px 14px; border-radius: 8px;
+  font: 11px var(--font-mono); z-index: 5;
+}
+
+.controls {
+  background: var(--bg-sunk); padding: 20px; border-left:1px solid var(--border-subtle);
+  display:flex; flex-direction:column; gap: 18px;
+}
+.ctrl-label { font:600 10px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color: var(--fg-3); margin-bottom: 8px; display:flex; justify-content:space-between; }
+.ctrl-label .val { color: var(--smc-navy-500); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.slider { width:100%; appearance: none; height: 4px; background: var(--smc-cream-300); border-radius: 2px; outline:none; }
+.slider::-webkit-slider-thumb { appearance:none; width:14px; height:14px; border-radius:50%; background: var(--smc-accent-500); cursor:pointer; }
+.opt {
+  font: 11px var(--font-mono); padding: 5px 10px; background: var(--bg-elevated);
+  border:1px solid var(--border-subtle); border-radius: var(--radius-sm); cursor:pointer; transition: 160ms;
+}
+.opt.active { background: var(--smc-navy-500); color: var(--smc-cream); border-color: transparent; }
+.ctrl-row { display:flex; gap:4px; flex-wrap:wrap; }
+
+.export-row { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-subtle); }
+.cta {
+  display:inline-flex; align-items:center; gap:6px;
+  padding: 8px 14px; border-radius: 100px;
+  background: var(--smc-navy-500); color: var(--smc-cream); border:none;
+  font: 500 11px var(--font-sans); cursor:pointer; width:100%; justify-content:center;
+  margin-bottom: 6px;
+}
+.cta.ghost { background:transparent; border:1px solid var(--smc-navy-500); color: var(--smc-navy-500); }
+
+@media (max-width: 900px) {
+  .playground { grid-template-columns: 1fr; }
+  .controls { border-left:none; border-top:1px solid var(--border-subtle); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="../index.html" class="back">← Banco SMC v11</a>
+  <h1>🎨 Shader Mesh · 5 backgrounds reactivos</h1>
+  <span class="meta">Canvas 2D · partículas físicas · mouse-driven</span>
+</header>
+
+<div class="playground" id="pg">
+  <div class="stage" id="stage">
+    <canvas id="shader"></canvas>
+
+    <div class="stage-overlay">
+      <span class="badge" id="badgeShader">OCEAN · Intranet</span>
+      <span class="badge" id="badgeFps">— fps</span>
+    </div>
+
+    <div class="cursor-counter" id="cursorCounter">→ mové el cursor</div>
+
+    <div class="variant-toggle">
+      <button class="active" data-variant="ocean">Ocean</button>
+      <button data-variant="sand">Sand</button>
+      <button data-variant="gold">Gold</button>
+      <button data-variant="navy">Navy</button>
+      <button data-variant="cream">Cream</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div>
+      <div class="ctrl-label">Variante <span class="val" id="v-variant">ocean</span></div>
+      <div class="ctrl-row" data-ctrl="variant">
+        <span class="opt active" data-val="ocean">Ocean</span>
+        <span class="opt" data-val="sand">Sand</span>
+        <span class="opt" data-val="gold">Gold</span>
+        <span class="opt" data-val="navy">Navy</span>
+        <span class="opt" data-val="cream">Cream</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="ctrl-label">Partículas <span class="val" id="v-count">80</span></div>
+      <input type="range" class="slider" id="countSlider" min="20" max="300" value="80">
+    </div>
+
+    <div>
+      <div class="ctrl-label">Tamaño <span class="val" id="v-size">3</span></div>
+      <input type="range" class="slider" id="sizeSlider" min="1" max="12" value="3" step="0.5">
+    </div>
+
+    <div>
+      <div class="ctrl-label">Velocidad <span class="val" id="v-speed">0.4</span></div>
+      <input type="range" class="slider" id="speedSlider" min="0" max="2" step="0.1" value="0.4">
+    </div>
+
+    <div>
+      <div class="ctrl-label">Fuerza mouse <span class="val" id="v-force">120</span></div>
+      <input type="range" class="slider" id="forceSlider" min="0" max="300" value="120">
+    </div>
+
+    <div>
+      <div class="ctrl-label">Conexiones <span class="val" id="v-conn">on</span></div>
+      <div class="ctrl-row" data-ctrl="connections">
+        <span class="opt active" data-val="on">on</span>
+        <span class="opt" data-val="off">off</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="ctrl-label">Modo mouse</div>
+      <div class="ctrl-row" data-ctrl="mode">
+        <span class="opt active" data-val="attract">atraer</span>
+        <span class="opt" data-val="repel">repeler</span>
+        <span class="opt" data-val="none">ninguno</span>
+      </div>
+    </div>
+
+    <div class="export-row">
+      <button class="cta" onclick="exportPNG()">📸 Export PNG</button>
+      <button class="cta ghost" onclick="copyConfig()">📋 Copy config JSON</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const PALETTES = {
+  ocean: {
+    bg1: '#0A1322', bg2: '#1B2F4E', bg3: '#00E5B0',
+    pBase: 'rgba(0,229,176,', pBaseAlpha: 0.7,
+    pGlow: 'rgba(77,235,196,', pGlowAlpha: 0.3,
+    lineCol: 'rgba(0,229,176,'
+  },
+  sand: {
+    bg1: '#F8F8F6', bg2: '#F4E7C3', bg3: '#FCFCFB',
+    pBase: 'rgba(138,107,35,', pBaseAlpha: 0.6,
+    pGlow: 'rgba(196,154,58,', pGlowAlpha: 0.25,
+    lineCol: 'rgba(138,107,35,'
+  },
+  gold: {
+    bg1: '#1B2F4E', bg2: '#C49A3A', bg3: '#8A6B23',
+    pBase: 'rgba(244,231,195,', pBaseAlpha: 0.8,
+    pGlow: 'rgba(255,255,255,', pGlowAlpha: 0.3,
+    lineCol: 'rgba(244,231,195,'
+  },
+  navy: {
+    bg1: '#131F35', bg2: '#1B2F4E', bg3: '#0A1322',
+    pBase: 'rgba(107,126,156,', pBaseAlpha: 0.7,
+    pGlow: 'rgba(0,229,176,', pGlowAlpha: 0.4,
+    lineCol: 'rgba(107,126,156,'
+  },
+  cream: {
+    bg1: '#EEEEE8', bg2: '#F8F8F6', bg3: '#DCDCD2',
+    pBase: 'rgba(27,47,78,', pBaseAlpha: 0.55,
+    pGlow: 'rgba(196,154,58,', pGlowAlpha: 0.3,
+    lineCol: 'rgba(27,47,78,'
+  }
+};
+
+const PROJECT_LABEL = {
+  ocean: 'OCEAN · Intranet',
+  sand: 'SAND · Marketing',
+  gold: 'GOLD · Kanki Surf',
+  navy: 'NAVY · Design Bank',
+  cream: 'CREAM · Holding'
+};
+
+const state = new Proxy({
+  variant: 'ocean',
+  count: 80,
+  size: 3,
+  speed: 0.4,
+  force: 120,
+  connections: 'on',
+  mode: 'attract'
+}, {
+  set(t, k, v) {
+    t[k] = v;
+    if (k === 'count') resizeParticles();
+    if (k === 'variant') updateBg();
+    updateUI();
+    return true;
+  }
+});
+
+const canvas = document.getElementById('shader');
+const ctx = canvas.getContext('2d', { alpha: false });
+const stage = document.getElementById('stage');
+let W = 0, H = 0;
+let particles = [];
+let mouse = { x: -1000, y: -1000, active: false };
+let lastT = performance.now();
+let frames = 0, lastFpsTime = performance.now();
+let bgGrad;
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const rect = stage.getBoundingClientRect();
+  W = rect.width;
+  H = rect.height;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  updateBg();
+}
+
+function updateBg() {
+  const p = PALETTES[state.variant];
+  bgGrad = ctx.createRadialGradient(W * 0.3, H * 0.3, 0, W * 0.5, H * 0.5, Math.max(W, H));
+  bgGrad.addColorStop(0, p.bg2);
+  bgGrad.addColorStop(0.6, p.bg1);
+  bgGrad.addColorStop(1, p.bg1);
+}
+
+function resizeParticles() {
+  const target = state.count;
+  if (particles.length > target) {
+    particles.length = target;
+  } else {
+    while (particles.length < target) {
+      particles.push(makeParticle());
+    }
+  }
+}
+
+function makeParticle() {
+  return {
+    x: Math.random() * W,
+    y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    size: state.size * (0.6 + Math.random() * 0.8),
+    seed: Math.random() * 1000
+  };
+}
+
+function tick(now) {
+  const dt = Math.min((now - lastT) / 16.67, 2);
+  lastT = now;
+
+  // FPS counter
+  frames++;
+  if (now - lastFpsTime > 1000) {
+    document.getElementById('badgeFps').textContent = frames + ' fps';
+    frames = 0;
+    lastFpsTime = now;
+  }
+
+  // Background
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  const palette = PALETTES[state.variant];
+
+  // Update + draw particles
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+
+    // Random drift
+    p.vx += (Math.random() - 0.5) * 0.02;
+    p.vy += (Math.random() - 0.5) * 0.02;
+
+    // Mouse force
+    if (mouse.active && state.mode !== 'none') {
+      const dx = mouse.x - p.x;
+      const dy = mouse.y - p.y;
+      const d = Math.sqrt(dx * dx + dy * dy) + 0.01;
+      if (d < state.force) {
+        const f = (state.force - d) / state.force * 0.15;
+        if (state.mode === 'attract') {
+          p.vx += dx / d * f;
+          p.vy += dy / d * f;
+        } else {
+          p.vx -= dx / d * f * 2;
+          p.vy -= dy / d * f * 2;
+        }
+      }
+    }
+
+    // Damping
+    p.vx *= 0.96;
+    p.vy *= 0.96;
+
+    // Move
+    p.x += p.vx * state.speed * dt * 4;
+    p.y += p.vy * state.speed * dt * 4;
+
+    // Wrap edges
+    if (p.x < -10) p.x = W + 10;
+    if (p.x > W + 10) p.x = -10;
+    if (p.y < -10) p.y = H + 10;
+    if (p.y > H + 10) p.y = -10;
+
+    // Draw glow
+    const glowR = p.size * 4;
+    const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowR);
+    glow.addColorStop(0, palette.pGlow + palette.pGlowAlpha + ')');
+    glow.addColorStop(1, palette.pGlow + '0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, glowR, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw particle core
+    ctx.fillStyle = palette.pBase + palette.pBaseAlpha + ')';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Connections
+  if (state.connections === 'on') {
+    ctx.lineWidth = 0.8;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 6400) {
+          const alpha = (1 - Math.sqrt(d2) / 80) * 0.35;
+          ctx.strokeStyle = palette.lineCol + alpha + ')';
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  // Mouse halo
+  if (mouse.active) {
+    const halo = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 80);
+    halo.addColorStop(0, palette.pGlow + '0.25)');
+    halo.addColorStop(1, palette.pGlow + '0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, 80, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(tick);
+}
+
+function updateUI() {
+  document.getElementById('v-variant').textContent = state.variant;
+  document.getElementById('v-count').textContent = state.count;
+  document.getElementById('v-size').textContent = state.size;
+  document.getElementById('v-speed').textContent = state.speed.toFixed(1);
+  document.getElementById('v-force').textContent = state.force;
+  document.getElementById('v-conn').textContent = state.connections;
+  document.getElementById('badgeShader').textContent = PROJECT_LABEL[state.variant];
+
+  document.querySelectorAll('.ctrl-row').forEach(row => {
+    const ctrl = row.dataset.ctrl;
+    if (!ctrl) return;
+    row.querySelectorAll('.opt').forEach(o => o.classList.toggle('active', o.dataset.val === state[ctrl]));
+  });
+  document.querySelectorAll('.variant-toggle button').forEach(b => {
+    b.classList.toggle('active', b.dataset.variant === state.variant);
+  });
+}
+
+// EVENT WIRING
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+  mouse.active = true;
+  document.getElementById('cursorCounter').textContent = `cursor · ${Math.round(mouse.x)} × ${Math.round(mouse.y)}`;
+});
+canvas.addEventListener('mouseleave', () => {
+  mouse.active = false;
+  mouse.x = -1000; mouse.y = -1000;
+  document.getElementById('cursorCounter').textContent = '→ mové el cursor';
+});
+
+document.querySelectorAll('.ctrl-row[data-ctrl]').forEach(row => {
+  const ctrl = row.dataset.ctrl;
+  row.addEventListener('click', e => {
+    if (!e.target.classList.contains('opt')) return;
+    state[ctrl] = e.target.dataset.val;
+  });
+});
+document.querySelectorAll('.variant-toggle button').forEach(b => {
+  b.addEventListener('click', () => state.variant = b.dataset.variant);
+});
+
+document.getElementById('countSlider').addEventListener('input', e => state.count = parseInt(e.target.value));
+document.getElementById('sizeSlider').addEventListener('input', e => state.size = parseFloat(e.target.value));
+document.getElementById('speedSlider').addEventListener('input', e => state.speed = parseFloat(e.target.value));
+document.getElementById('forceSlider').addEventListener('input', e => state.force = parseInt(e.target.value));
+
+function exportPNG() {
+  const link = document.createElement('a');
+  link.download = `smc-shader-${state.variant}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function copyConfig() {
+  const cfg = JSON.stringify({
+    variant: state.variant,
+    count: state.count,
+    size: state.size,
+    speed: state.speed,
+    force: state.force,
+    connections: state.connections,
+    mode: state.mode
+  }, null, 2);
+  navigator.clipboard.writeText(cfg);
+  var t=document.createElement('div');t.textContent='✓ Config copiada · pegala en SmcMesh.tsx';t.style.cssText='position:fixed;bottom:24px;right:24px;padding:12px 18px;background:#1D1D1F;color:white;border-radius:12px;font:500 13px -apple-system,sans-serif;letter-spacing:-0.012em;z-index:9999;box-shadow:0 12px 32px rgba(0,0,0,.2);opacity:0;transform:translateY(8px);transition:220ms';document.body.appendChild(t);requestAnimationFrame(function(){t.style.opacity='1';t.style.transform='translateY(0)'});setTimeout(function(){t.style.opacity='0';t.style.transform='translateY(8px)';setTimeout(function(){t.remove()},240)},1800);
+}
+
+// Init
+window.addEventListener('resize', () => { resize(); resizeParticles(); });
+resize();
+resizeParticles();
+requestAnimationFrame(tick);
+</script>
+<script src="_nav.js"></script>
+<script src="_themes.js"></script>
+</body>
+</html>
