@@ -218,6 +218,7 @@ footer .marquee-mini { font-family: var(--font-display); font-size: 14px; color:
       <a href="#components">Components</a>
       <a href="#brand">Brand</a>
       <a href="#patterns">Patterns</a>
+      <a href="#lab" style="color:#FF6B35;font-weight:600">🧪 LAB</a>
       <a href="#proyectos">Proyectos</a>
       <a href="#radar">RADAR</a>
       <a href="motion/index.html" style="background:linear-gradient(135deg,#FF6B35,#FFD23F);color:#0A0A0B;padding:6px 12px;border-radius:980px;font-weight:600">🎬 Motion · NEW</a>
@@ -650,6 +651,161 @@ footer .marquee-mini { font-family: var(--font-display); font-size: 14px; color:
   </div>
 </section>
 
+<!-- ═══════════════════ LAB ALQUIMISTA · drag-drop effects ═══════════════════ -->
+<section class="container-section" id="lab" style="background:linear-gradient(180deg,#0A0A0B 0%,#161618 100%); color:#F5F5F7;">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <div class="eb" style="color:#FF6B35">🧪 LAB ALQUIMISTA · EXPERIMENTAL</div>
+      <h2 style="color:#F5F5F7">Mezclá efectos. <em class="muted" style="color:rgba(255,255,255,0.5)">Promové al @smc/ui.</em></h2>
+      <p class="strap" style="color:rgba(255,255,255,0.65)">Arrastrá efectos desde la biblioteca al canvas · mezclalos en vivo · guardá tu combinación · si funciona, promoveda a producción.</p>
+    </div>
+    <div class="lab-card">
+      <aside class="lab-library">
+        <h3>📚 Biblioteca <span>11 efectos</span></h3>
+        <div class="lab-effect-source" draggable="true" data-effect="aurora">💫 Aurora Field</div>
+        <div class="lab-effect-source" draggable="true" data-effect="mesh">🎨 Mesh Gradient</div>
+        <div class="lab-effect-source" draggable="true" data-effect="grain">🎞️ Film Grain</div>
+        <div class="lab-effect-source" draggable="true" data-effect="vignette">⚫ Vignette</div>
+        <div class="lab-effect-source" draggable="true" data-effect="particles">✨ Particles</div>
+        <div class="lab-effect-source" draggable="true" data-effect="grid">⊞ Grid Pattern</div>
+        <div class="lab-effect-source" draggable="true" data-effect="glow">💡 Glow Pulse</div>
+        <div class="lab-effect-source" draggable="true" data-effect="marquee">▸ Marquee Text</div>
+        <div class="lab-effect-source" draggable="true" data-effect="noise">📺 Noise</div>
+        <div class="lab-effect-source" draggable="true" data-effect="orb">🪐 Orb</div>
+        <div class="lab-effect-source" draggable="true" data-effect="kinetic">📝 Kinetic Text</div>
+      </aside>
+      <div class="lab-canvas" id="labCanvas">
+        <div class="lab-canvas-empty" id="labEmpty">
+          <div style="font-size:48px; opacity:.5; margin-bottom:8px">🧪</div>
+          Arrastrá efectos aquí · mezclá hasta 4 capas
+        </div>
+        <div class="lab-canvas-layers" id="labLayers"></div>
+      </div>
+      <aside class="lab-stack">
+        <h3>🎯 Stack activo <span id="stackCount">0</span></h3>
+        <div id="labStack" style="display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto"></div>
+        <div class="lab-controls">
+          <button class="lab-btn lab-btn-primary" id="labClear">Limpiar</button>
+          <button class="lab-btn lab-btn-success" id="labSave">Guardar mix</button>
+        </div>
+        <div class="lab-saved" id="labSaved">
+          ✅ Mix guardado · listo para promover a <code>@smc/ui/effects/</code>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lab-card { display:grid; grid-template-columns:240px 1fr 280px; gap:18px; min-height:520px; max-width:1280px; margin:0 auto; padding:0 22px; }
+  .lab-library { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:18px; overflow-y:auto; max-height:520px; }
+  .lab-library h3 { font:600 11px var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5); margin:0 0 14px; display:flex; justify-content:space-between; }
+  .lab-library h3 span { color:#FF6B35; font-size:10px; }
+  .lab-effect-source { padding:10px 14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); border-radius:10px; margin-bottom:8px; cursor:grab; font:500 13px var(--font-sans); color:#F5F5F7; transition:all .15s; display:flex; align-items:center; gap:8px; }
+  .lab-effect-source:hover { background:rgba(255,107,53,.15); border-color:rgba(255,107,53,.5); transform:translateX(4px); }
+  .lab-effect-source:active { cursor:grabbing; }
+  .lab-effect-source.dragging { opacity:.4; }
+
+  .lab-canvas { background:#000; border:2px dashed rgba(255,255,255,.15); border-radius:18px; position:relative; min-height:520px; overflow:hidden; transition:border-color .2s; }
+  .lab-canvas.dragover { border-color:#FF6B35; background:rgba(255,107,53,.05); }
+  .lab-canvas-empty { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:13px; color:rgba(255,255,255,.4); text-align:center; pointer-events:none; }
+  .lab-canvas-layers { position:absolute; inset:0; pointer-events:none; }
+  .lab-canvas-layers > div { position:absolute; inset:0; }
+
+  /* Effects layers */
+  .lay-aurora { background: radial-gradient(circle at 20% 30%, rgba(255,107,53,.5), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0,229,176,.4), transparent 40%); filter:blur(40px); animation:auroraMv 12s ease-in-out infinite alternate; }
+  @keyframes auroraMv { 0% { transform:scale(1) rotate(0); } 100% { transform:scale(1.3) rotate(180deg); } }
+  .lay-mesh { background: linear-gradient(135deg, #6366F1, #EC4899, #F59E0B); filter:blur(80px); opacity:.6; }
+  .lay-grain { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"); mix-blend-mode:overlay; animation:grainMv .4s steps(4) infinite; }
+  @keyframes grainMv { 0%,100% { transform:translate(0); } 25% { transform:translate(-2px,1px); } 50% { transform:translate(1px,-2px); } 75% { transform:translate(2px,2px); } }
+  .lay-vignette { box-shadow:inset 0 0 200px rgba(0,0,0,1); }
+  .lay-particles::before, .lay-particles::after { content:''; position:absolute; width:6px; height:6px; border-radius:50%; background:#00E5B0; box-shadow:0 0 16px #00E5B0; }
+  .lay-particles::before { top:20%; left:30%; animation:dribft 5s ease-in-out infinite; }
+  .lay-particles::after { top:60%; left:70%; background:#FF6B35; box-shadow:0 0 16px #FF6B35; animation:dribft 6s ease-in-out infinite reverse; }
+  @keyframes dribft { 0%,100% { transform:translate(0,0); } 50% { transform:translate(40px,-30px) scale(1.6); } }
+  .lay-grid { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size:40px 40px; animation:gridMv 4s linear infinite; }
+  @keyframes gridMv { from { background-position:0 0; } to { background-position:40px 40px; } }
+  .lay-glow { background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.6) 0%, transparent 50%); animation:glowMv 4s ease-in-out infinite; }
+  @keyframes glowMv { 0%,100% { transform:scale(1); opacity:.8; } 50% { transform:scale(1.4); opacity:1; } }
+  .lay-marquee { display:flex; align-items:center; }
+  .lay-marquee::before { content:'LAB · LAB · LAB · LAB · LAB · LAB · '; font:700 64px 'Instrument Serif', serif; color:rgba(255,255,255,.2); white-space:nowrap; animation:marqueeMv 18s linear infinite; }
+  @keyframes marqueeMv { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  .lay-noise { background:radial-gradient(circle at 30% 40%, rgba(255,107,53,.5), transparent), radial-gradient(circle at 70% 60%, rgba(99,102,241,.5), transparent); filter:contrast(1.4); }
+  .lay-orb { background:radial-gradient(circle at 50% 50%, rgba(255,107,181,1) 0%, rgba(124,58,237,.8) 30%, transparent 60%); filter:blur(30px); animation:orbMv 8s ease-in-out infinite; }
+  @keyframes orbMv { 0%,100% { transform:scale(1); } 50% { transform:scale(1.3); } }
+  .lay-kinetic { display:flex; align-items:center; justify-content:center; }
+  .lay-kinetic::before { content:'SMC'; font:800 96px var(--font-display); letter-spacing:-.04em; color:#F5F5F7; animation:kinMv 2s ease-in-out infinite; }
+  @keyframes kinMv { 0%,100% { opacity:0; transform:scale(.9); } 50% { opacity:1; transform:scale(1); } }
+
+  .lab-stack { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:18px; display:flex; flex-direction:column; gap:10px; max-height:520px; }
+  .lab-stack h3 { font:600 11px var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5); display:flex; justify-content:space-between; }
+  .lab-stack h3 span { background:#FF6B35; color:#0A0A0B; padding:2px 8px; border-radius:99px; font-size:10px; }
+  .lab-stack-item { padding:10px 12px; background:rgba(255,107,53,.1); border:1px solid rgba(255,107,53,.3); border-radius:10px; font:500 13px var(--font-sans); color:#F5F5F7; display:flex; align-items:center; gap:8px; }
+  .lab-stack-item button { margin-left:auto; background:transparent; color:rgba(255,255,255,.5); border:0; cursor:pointer; font-size:16px; padding:0 4px; }
+  .lab-stack-item button:hover { color:#FF6B35; }
+  .lab-controls { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .lab-btn { padding:10px 16px; border-radius:980px; font:600 12px var(--font-sans); cursor:pointer; transition:all .15s; border:1px solid transparent; flex:1; }
+  .lab-btn-primary { background:transparent; color:#F5F5F7; border-color:rgba(255,255,255,.2); }
+  .lab-btn-primary:hover { background:rgba(255,255,255,.05); }
+  .lab-btn-success { background:#FF6B35; color:#0A0A0B; }
+  .lab-btn-success:hover { background:#FFD23F; }
+  .lab-saved { padding:12px; background:rgba(0,229,176,.1); border:1px solid rgba(0,229,176,.3); border-radius:10px; font:11px var(--font-sans); color:#00E5B0; display:none; }
+  .lab-saved.show { display:block; }
+  .lab-saved code { background:rgba(0,229,176,.15); padding:2px 6px; border-radius:4px; }
+
+  @media (max-width:1024px) { .lab-card { grid-template-columns:1fr; gap:12px; padding:0 16px; } .lab-canvas { min-height:320px; } }
+</style>
+
+<script>
+(function(){
+  const sources = document.querySelectorAll('.lab-effect-source');
+  const canvas = document.getElementById('labCanvas');
+  const layers = document.getElementById('labLayers');
+  const empty = document.getElementById('labEmpty');
+  const stackEl = document.getElementById('labStack');
+  const stackCount = document.getElementById('stackCount');
+  const saved = document.getElementById('labSaved');
+  const labelMap = { aurora:'💫 Aurora', mesh:'🎨 Mesh', grain:'🎞️ Grain', vignette:'⚫ Vignette', particles:'✨ Particles', grid:'⊞ Grid', glow:'💡 Glow', marquee:'▸ Marquee', noise:'📺 Noise', orb:'🪐 Orb', kinetic:'📝 Kinetic' };
+  let stack = [];
+
+  function render() {
+    stackCount.textContent = stack.length;
+    empty.style.display = stack.length ? 'none' : 'block';
+    layers.innerHTML = stack.map(e => `<div class="lay-${e}"></div>`).join('');
+    stackEl.innerHTML = stack.map((e,i) => `<div class="lab-stack-item">${labelMap[e]||e}<button onclick="window._labRm(${i})">×</button></div>`).join('');
+  }
+  window._labRm = i => { stack.splice(i,1); render(); };
+
+  sources.forEach(src => {
+    src.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('effect', src.dataset.effect);
+      src.classList.add('dragging');
+    });
+    src.addEventListener('dragend', () => src.classList.remove('dragging'));
+    src.addEventListener('click', () => {
+      if (stack.length >= 4) return;
+      stack.push(src.dataset.effect);
+      render();
+    });
+  });
+  canvas.addEventListener('dragover', e => { e.preventDefault(); canvas.classList.add('dragover'); });
+  canvas.addEventListener('dragleave', () => canvas.classList.remove('dragover'));
+  canvas.addEventListener('drop', e => {
+    e.preventDefault();
+    canvas.classList.remove('dragover');
+    const eff = e.dataTransfer.getData('effect');
+    if (eff && stack.length < 4) { stack.push(eff); render(); }
+  });
+  document.getElementById('labClear').onclick = () => { stack = []; render(); saved.classList.remove('show'); };
+  document.getElementById('labSave').onclick = () => {
+    if (!stack.length) return;
+    saved.classList.add('show');
+    setTimeout(() => saved.classList.remove('show'), 4000);
+  };
+  render();
+})();
+</script>
+
 <section class="container-section" id="proyectos">
   <div class="container">
     <div class="sec-head" data-reveal>
@@ -659,21 +815,25 @@ footer .marquee-mini { font-family: var(--font-display); font-size: 14px; color:
     </div>
 
     <div class="tile-grid">
-      <a href="https://kanki.smconnection.cl/" target="_blank" class="tile" data-reveal style="padding:0; overflow:hidden;">
+      <a href="ui_kits/proyectos/kanki-street.html" class="tile" data-reveal style="padding:0; overflow:hidden; position:relative;">
         <div class="proj-thumb"><iframe src="https://kanki.smconnection.cl/" loading="lazy"></iframe></div>
-        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE</div><h4>🏄 Kanki Street</h4><p class="sub-tile">streetwear B2C · 21 maquetas</p></div>
+        <a href="https://kanki.smconnection.cl/" target="_blank" onclick="event.stopPropagation()" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);color:white;padding:6px 12px;border-radius:980px;font:600 10px var(--font-mono);letter-spacing:.06em;backdrop-filter:blur(8px);z-index:5;text-decoration:none">↗ LIVE</a>
+        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE <span style="color:#009E78;">◆ DETAIL</span></div><h4>🏄 Kanki Street</h4><p class="sub-tile">streetwear B2C · 21 maquetas</p></div>
       </a>
-      <a href="https://voy-app-3.vercel.app/" target="_blank" class="tile" data-reveal style="padding:0; overflow:hidden;">
+      <a href="ui_kits/proyectos/voy.html" class="tile" data-reveal style="padding:0; overflow:hidden; position:relative;">
         <div class="proj-thumb"><iframe src="https://voy-app-3.vercel.app/" loading="lazy"></iframe></div>
-        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE</div><h4>🚐 VOY</h4><p class="sub-tile">cotizador multi-step + PDF</p></div>
+        <a href="https://voy-app-3.vercel.app/" target="_blank" onclick="event.stopPropagation()" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);color:white;padding:6px 12px;border-radius:980px;font:600 10px var(--font-mono);letter-spacing:.06em;backdrop-filter:blur(8px);z-index:5;text-decoration:none">↗ LIVE</a>
+        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE <span style="color:#009E78;">◆ DETAIL</span></div><h4>🚐 VOY</h4><p class="sub-tile">cotizador multi-step + PDF</p></div>
       </a>
-      <a href="https://intranet.smconnection.cl/" target="_blank" class="tile" data-reveal style="padding:0; overflow:hidden;">
+      <a href="ui_kits/proyectos/intranet.html" class="tile" data-reveal style="padding:0; overflow:hidden; position:relative;">
         <div class="proj-thumb"><iframe src="https://intranet.smconnection.cl/" loading="lazy"></iframe></div>
-        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE</div><h4>🖥️ Intranet</h4><p class="sub-tile">dashboard interno · 24 agentes</p></div>
+        <a href="https://intranet.smconnection.cl/" target="_blank" onclick="event.stopPropagation()" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);color:white;padding:6px 12px;border-radius:980px;font:600 10px var(--font-mono);letter-spacing:.06em;backdrop-filter:blur(8px);z-index:5;text-decoration:none">↗ LIVE</a>
+        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE <span style="color:#009E78;">◆ DETAIL</span></div><h4>🖥️ Intranet</h4><p class="sub-tile">dashboard interno · 24 agentes</p></div>
       </a>
-      <a href="https://smconnection.cl/" target="_blank" class="tile" data-reveal style="padding:0; overflow:hidden;">
+      <a href="ui_kits/proyectos/marketing.html" class="tile" data-reveal style="padding:0; overflow:hidden; position:relative;">
         <div class="proj-thumb"><iframe src="https://smconnection.cl/" loading="lazy"></iframe></div>
-        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE</div><h4>💡 Marketing</h4><p class="sub-tile">smconnection.cl · HTML + S3</p></div>
+        <a href="https://smconnection.cl/" target="_blank" onclick="event.stopPropagation()" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);color:white;padding:6px 12px;border-radius:980px;font:600 10px var(--font-mono);letter-spacing:.06em;backdrop-filter:blur(8px);z-index:5;text-decoration:none">↗ LIVE</a>
+        <div style="padding:20px 24px 24px;"><div class="eb">PROYECTO · LIVE <span style="color:#009E78;">◆ DETAIL</span></div><h4>💡 Marketing</h4><p class="sub-tile">smconnection.cl · HTML + S3</p></div>
       </a>
       <a href="ui_kits/proyectos/infopet.html" class="tile" data-reveal data-glow>
         <div class="eb">PROYECTO · QAS <span style="color:#009E78;">◆ DETAIL</span></div><h4>🐾 InfoPet</h4><p class="sub-tile">Bsale + Jumpseller + Tsukai IA</p>

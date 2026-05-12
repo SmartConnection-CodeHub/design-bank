@@ -1,93 +1,135 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><title>Cerebro · Proyecto</title>
+<html lang="es"><head><meta charset="utf-8"><title>Cerebro · Mentor IA · Proyecto</title>
 <link rel="stylesheet" href="../../colors_and_type.css">
 <link rel="stylesheet" href="../../hub-card.css">
 <style>
-  .stage { flex:1; background: var(--smc-navy-900); border-radius: 10px; padding: 22px; min-height: 380px; display:grid; grid-template-columns: 1fr 280px; gap: 16px; color: var(--smc-cream); }
-  .ce-chat { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 22px; display:flex; flex-direction:column; gap: 14px; }
-  .ce-eb { font: 600 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--smc-accent); }
-  .ce-h { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.025em; margin: 0; color: var(--smc-cream); }
-  .ce-msgs { display:flex; flex-direction:column; gap: 14px; flex: 1; }
-  .ce-msg { display:flex; flex-direction:column; gap: 8px; }
-  .ce-msg .author { font: 10px var(--font-mono); color: var(--smc-cream-400); letter-spacing: .08em; text-transform: uppercase; }
-  .ce-msg .body { font-size: 13px; color: var(--smc-cream); line-height: 1.55; }
-  .ce-msg .body code { background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 3px; font: 11.5px var(--font-mono); color: var(--smc-accent); }
-  .ce-cite { display:flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
-  .ce-cite span { font: 10px var(--font-mono); padding: 3px 9px; border-radius: 99px; background: rgba(0,229,176,.12); color: var(--smc-accent); border: 1px solid rgba(0,229,176,.25); cursor: pointer; }
-  .ce-input { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 99px; padding: 14px 18px; display:flex; gap: 10px; align-items: center; }
-  .ce-input .ph { flex: 1; font: 12px var(--font-sans); color: var(--smc-cream-400); }
-  .ce-input .btn { background: var(--smc-accent); color: var(--smc-navy-900); padding: 7px 14px; border-radius: 99px; font: 600 11px var(--font-sans); }
+  .stage { flex:1; background: var(--smc-navy-900); border-radius: 10px; padding: 22px; min-height: 440px; display:grid; grid-template-columns: 1fr 320px; gap: 16px; color:var(--smc-cream); }
 
-  .ce-side { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 16px; display:flex; flex-direction:column; gap: 10px; }
-  .ce-side h5 { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.02em; margin: 0; color: var(--smc-cream); }
-  .ce-stat { display:flex; justify-content: space-between; font-size: 12px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
-  .ce-stat .l { color: var(--smc-cream-400); }
-  .ce-stat .v { font: 600 11px var(--font-mono); color: var(--smc-cream); }
-  .ce-stat .v.green { color: var(--smc-accent); }
-  .ce-src { font: 11.5px var(--font-mono); padding: 8px 10px; background: rgba(255,255,255,.04); border-radius: 6px; color: var(--smc-cream-300); display:flex; gap: 8px; align-items: center; }
-  .ce-src .ic { font-size: 10px; color: var(--smc-accent); }
+  /* Knowledge map (mind-map / agent network) */
+  .brain-map { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:18px; position:relative; min-height:380px; overflow:hidden; }
+  .brain-map h4 { font-family:var(--font-display); font-size:15px; font-weight:600; margin:0 0 12px; color:var(--smc-cream); }
+  .brain-map .eb { font:600 9px var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--smc-accent); }
+  .brain-net { position:absolute; inset:60px 18px 18px; }
+  .brain-node { position:absolute; padding:8px 14px; border-radius:99px; font:600 12px var(--font-mono); letter-spacing:.04em; background:rgba(0,229,176,.15); border:1px solid var(--smc-accent); color:var(--smc-accent); transform:translate(-50%,-50%); transition:all .3s; }
+  .brain-node:hover { background:var(--smc-accent); color:var(--smc-navy-900); transform:translate(-50%,-50%) scale(1.08); }
+  .brain-node.core { background:var(--smc-gold); color:var(--smc-navy-900); border-color:var(--smc-gold); font-size:14px; padding:10px 18px; }
+  .brain-node.sec { background:rgba(255,255,255,.06); color:var(--smc-cream); border-color:rgba(255,255,255,.2); }
+  .brain-link { position:absolute; pointer-events:none; }
+
+  /* KPIs */
+  .brain-kpis { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .brain-kpi { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:14px; }
+  .brain-kpi .lbl { font:600 9px var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--smc-cream-400); margin-bottom:4px; }
+  .brain-kpi .v { font-family:var(--font-display); font-size:32px; font-weight:600; letter-spacing:-.025em; color:var(--smc-gold); line-height:1; }
+  .brain-kpi .sub { font:11px var(--font-mono); color:var(--smc-accent); margin-top:4px; }
+
+  /* Conversation panel right side */
+  .brain-chat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:18px; display:flex; flex-direction:column; gap:10px; }
+  .brain-chat .eb { font:600 9px var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--smc-accent); }
+  .brain-chat h4 { font-family:var(--font-display); font-size:15px; font-weight:600; margin:0; color:var(--smc-cream); }
+  .msg { padding:10px 12px; border-radius:10px; font:13px var(--font-sans); line-height:1.5; }
+  .msg.guille { background:rgba(255,255,255,.06); align-self:flex-end; max-width:85%; color:var(--smc-cream); }
+  .msg.cerebro { background:linear-gradient(135deg, rgba(0,229,176,.18), rgba(0,229,176,.08)); border:1px solid rgba(0,229,176,.3); max-width:85%; color:var(--smc-cream); }
+  .msg.cerebro::before { content:'🧠 Cerebro'; display:block; font:600 9px var(--font-mono); letter-spacing:.12em; color:var(--smc-accent); margin-bottom:4px; }
+  .typing { display:inline-flex; gap:3px; align-items:center; }
+  .typing span { width:5px; height:5px; border-radius:50%; background:var(--smc-accent); animation:typing 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay:.15s; }
+  .typing span:nth-child(3) { animation-delay:.3s; }
+  @keyframes typing { 0%,60%,100% { opacity:.3; } 30% { opacity:1; } }
+
   .scene .ttl { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; margin: 0; }
 </style></head>
 <body data-screen-label="Cerebro">
 <div class="hub">
-  <header class="hub-top"><div class="brand">Cerebro<span class="dot">.</span></div><div class="crumbs">proyectos · 13/13 · agente IA interno</div></header>
-  <div class="hub-eyebrow">Proyecto SMC · agente IA interno · RAG federado</div>
-  <h1 class="hub-title">El mentor que conoce los 13.</h1>
-  <p class="hub-strap">Agente IA con RAG sobre la base de conocimiento federada. Lee Notion, GitHub, Supabase logs, RADAR weekly. Cita fuente. Responde en jerga SMC. Procesó 142 tickets esta semana.</p>
+  <header class="hub-top"><div class="brand">Cerebro<span class="dot">.</span></div><div class="crumbs">proyectos · 12/13 · mentor IA</div></header>
+  <div class="hub-eyebrow">Proyecto SMC · agente Opus 4.7 · Reflexion loop</div>
+  <h1 class="hub-title">El sistema que observa, aprende y enseña.</h1>
+  <p class="hub-strap">Agente Reflexion sobre Claude Opus 4.7. Observa todos los agentes (24), detecta patrones, conecta dominios, enseña en contexto. Memoria persistente en Supabase · tabla cerebro_knowledge.</p>
 
   <div class="pill-row">
-    <button class="pill on"><span class="n">01</span>Chat con citas</button>
-    <button class="pill"><span class="n">02</span>Knowledge graph</button>
-    <button class="pill"><span class="n">03</span>Costos por modelo</button>
-    <button class="pill"><span class="n">04</span>Tickets resueltos</button>
-    <button class="pill"><span class="n">05</span>Memoria persistente</button>
+    <button class="pill on"><span class="n">01</span>Mapa de conocimiento</button>
+    <button class="pill"><span class="n">02</span>Conversación</button>
+    <button class="pill"><span class="n">03</span>Skills</button>
+    <button class="pill"><span class="n">04</span>Evolución</button>
   </div>
 
   <div class="hub-kit">
-    <section class="scene dark">
-      <div class="scene-h"><span class="live"></span>variant · 01 chat · streaming · Sonnet 4.5</div>
-      <h3 class="ttl" style="color: var(--smc-cream);">Cerebro · sesión #4128 · 14:32</h3>
+    <section class="scene">
+      <div class="scene-h"><span class="live"></span>variant · 01 mapa · 247 conceptos · 9 dominios</div>
+      <h3 class="ttl">Knowledge graph + Mentor live</h3>
       <div class="stage">
-        <div class="ce-chat">
-          <div class="ce-msgs">
-            <div class="ce-msg">
-              <span class="author">tú · sebastián</span>
-              <span class="body">¿Por qué se está cayendo el webhook de MeLi para Kanki? ¿Es de hoy o viene de antes?</span>
-            </div>
-            <div class="ce-msg">
-              <span class="author">cerebro · sonnet 4.5 · 2.4 s</span>
-              <span class="body">Viene desde el <b>lunes 21-abr</b>. El SKU <code>IP-SNK-001</code> empezó a fallar con timeout en <code>POST /items/MLA12345/listings</code>. Hay 3 retries colgados en la dead-letter. El problema parece ser que MeLi aumentó la latencia de su endpoint para variantes; nuestro timeout está en <code>5 000 ms</code> pero el p95 actual de MeLi es <code>6 200 ms</code>. Te sugiero subir a <code>10 000 ms</code> y revisar mañana.<div class="ce-cite"><span>📂 marketplace/webhook.ts:142</span><span>📂 RADAR-46 · MeLi outage</span><span>📂 sentry · MAR-04918</span></div></span>
-            </div>
+
+        <div class="brain-map">
+          <div class="eb">KNOWLEDGE GRAPH · 9 dominios</div>
+          <h4>Lo que el Cerebro sabe de Guillermo</h4>
+          <div class="brain-net">
+            <!-- Lines (SVG) -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <line x1="50" y1="50" x2="20" y2="20" stroke="rgba(0,229,176,.4)" stroke-width=".3" stroke-dasharray="2 2"/>
+              <line x1="50" y1="50" x2="80" y2="20" stroke="rgba(0,229,176,.4)" stroke-width=".3" stroke-dasharray="2 2"/>
+              <line x1="50" y1="50" x2="15" y2="60" stroke="rgba(0,229,176,.4)" stroke-width=".3" stroke-dasharray="2 2"/>
+              <line x1="50" y1="50" x2="85" y2="60" stroke="rgba(0,229,176,.4)" stroke-width=".3" stroke-dasharray="2 2"/>
+              <line x1="50" y1="50" x2="30" y2="85" stroke="rgba(0,229,176,.4)" stroke-width=".3" stroke-dasharray="2 2"/>
+              <line x1="50" y1="50" x2="70" y2="85" stroke="rgba(0,229,176,.4)" stroke-width=".3" stroke-dasharray="2 2"/>
+              <line x1="20" y1="20" x2="80" y2="20" stroke="rgba(196,154,58,.2)" stroke-width=".2"/>
+              <line x1="15" y1="60" x2="30" y2="85" stroke="rgba(196,154,58,.2)" stroke-width=".2"/>
+            </svg>
+            <div class="brain-node core" style="top:50%; left:50%;">🧠 Cerebro</div>
+            <div class="brain-node" style="top:20%; left:20%;">Agentes (24)</div>
+            <div class="brain-node" style="top:20%; left:80%;">Prompts</div>
+            <div class="brain-node" style="top:60%; left:15%;">Arquitectura</div>
+            <div class="brain-node sec" style="top:60%; left:85%;">Integraciones</div>
+            <div class="brain-node sec" style="top:85%; left:30%;">Testing</div>
+            <div class="brain-node sec" style="top:85%; left:70%;">LLMOps</div>
           </div>
-          <div class="ce-input"><span class="ph">Preguntá lo que necesités saber...</span><span class="btn">enviar ↵</span></div>
         </div>
-        <div class="ce-side">
-          <span class="ce-eb">● Sesión vivo</span>
-          <h5>Esta consulta</h5>
-          <div class="ce-stat"><span class="l">Modelo</span><span class="v">claude-sonnet-4.5</span></div>
-          <div class="ce-stat"><span class="l">Tokens in/out</span><span class="v">2.4k / 380</span></div>
-          <div class="ce-stat"><span class="l">RAG retrievals</span><span class="v">3 docs</span></div>
-          <div class="ce-stat"><span class="l">Costo</span><span class="v green">$0.018</span></div>
-          <div class="ce-stat"><span class="l">Latencia total</span><span class="v">2.4 s</span></div>
-          <span class="ce-eb" style="margin-top: 8px;">Fuentes citadas</span>
-          <div class="ce-src"><span class="ic">📂</span> marketplace/webhook.ts:142</div>
-          <div class="ce-src"><span class="ic">📂</span> RADAR-46 · MeLi outage</div>
-          <div class="ce-src"><span class="ic">📂</span> sentry · MAR-04918</div>
+
+        <div class="brain-chat">
+          <div class="eb">CONVERSACIÓN LIVE</div>
+          <h4>Modo mentor adaptativo</h4>
+          <div class="msg guille">¿Por qué Claude responde más rápido en este endpoint?</div>
+          <div class="msg cerebro">Por el fallback chain. La memoria <code>feedback_hoku_fallback_chain</code> dice: Groq Llama 3.3 70B → Llama 4 Scout → Gemini Flash → DeepSeek. Te ahorra ~280ms p95 y mantiene calidad de respuesta.</div>
+          <div class="msg guille">¿Y si Groq cae?</div>
+          <div class="msg cerebro"><span class="typing"><span></span><span></span><span></span></span></div>
+        </div>
+
+      </div>
+
+      <div class="brain-kpis" style="margin-top:16px">
+        <div class="brain-kpi">
+          <div class="lbl">Conceptos aprendidos</div>
+          <div class="v">247</div>
+          <div class="sub">+18 esta semana</div>
+        </div>
+        <div class="brain-kpi">
+          <div class="lbl">Dominios cubiertos</div>
+          <div class="v">9</div>
+          <div class="sub">Agentes · Prompts · Arq · Int · QA · LLMOps · Sec · Front · Neg</div>
+        </div>
+        <div class="brain-kpi">
+          <div class="lbl">Mentor confidence</div>
+          <div class="v">0.91</div>
+          <div class="sub">basado en feedback ↑↓ acumulado</div>
+        </div>
+        <div class="brain-kpi">
+          <div class="lbl">Memoria total</div>
+          <div class="v">182</div>
+          <div class="sub">archivos .md · 1.4 MB persistente</div>
         </div>
       </div>
     </section>
     <aside class="panel">
       <div class="panel-h"><span class="dot"></span><span class="lbl">controles · cerebro</span></div>
-      <div class="dim"><span class="name">Modelo</span><div class="opts"><span class="opt">Haiku</span><span class="opt on">Sonnet 4.5</span><span class="opt">Opus</span></div></div>
-      <div class="dim"><span class="name">RAG sources</span><div class="opts"><span class="opt on">todos</span><span class="opt">solo código</span><span class="opt">solo RADAR</span></div></div>
-      <div class="dim"><span class="name">Streaming</span><div class="opts"><span class="opt on">on · 30 tok/s</span><span class="opt">off</span></div></div>
-      <div class="dim"><span class="name">Citas</span><div class="opts"><span class="opt on">inline pills</span><span class="opt">footnotes</span></div></div>
-      <div class="dim"><span class="name">Memoria entre sesiones</span><div class="opts"><span class="opt on">on</span><span class="opt">off · stateless</span></div></div>
+      <div class="dim"><span class="name">Modo</span><div class="opts"><span class="opt on">mentor</span><span class="opt">observador</span><span class="opt">flash</span><span class="opt">diverge</span></div></div>
+      <div class="dim"><span class="name">Nivel Guillermo</span><div class="opts"><span class="opt">junior</span><span class="opt on">mid</span><span class="opt">senior</span></div></div>
+      <div class="dim"><span class="name">Spaced repetition</span><div class="opts"><span class="opt on">on</span><span class="opt">off</span></div></div>
+      <div class="dim"><span class="name">Intervención proactiva</span><div class="opts"><span class="opt">cada 5 min</span><span class="opt on">cada 10 min</span><span class="opt">solo si preguntan</span></div></div>
+      <div class="dim"><span class="name">Mapa orientación</span><div class="opts"><span class="opt on">radial</span><span class="opt">jerárquico</span><span class="opt">timeline</span></div></div>
       <div class="divider"></div>
       <div class="use-cta">
         <span class="lbl">Stack del proyecto</span>
-        <span class="where">Next.js + Vercel AI SDK + Supabase Vector. Embeddings text-embedding-3-large. RAG sobre Notion, GitHub, Supabase logs y RADAR. Memoria persistente <code>conv_state</code> en Postgres.</span>
-        <button class="btn">Abrir proyecto →</button>
+        <span class="where">Claude Opus 4.7 (Reflexion loop). Supabase pgvector · tabla <code>cerebro_knowledge</code>. Spaced repetition algoritmo SM-2. Embeddings con Cohere v3. 247 conceptos · 9 dominios · 182 memorias persistentes.</span>
+        <button class="btn">Abrir mentor →</button>
       </div>
     </aside>
   </div>
