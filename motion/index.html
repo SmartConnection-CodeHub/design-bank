@@ -4,18 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Banco de Motion · SMC Design System</title>
-<link rel="stylesheet" href="../tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
-    background: var(--bg, #0A0A0B);
-    color: var(--text, #F5F5F7);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0A0A0B;
+    color: #F5F5F7;
     letter-spacing: -0.012em;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
     overflow-x: hidden;
   }
+  a { color: inherit; text-decoration: none; }
+
   .nav {
     position: sticky; top: 0; z-index: 100;
     backdrop-filter: saturate(180%) blur(20px);
@@ -26,41 +30,48 @@
     display: flex; align-items: center; gap: 24px;
   }
   .nav-logo { font-weight: 600; font-size: 17px; letter-spacing: -0.022em; }
-  .nav-logo a { color: #F5F5F7; text-decoration: none; }
-  .nav-back { font-size: 12px; color: #86868B; text-decoration: none; transition: 200ms; }
+  .nav-back { font-size: 12px; color: #86868B; transition: 200ms; }
   .nav-back:hover { color: #F5F5F7; }
   .nav-spacer { flex: 1; }
-  .nav-meta { font-size: 11px; color: #86868B; font-family: 'SF Mono', monospace; letter-spacing: 0.04em; }
+  .nav-meta { font-size: 11px; color: #86868B; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
 
   .hero {
-    padding: 88px 32px 56px;
+    padding: 96px 32px 56px;
     text-align: center;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
   }
   .hero-eyebrow {
-    font-size: 13px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.32);
+    border-radius: 980px;
+    font-size: 12px;
     color: #FF6B35;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 18px;
-  }
-  .hero h1 {
-    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(48px, 8vw, 88px);
-    font-weight: 400;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    background: linear-gradient(180deg, #F5F5F7 0%, #86868B 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    letter-spacing: 0.04em;
+    font-weight: 500;
     margin-bottom: 22px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: 50%; background: #FF6B35;
+    box-shadow: 0 0 12px #FF6B35;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero h1 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin-bottom: 24px;
+    color: #F5F5F7;
   }
   .hero h1 em {
     font-style: italic;
-    background: linear-gradient(135deg, #FF6B35 0%, #FFD23F 50%, #00E5B0 100%);
+    background: linear-gradient(135deg, #FF6B35 0%, #FFD23F 35%, #00E5B0 70%, #6366F1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -68,30 +79,27 @@
   .hero p {
     font-size: 19px;
     color: #86868B;
-    line-height: 1.45;
+    line-height: 1.5;
     max-width: 620px;
-    margin: 0 auto 38px;
-    letter-spacing: -0.012em;
+    margin: 0 auto 42px;
   }
-  .hero-cta {
-    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-  }
+  .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 22px; border-radius: 980px;
-    font: 600 15px -apple-system, sans-serif;
+    padding: 13px 26px;
+    border-radius: 980px;
+    font: 600 15px 'Inter', sans-serif;
     letter-spacing: -0.012em;
-    text-decoration: none;
-    transition: 200ms cubic-bezier(0.4,0,0.2,1);
+    transition: 220ms cubic-bezier(0.4,0,0.2,1);
     cursor: pointer; border: none;
   }
   .btn-primary { background: #F5F5F7; color: #0A0A0B; }
-  .btn-primary:hover { transform: scale(1.04); box-shadow: 0 12px 36px rgba(255,255,255,0.16); }
-  .btn-ghost { background: transparent; color: #F5F5F7; border: 1px solid rgba(255,255,255,0.2); }
+  .btn-primary:hover { transform: scale(1.04); box-shadow: 0 16px 40px rgba(255,255,255,0.18); }
+  .btn-ghost { background: transparent; color: #F5F5F7; border: 1px solid rgba(255,255,255,0.18); }
   .btn-ghost:hover { background: rgba(255,255,255,0.06); }
 
   .filters {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 0 32px 32px;
     display: flex; gap: 8px; flex-wrap: wrap;
@@ -103,8 +111,7 @@
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     color: #86868B;
-    font: 500 13px -apple-system, sans-serif;
-    letter-spacing: -0.012em;
+    font: 500 13px 'Inter', sans-serif;
     cursor: pointer;
     transition: 180ms;
   }
@@ -112,357 +119,404 @@
   .chip.active { background: #F5F5F7; color: #0A0A0B; border-color: #F5F5F7; }
 
   .grid {
-    max-width: 1280px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 32px 96px;
+    padding: 0 32px 120px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
+  @media (min-width: 1280px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; padding: 0 16px 64px; gap: 16px; } }
+
   .card {
     position: relative;
     background: #161618;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.06);
     cursor: pointer;
-    transition: 280ms cubic-bezier(0.4,0,0.2,1);
+    transition: 320ms cubic-bezier(0.4,0,0.2,1);
     display: flex; flex-direction: column;
-    aspect-ratio: 4/5;
   }
-  .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.16); box-shadow: 0 24px 48px rgba(0,0,0,0.4); }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.14);
+    box-shadow: 0 32px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
+  }
 
-  .card-preview {
+  /* Mini-site frame (aspect 16/10) */
+  .site {
     position: relative;
-    flex: 1;
+    aspect-ratio: 16/10;
     overflow: hidden;
-    background: linear-gradient(135deg, #1A1A1D, #0A0A0B);
+    background: #0A0A0B;
   }
+  .site-inner { position: absolute; inset: 0; padding: 28px 32px; display: flex; flex-direction: column; }
+  .site-nav { display: flex; align-items: center; gap: 16px; font-size: 11px; opacity: 0.85; }
+  .site-brand { font-weight: 700; letter-spacing: -0.012em; font-size: 13px; }
+  .site-links { display: flex; gap: 12px; font-size: 10px; opacity: 0.6; margin-left: auto; }
+  .site-cta {
+    margin-left: 12px;
+    padding: 5px 12px;
+    border-radius: 980px;
+    font-size: 10px; font-weight: 600;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+  .site-body {
+    flex: 1;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .site-eyebrow {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    opacity: 0.6;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .site-title {
+    font-size: clamp(20px, 3vw, 32px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 8px;
+    max-width: 80%;
+  }
+  .site-sub { font-size: 11px; opacity: 0.6; max-width: 70%; line-height: 1.4; margin-bottom: 14px; }
+  .site-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border-radius: 980px;
+    font-size: 11px; font-weight: 600;
+    align-self: flex-start;
+    background: rgba(255,255,255,0.92);
+    color: #0A0A0B;
+  }
+  .site-footer-strip {
+    position: absolute; bottom: 14px; left: 32px; right: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 9px; opacity: 0.4;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em;
+  }
+
   .card-meta {
-    padding: 18px 22px 22px;
+    padding: 20px 24px 22px;
     border-top: 1px solid rgba(255,255,255,0.06);
     background: #0F0F11;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
-  .card-title {
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: -0.012em;
-    margin-bottom: 4px;
-  }
-  .card-cat {
-    font: 500 11px 'SF Mono', monospace;
-    color: #86868B;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  .meta-left { flex: 1; min-width: 0; }
+  .card-title { font-size: 15px; font-weight: 600; letter-spacing: -0.012em; margin-bottom: 4px; }
+  .card-cat { font: 500 10px 'JetBrains Mono', monospace; color: #86868B; letter-spacing: 0.1em; text-transform: uppercase; }
   .card-badge {
-    position: absolute; top: 14px; right: 14px;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 980px;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(8px);
-    font: 600 10px 'SF Mono', monospace;
+    background: rgba(255,210,63,0.14);
+    border: 1px solid rgba(255,210,63,0.3);
+    font: 600 10px 'JetBrains Mono', monospace;
     color: #FFD23F;
-    letter-spacing: 0.08em;
-    z-index: 3;
+    letter-spacing: 0.06em;
+  }
+  .card-badge.free {
+    background: rgba(0,229,176,0.14);
+    border-color: rgba(0,229,176,0.3);
+    color: #00E5B0;
   }
 
-  /* ===== MOTION PREVIEWS (live CSS, no GIFs) ===== */
+  /* ─────────────────────────────────────────────
+     10 MINI-SITES · cada uno con identidad propia
+     ───────────────────────────────────────────── */
 
-  /* 1 · Aurora gradient mesh */
-  .m-aurora { position: absolute; inset: 0; background:
-    radial-gradient(circle at 20% 30%, #FF6B35 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, #00E5B0 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, #6366F1 0%, transparent 50%);
+  /* 1 · VELORAH · serif premium · aurora gradient */
+  .site-1 { background: radial-gradient(ellipse at top, #2A1B3D 0%, #0A0A0B 65%); color: #FAF5FF; font-family: 'Inter', sans-serif; }
+  .site-1 .site-brand { font-family: 'Instrument Serif', serif; font-size: 16px; font-weight: 400; }
+  .site-1 .site-title { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; }
+  .site-1::before {
+    content: ''; position: absolute; inset: -40%;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(255,107,181,0.4) 0%, transparent 40%),
+      radial-gradient(circle at 70% 30%, rgba(124,58,237,0.5) 0%, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(0,212,255,0.3) 0%, transparent 40%);
     filter: blur(40px);
-    animation: aurora 12s ease-in-out infinite alternate;
+    animation: aurora1 14s ease-in-out infinite alternate;
   }
-  @keyframes aurora {
-    0% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.2) rotate(180deg); }
-    100% { transform: scale(1) rotate(360deg); }
-  }
-
-  /* 2 · Marquee infinito */
-  .m-marquee {
-    position: absolute; inset: 0;
-    display: flex; align-items: center;
-    overflow: hidden;
-  }
-  .m-marquee-track {
-    display: flex; gap: 24px;
-    font: 700 64px 'Instrument Serif', serif;
-    letter-spacing: -0.04em;
-    color: rgba(255,255,255,0.2);
-    white-space: nowrap;
-    animation: marquee 18s linear infinite;
-  }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+  @keyframes aurora1 {
+    0% { transform: rotate(0) scale(1); }
+    100% { transform: rotate(180deg) scale(1.3); }
   }
 
-  /* 3 · Kinetic typography */
-  .m-kinetic {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font: 800 56px -apple-system, sans-serif;
-    letter-spacing: -0.04em;
-    line-height: 0.9;
+  /* 2 · NEXACORE · infrastructure · purple wave */
+  .site-2 { background: linear-gradient(180deg, #1A0B2E 0%, #0A0A1F 100%); color: #E0E7FF; font-family: 'Space Grotesk', sans-serif; }
+  .site-2 .site-title { font-weight: 600; }
+  .site-2::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 100% 50%, #6366F1 0%, transparent 60%);
+    opacity: 0.6;
   }
-  .m-kinetic span {
-    display: block; opacity: 0;
-    animation: kinetic 4s cubic-bezier(0.4,0,0.2,1) infinite;
+  .site-2::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+    background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 19px, rgba(99,102,241,0.15) 20px),
+                      repeating-linear-gradient(90deg, transparent 0px, transparent 19px, rgba(99,102,241,0.15) 20px);
+    mask-image: linear-gradient(180deg, transparent 0%, black 100%);
+    transform: perspective(400px) rotateX(50deg);
+    transform-origin: bottom;
+    animation: grid2 8s linear infinite;
   }
-  .m-kinetic span:nth-child(1) { animation-delay: 0s; color: #FF6B35; }
-  .m-kinetic span:nth-child(2) { animation-delay: 0.5s; color: #00E5B0; }
-  .m-kinetic span:nth-child(3) { animation-delay: 1s; color: #6366F1; }
-  @keyframes kinetic {
-    0%, 80%, 100% { opacity: 0; transform: translateY(20px); }
-    20%, 60% { opacity: 1; transform: translateY(0); }
-  }
-
-  /* 4 · Particles drift */
-  .m-particles { position: absolute; inset: 0; overflow: hidden; }
-  .m-particles span {
-    position: absolute;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: #00E5B0;
-    box-shadow: 0 0 16px #00E5B0;
-    animation: drift 6s ease-in-out infinite;
-  }
-  .m-particles span:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
-  .m-particles span:nth-child(2) { top: 60%; left: 40%; animation-delay: 1s; background: #FF6B35; box-shadow: 0 0 16px #FF6B35; }
-  .m-particles span:nth-child(3) { top: 30%; left: 70%; animation-delay: 2s; background: #FFD23F; box-shadow: 0 0 16px #FFD23F; }
-  .m-particles span:nth-child(4) { top: 80%; left: 20%; animation-delay: 3s; background: #6366F1; box-shadow: 0 0 16px #6366F1; }
-  .m-particles span:nth-child(5) { top: 50%; left: 80%; animation-delay: 1.5s; }
-  @keyframes drift {
-    0%, 100% { transform: translate(0,0) scale(1); }
-    50% { transform: translate(40px,-30px) scale(1.6); }
+  @keyframes grid2 {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 0 20px, 0 0; }
   }
 
-  /* 5 · Liquid blob morph */
-  .m-blob {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .m-blob-shape {
-    width: 200px; height: 200px;
-    background: linear-gradient(135deg, #FF6B35, #FFD23F);
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    animation: blob 8s ease-in-out infinite;
+  /* 3 · LUMINA · cosmic · moon glow */
+  .site-3 { background: linear-gradient(180deg, #0F1419 0%, #1A2332 100%); color: #F0F4FF; font-family: 'Cormorant Garamond', serif; }
+  .site-3 .site-nav, .site-3 .site-links, .site-3 .site-cta, .site-3 .site-btn { font-family: 'Inter', sans-serif; }
+  .site-3 .site-title { font-weight: 500; letter-spacing: -0.02em; }
+  .site-3::before {
+    content: ''; position: absolute;
+    top: -50%; right: -20%;
+    width: 120%; height: 200%;
+    background: radial-gradient(circle, #B8C5FF 0%, rgba(184,197,255,0.6) 15%, transparent 35%);
+    opacity: 0.4;
+    animation: moon3 24s linear infinite;
     filter: blur(2px);
   }
-  @keyframes blob {
-    0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(0deg); }
-    33% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: rotate(120deg); }
-    66% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; transform: rotate(240deg); }
-  }
-
-  /* 6 · Grid scroll */
-  .m-grid-scroll {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: gridScroll 4s linear infinite;
-  }
-  @keyframes gridScroll {
-    from { background-position: 0 0; }
-    to { background-position: 40px 40px; }
-  }
-
-  /* 7 · Text gradient sweep */
-  .m-sweep {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font: 800 56px -apple-system, sans-serif;
-    letter-spacing: -0.04em;
-  }
-  .m-sweep span {
-    background: linear-gradient(90deg, #86868B 0%, #86868B 40%, #F5F5F7 50%, #86868B 60%, #86868B 100%);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: sweep 3s linear infinite;
-  }
-  @keyframes sweep {
-    0% { background-position: 100% 0; }
-    100% { background-position: -100% 0; }
-  }
-
-  /* 8 · 3D Cube rotate */
-  .m-cube {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    perspective: 600px;
-  }
-  .m-cube-shape {
-    width: 140px; height: 140px;
-    transform-style: preserve-3d;
-    animation: cube 14s linear infinite;
-  }
-  .m-cube-face {
-    position: absolute; width: 140px; height: 140px;
-    background: rgba(0,229,176,0.16);
-    border: 1px solid #00E5B0;
-    backdrop-filter: blur(8px);
-  }
-  .m-cube-face:nth-child(1) { transform: translateZ(70px); }
-  .m-cube-face:nth-child(2) { transform: rotateY(180deg) translateZ(70px); }
-  .m-cube-face:nth-child(3) { transform: rotateY(90deg) translateZ(70px); background: rgba(255,107,53,0.16); border-color: #FF6B35; }
-  .m-cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(70px); background: rgba(255,107,53,0.16); border-color: #FF6B35; }
-  .m-cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(70px); background: rgba(99,102,241,0.16); border-color: #6366F1; }
-  .m-cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(70px); background: rgba(99,102,241,0.16); border-color: #6366F1; }
-  @keyframes cube {
-    from { transform: rotateX(0) rotateY(0); }
-    to { transform: rotateX(360deg) rotateY(360deg); }
-  }
-
-  /* 9 · Wave SVG */
-  .m-wave {
-    position: absolute; inset: 0;
-    display: flex; align-items: center;
-    overflow: hidden;
-  }
-  .m-wave svg { width: 200%; height: 60%; }
-  .m-wave path {
-    fill: none;
-    stroke: url(#waveGrad);
-    stroke-width: 2;
-    animation: wave 6s ease-in-out infinite;
-  }
-  @keyframes wave {
-    0%, 100% { d: path("M 0 50 Q 25 30 50 50 T 100 50 T 150 50 T 200 50"); }
-    50% { d: path("M 0 50 Q 25 70 50 50 T 100 50 T 150 50 T 200 50"); }
-  }
-
-  /* 10 · Spotlight follow */
-  .m-spotlight {
-    position: absolute; inset: 0;
-    background: radial-gradient(circle 200px at 50% 50%, rgba(0,229,176,0.4) 0%, transparent 70%);
-    animation: spot 5s ease-in-out infinite;
-  }
-  @keyframes spot {
-    0% { background-position: 0% 0%; }
-    25% { background-position: 100% 0%; }
-    50% { background-position: 100% 100%; }
-    75% { background-position: 0% 100%; }
-    100% { background-position: 0% 0%; }
-  }
-  .m-spotlight {
-    background-image: radial-gradient(circle 200px at var(--x,50%) var(--y,50%), rgba(0,229,176,0.5) 0%, rgba(255,107,53,0.2) 30%, transparent 70%);
-  }
-
-  /* 11 · Glitch text */
-  .m-glitch {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font: 900 64px -apple-system, sans-serif;
-    letter-spacing: -0.04em;
-    color: #F5F5F7;
-    position: relative;
-  }
-  .m-glitch span {
-    position: relative;
-    text-shadow:
-      2px 0 #FF6B35,
-      -2px 0 #00E5B0;
-    animation: glitch 3s steps(2, end) infinite;
-  }
-  @keyframes glitch {
-    0%, 100% { text-shadow: 2px 0 #FF6B35, -2px 0 #00E5B0; transform: translate(0); }
-    20% { text-shadow: -2px 0 #FF6B35, 2px 0 #00E5B0; transform: translate(-2px,1px); }
-    40% { text-shadow: 2px 0 #FF6B35, -2px 0 #00E5B0; transform: translate(2px,-1px); }
-    60% { text-shadow: -2px 1px #FF6B35, 2px -1px #00E5B0; transform: translate(0); }
-  }
-
-  /* 12 · Ripple */
-  .m-ripple {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .m-ripple span {
-    position: absolute;
-    width: 80px; height: 80px;
-    border: 2px solid #00E5B0;
-    border-radius: 50%;
-    animation: ripple 2s ease-out infinite;
-    opacity: 0;
-  }
-  .m-ripple span:nth-child(2) { animation-delay: 0.5s; border-color: #FF6B35; }
-  .m-ripple span:nth-child(3) { animation-delay: 1s; border-color: #FFD23F; }
-  .m-ripple span:nth-child(4) { animation-delay: 1.5s; border-color: #6366F1; }
-  @keyframes ripple {
-    0% { transform: scale(0.4); opacity: 1; }
-    100% { transform: scale(3); opacity: 0; }
-  }
-
-  /* 13 · Noise texture */
-  .m-noise {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(circle at 30% 40%, #FF6B35 0%, transparent 50%),
-      radial-gradient(circle at 70% 60%, #6366F1 0%, transparent 50%);
-    filter: contrast(1.4);
-  }
-  .m-noise::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-    animation: noise 0.5s steps(4) infinite;
-    mix-blend-mode: overlay;
-  }
-  @keyframes noise {
-    0%, 100% { transform: translate(0,0); }
-    25% { transform: translate(-2px,1px); }
-    50% { transform: translate(1px,-2px); }
-    75% { transform: translate(2px,2px); }
-  }
-
-  /* 14 · Letter cascade */
-  .m-cascade {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font: 800 64px -apple-system, sans-serif;
-    letter-spacing: -0.04em;
-  }
-  .m-cascade span { display: inline-block; animation: cascade 2s ease-in-out infinite; }
-  .m-cascade span:nth-child(1) { animation-delay: 0s; }
-  .m-cascade span:nth-child(2) { animation-delay: 0.1s; }
-  .m-cascade span:nth-child(3) { animation-delay: 0.2s; }
-  .m-cascade span:nth-child(4) { animation-delay: 0.3s; }
-  .m-cascade span:nth-child(5) { animation-delay: 0.4s; }
-  .m-cascade span:nth-child(6) { animation-delay: 0.5s; }
-  @keyframes cascade {
-    0%, 100% { transform: translateY(0); color: #F5F5F7; }
-    50% { transform: translateY(-20px); color: #FF6B35; }
-  }
-
-  /* 15 · Conic spinner */
-  .m-conic {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .m-conic-shape {
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, #FF6B35, #FFD23F, #00E5B0, #6366F1, #FF6B35);
-    filter: blur(8px);
-    animation: spin 8s linear infinite;
-  }
-  .m-conic-inner {
-    position: absolute;
-    width: 120px; height: 120px;
-    background: #0A0A0B;
-    border-radius: 50%;
-  }
-  @keyframes spin {
+  @keyframes moon3 {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+  }
+  .site-3::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(1px 1px at 20% 30%, white, transparent),
+                      radial-gradient(1px 1px at 60% 70%, white, transparent),
+                      radial-gradient(1px 1px at 80% 20%, white, transparent),
+                      radial-gradient(2px 2px at 40% 50%, white, transparent);
+    background-size: 200px 200px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* 4 · HALO · DeFi · coins floating */
+  .site-4 { background: linear-gradient(180deg, #1A1F2E 0%, #0F1419 100%); color: #F5F5F7; font-family: 'Inter', sans-serif; }
+  .site-4 .site-title { font-weight: 700; letter-spacing: -0.03em; }
+  .site-4 .coins { position: absolute; inset: 0; }
+  .site-4 .coin {
+    position: absolute;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    box-shadow: 0 8px 24px rgba(255,215,0,0.3), inset 0 -2px 4px rgba(0,0,0,0.3);
+    animation: float4 5s ease-in-out infinite;
+  }
+  .site-4 .coin:nth-child(1) { top: 18%; right: 28%; animation-delay: 0s; width: 36px; height: 36px; }
+  .site-4 .coin:nth-child(2) { top: 45%; right: 12%; animation-delay: 1.5s; }
+  .site-4 .coin:nth-child(3) { top: 70%; right: 25%; animation-delay: 3s; width: 24px; height: 24px; }
+  .site-4 .coin:nth-child(4) { top: 30%; right: 40%; animation-delay: 0.8s; width: 20px; height: 20px; opacity: 0.6; }
+  .site-4 .coin:nth-child(5) { top: 60%; right: 38%; animation-delay: 2.2s; width: 16px; height: 16px; opacity: 0.5; }
+  @keyframes float4 {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-14px) rotate(180deg); }
+  }
+
+  /* 5 · SYNC AI · green hills · landscape */
+  .site-5 { background: linear-gradient(180deg, #B8E0D2 0%, #6FA88D 60%, #2A4D3A 100%); color: #0A2E1F; font-family: 'Space Grotesk', sans-serif; }
+  .site-5 .site-title { font-weight: 600; color: #0A2E1F; }
+  .site-5 .site-sub { color: rgba(10,46,31,0.7); }
+  .site-5 .site-btn { background: #0A2E1F; color: #B8E0D2; }
+  .site-5::before {
+    content: ''; position: absolute;
+    top: -10%; left: -10%; right: -10%; height: 60%;
+    background: radial-gradient(ellipse at center, #FFF5DD 0%, rgba(255,245,221,0.4) 30%, transparent 60%);
+    opacity: 0.7;
+  }
+  .site-5::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
+    background:
+      radial-gradient(ellipse 80% 100% at 30% 100%, #4A7A5E 0%, transparent 50%),
+      radial-gradient(ellipse 90% 100% at 70% 100%, #2A4D3A 0%, transparent 60%),
+      linear-gradient(180deg, transparent 0%, #1A3D2A 100%);
+    animation: hillSway 12s ease-in-out infinite alternate;
+  }
+  @keyframes hillSway {
+    from { background-position: 0 0, 0 0, 0 0; }
+    to { background-position: 10% 0, -10% 0, 0 0; }
+  }
+
+  /* 6 · BRANDLY · creative · figure pose */
+  .site-6 { background: linear-gradient(135deg, #FFF8F0 0%, #FFE8D0 100%); color: #1A1A1A; font-family: 'Inter', sans-serif; }
+  .site-6 .site-title { color: #1A1A1A; font-weight: 800; letter-spacing: -0.04em; line-height: 0.95; }
+  .site-6 .site-sub { color: rgba(26,26,26,0.6); }
+  .site-6 .site-cta { background: #1A1A1A; color: white; border-color: #1A1A1A; }
+  .site-6 .site-btn { background: #1A1A1A; color: white; }
+  .site-6::before {
+    content: ''; position: absolute;
+    bottom: 0; right: -20%;
+    width: 60%; height: 100%;
+    background:
+      radial-gradient(circle at 50% 60%, #FF6B35 0%, #E63946 60%, transparent 75%);
+    border-radius: 50% 50% 0 0;
+    transform: translateY(40%);
+    filter: contrast(1.05);
+  }
+  .site-6::after {
+    content: ''; position: absolute;
+    bottom: 8%; right: 8%;
+    width: 90px; height: 50px;
+    border-radius: 50% 50% 0 0;
+    background: linear-gradient(180deg, #FFD23F 0%, #FF6B35 100%);
+    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.2);
+    animation: brandlyPulse6 4s ease-in-out infinite;
+  }
+  @keyframes brandlyPulse6 {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  /* 7 · CRYPTO WEALTH · dashboard · chart bars */
+  .site-7 { background: linear-gradient(180deg, #0F1419 0%, #1A2332 100%); color: #F5F5F7; font-family: 'Inter', sans-serif; }
+  .site-7 .site-title { font-weight: 600; }
+  .site-7 .chart {
+    position: absolute;
+    bottom: 18%; right: 8%;
+    width: 38%; height: 50%;
+    display: flex; align-items: flex-end; gap: 4px;
+    padding: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+  }
+  .site-7 .bar { flex: 1; background: linear-gradient(180deg, #00E5B0, #00B890); border-radius: 3px 3px 0 0; animation: chart7 3s ease-in-out infinite; }
+  .site-7 .bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+  .site-7 .bar:nth-child(2) { height: 55%; animation-delay: 0.2s; }
+  .site-7 .bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+  .site-7 .bar:nth-child(4) { height: 70%; animation-delay: 0.6s; }
+  .site-7 .bar:nth-child(5) { height: 60%; animation-delay: 0.8s; }
+  .site-7 .bar:nth-child(6) { height: 85%; animation-delay: 1s; }
+  .site-7 .bar:nth-child(7) { height: 75%; animation-delay: 1.2s; }
+  .site-7 .bar:nth-child(8) { height: 95%; animation-delay: 1.4s; background: linear-gradient(180deg, #FFD23F, #FF6B35); }
+  @keyframes chart7 {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.85); }
+  }
+
+  /* 8 · SHAMONI · invitation · forest */
+  .site-8 { background: linear-gradient(180deg, #0D1F1A 0%, #1A3D2F 100%); color: #E8F0E8; font-family: 'Cormorant Garamond', serif; }
+  .site-8 .site-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-style: italic; }
+  .site-8 .site-eyebrow { font-family: 'Inter', sans-serif; }
+  .site-8 .site-sub { font-family: 'Inter', sans-serif; }
+  .site-8 .site-btn { font-family: 'Inter', sans-serif; background: rgba(232,240,232,0.95); }
+  .site-8::before {
+    content: ''; position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 70% at 10% 100%, #0A1A12 0%, transparent 50%),
+      radial-gradient(ellipse 40% 60% at 90% 100%, #0A1A12 0%, transparent 50%),
+      linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.4) 100%);
+  }
+  .site-8::after {
+    content: '0651';
+    position: absolute;
+    top: 16px; right: 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; opacity: 0.5; letter-spacing: 0.2em;
+  }
+
+  /* 9 · DESIGNPRO ACADEMY · 3D abstract · tech course */
+  .site-9 { background: linear-gradient(135deg, #1A0B2E 0%, #0A0A1F 60%); color: #F0E8FF; font-family: 'Space Grotesk', sans-serif; }
+  .site-9 .site-title { font-weight: 700; }
+  .site-9::before {
+    content: ''; position: absolute;
+    top: 20%; right: 8%;
+    width: 180px; height: 180px;
+    background: conic-gradient(from 180deg, #FF6B9D, #C44569, #7B68EE, #4A90E2, #50C9CE, #FF6B9D);
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0.6;
+    animation: orb9 10s linear infinite;
+  }
+  .site-9::after {
+    content: ''; position: absolute;
+    top: 28%; right: 16%;
+    width: 110px; height: 110px;
+    background:
+      radial-gradient(circle at 30% 30%, #FFE0F0 0%, #FF6B9D 30%, #7B68EE 70%);
+    border-radius: 50%;
+    box-shadow: 0 20px 60px rgba(123,104,238,0.6);
+    animation: orbFloat9 6s ease-in-out infinite;
+  }
+  @keyframes orb9 {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes orbFloat9 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* 10 · TRANSFORM DATA · mountain road · journey */
+  .site-10 { background: linear-gradient(180deg, #B5C9D6 0%, #6B8FA6 50%, #2A4A60 100%); color: #0A1A2E; font-family: 'Inter', sans-serif; }
+  .site-10 .site-title { font-weight: 700; color: #0A1A2E; letter-spacing: -0.025em; }
+  .site-10 .site-sub { color: rgba(10,26,46,0.7); }
+  .site-10 .site-btn { background: #0A1A2E; color: white; }
+  .site-10::before {
+    content: ''; position: absolute;
+    top: -20%; left: 0; right: 0; height: 80%;
+    background: radial-gradient(ellipse at center, #FFF8E7 0%, rgba(255,248,231,0.3) 25%, transparent 50%);
+  }
+  .site-10::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 50%;
+    background:
+      radial-gradient(ellipse 60% 100% at 20% 100%, #4A6F88 0%, transparent 60%),
+      radial-gradient(ellipse 80% 100% at 80% 100%, #2A4A60 0%, transparent 70%),
+      linear-gradient(180deg, transparent 0%, #1A3550 100%);
+    clip-path: polygon(0 60%, 30% 40%, 50% 55%, 75% 35%, 100% 50%, 100% 100%, 0 100%);
+  }
+
+  /* 11 · SHADER MESH · abstract grad cycle */
+  .site-11 { background: #000; color: white; font-family: 'Space Grotesk', sans-serif; }
+  .site-11 .site-title { font-weight: 700; }
+  .site-11::before {
+    content: ''; position: absolute; inset: -20%;
+    background:
+      radial-gradient(circle at 20% 30%, #FF6B35 0%, transparent 40%),
+      radial-gradient(circle at 80% 20%, #00E5B0 0%, transparent 40%),
+      radial-gradient(circle at 50% 70%, #6366F1 0%, transparent 50%),
+      radial-gradient(circle at 30% 90%, #FFD23F 0%, transparent 40%);
+    filter: blur(60px);
+    animation: shader11 15s ease-in-out infinite alternate;
+  }
+  @keyframes shader11 {
+    0% { transform: scale(1) rotate(0); }
+    100% { transform: scale(1.3) rotate(180deg); }
+  }
+
+  /* 12 · LUMINA AGENCY · sleek minimal */
+  .site-12 { background: #0F0F0F; color: #F5F5F7; font-family: 'Inter', sans-serif; }
+  .site-12 .site-title { font-weight: 600; }
+  .site-12::before {
+    content: ''; position: absolute;
+    top: 30%; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 200px;
+    background: linear-gradient(135deg, #6366F1, #EC4899, #F59E0B);
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: lumPulse 6s ease-in-out infinite;
+  }
+  @keyframes lumPulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.4); }
+  }
+  .site-12::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
   }
 
   .footer {
@@ -471,17 +525,8 @@
     border-top: 1px solid rgba(255,255,255,0.06);
     color: #6E6E73;
     font-size: 13px;
-    letter-spacing: -0.012em;
   }
-
-  @media (max-width: 768px) {
-    .hero { padding: 56px 24px 32px; }
-    .grid { padding: 0 16px 56px; gap: 12px; grid-template-columns: 1fr 1fr; }
-    .card { aspect-ratio: 3/4; }
-    .card-meta { padding: 12px 14px 14px; }
-    .card-title { font-size: 13px; }
-    .card-cat { font-size: 9px; }
-  }
+  .footer a { color: #F5F5F7; }
 </style>
 </head>
 <body>
@@ -490,164 +535,365 @@
   <div class="nav-logo"><a href="../index.html">SMC Design System</a></div>
   <a href="../index.html" class="nav-back">← Volver al banco</a>
   <div class="nav-spacer"></div>
-  <div class="nav-meta">BANCO DE MOTION · v16 · 15 patrones</div>
+  <div class="nav-meta">BANCO DE MOTION · v16.1 · 12 mini-sites</div>
 </nav>
 
 <section class="hero">
-  <div class="hero-eyebrow">Banco de Motion · 2026</div>
-  <h1>Motion que <em>copias y pegas</em></h1>
-  <p>15 patrones de motion premium en CSS/JS puro · live preview · sin GIFs · sin builder · copy/paste plug-and-play. Inspirado en motionsites.ai + awwwards + 60fps.design pero sin vendor lock-in.</p>
+  <div class="hero-eyebrow">v16.1 · Mini-sites premium · sin GIFs</div>
+  <h1>Motion que se ve como <em>un sitio real</em></h1>
+  <p>12 mini-sites completos · brand + nav + hero + visual + CTA · CSS/JS puro · copy/paste plug-and-play. Calidad motionsites.ai sin vendor lock-in.</p>
   <div class="hero-cta">
-    <a href="#grid" class="btn btn-primary">Explorar patrones →</a>
+    <a href="#grid" class="btn btn-primary">Explorar mini-sites →</a>
     <a href="../index.html" class="btn btn-ghost">Volver al banco</a>
   </div>
 </section>
 
 <div class="filters">
-  <div class="chip active" data-filter="all">Todos · 15</div>
-  <div class="chip" data-filter="hero">Hero backgrounds</div>
-  <div class="chip" data-filter="text">Tipografía</div>
-  <div class="chip" data-filter="3d">3D + Spatial</div>
-  <div class="chip" data-filter="ambient">Ambient</div>
+  <div class="chip active" data-filter="all">Todos · 12</div>
+  <div class="chip" data-filter="hero">Hero sections</div>
+  <div class="chip" data-filter="saas">SaaS · Tech</div>
+  <div class="chip" data-filter="creative">Creative · Brand</div>
+  <div class="chip" data-filter="editorial">Editorial</div>
 </div>
 
 <div class="grid" id="grid">
 
-  <a href="#" class="card" data-cat="hero ambient">
-    <div class="card-preview"><div class="m-aurora"></div></div>
-    <div class="card-meta">
-      <div class="card-title">Aurora Gradient Mesh</div>
-      <div class="card-cat">HERO · AMBIENT</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="text">
-    <div class="card-preview"><div class="m-marquee"><div class="m-marquee-track">MOTION · MOTION · MOTION · MOTION ·&nbsp;</div></div></div>
-    <div class="card-meta">
-      <div class="card-title">Marquee Infinito</div>
-      <div class="card-cat">TIPOGRAFÍA</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="text">
-    <div class="card-preview"><div class="m-kinetic"><span>SMC</span><span>2026</span><span>MOTION</span></div></div>
-    <div class="card-meta">
-      <div class="card-title">Kinetic Typography</div>
-      <div class="card-cat">TIPOGRAFÍA</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="ambient">
-    <div class="card-preview"><div class="m-particles"><span></span><span></span><span></span><span></span><span></span></div></div>
-    <div class="card-meta">
-      <div class="card-title">Particles Drift</div>
-      <div class="card-cat">AMBIENT</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="hero ambient">
-    <div class="card-preview"><div class="m-blob"><div class="m-blob-shape"></div></div></div>
-    <div class="card-meta">
-      <div class="card-title">Liquid Blob Morph</div>
-      <div class="card-cat">HERO</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="ambient">
-    <div class="card-preview"><div class="m-grid-scroll"></div></div>
-    <div class="card-meta">
-      <div class="card-title">Grid Scroll</div>
-      <div class="card-cat">AMBIENT</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="text">
-    <div class="card-preview"><div class="m-sweep"><span>SHIMMER</span></div></div>
-    <div class="card-meta">
-      <div class="card-title">Text Gradient Sweep</div>
-      <div class="card-cat">TIPOGRAFÍA</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="3d">
-    <div class="card-preview"><div class="m-cube"><div class="m-cube-shape"><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div><div class="m-cube-face"></div></div></div></div>
-    <div class="card-meta">
-      <div class="card-title">3D Cube Rotate</div>
-      <div class="card-cat">3D · SPATIAL</div>
-    </div>
-  </a>
-
-  <a href="#" class="card" data-cat="ambient">
-    <div class="card-preview">
-      <div class="m-wave">
-        <svg viewBox="0 0 200 100" preserveAspectRatio="none">
-          <defs><linearGradient id="waveGrad"><stop offset="0%" stop-color="#FF6B35"/><stop offset="100%" stop-color="#00E5B0"/></linearGradient></defs>
-          <path d="M 0 50 Q 25 30 50 50 T 100 50 T 150 50 T 200 50"/>
-        </svg>
+  <!-- 1 · VELORAH -->
+  <a href="#" class="card" data-cat="creative editorial">
+    <div class="site site-1">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">Velorah*</div>
+          <div class="site-links"><span>Studios</span><span>Work</span><span>Journal</span><span>Contact</span></div>
+          <div class="site-cta">Begin Journey</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">Studio · 2026</div>
+          <div class="site-title">Focus in a<br>Distracted World</div>
+          <div class="site-sub">Designing tools for deep thinkers, bold creators, and quiet rebels. Amid the chaos, we build digital spaces.</div>
+          <div class="site-btn">Begin Journey →</div>
+        </div>
+        <div class="site-footer-strip"><span>VEL · 2026</span><span>HERO 01</span></div>
       </div>
     </div>
     <div class="card-meta">
-      <div class="card-title">Wave SVG</div>
-      <div class="card-cat">AMBIENT</div>
+      <div class="meta-left">
+        <div class="card-title">Velorah Focus</div>
+        <div class="card-cat">EDITORIAL · STUDIO</div>
+      </div>
+      <div class="card-badge free">FREE</div>
     </div>
   </a>
 
-  <a href="#" class="card" data-cat="hero ambient" id="spotCard">
-    <div class="card-preview"><div class="m-spotlight" id="spot"></div></div>
+  <!-- 2 · NEXACORE -->
+  <a href="#" class="card" data-cat="saas hero">
+    <div class="site site-2">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">⬡ NexaCore</div>
+          <div class="site-links"><span>What We Build</span><span>Method</span><span>Thinking</span></div>
+          <div class="site-cta">Contact</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">Infrastructure · Built to Last</div>
+          <div class="site-title">Engineer and scale<br>with clarity.</div>
+          <div class="site-sub">NexaCore helps infrastructure owners, operators and suppliers enforce global build standards.</div>
+          <div class="site-btn">Get Started</div>
+        </div>
+        <div class="site-footer-strip"><span>NEX/26</span><span>HERO 02</span></div>
+      </div>
+    </div>
     <div class="card-meta">
-      <div class="card-title">Spotlight Follow Mouse</div>
-      <div class="card-cat">HERO · INTERACTIVE</div>
+      <div class="meta-left">
+        <div class="card-title">NexaCore Infrastructure</div>
+        <div class="card-cat">SAAS · INFRASTRUCTURE</div>
+      </div>
+      <div class="card-badge">PREMIUM</div>
     </div>
   </a>
 
-  <a href="#" class="card" data-cat="text">
-    <div class="card-preview"><div class="m-glitch"><span>GLITCH</span></div></div>
+  <!-- 3 · LUMINA -->
+  <a href="#" class="card" data-cat="creative editorial">
+    <div class="site site-3">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">✦ LUMINA</div>
+          <div class="site-links"><span>Discover</span><span>The Mission</span><span>Concierge</span></div>
+          <div class="site-cta">Stay Notified</div>
+        </div>
+        <div class="site-body" style="align-items:center;text-align:center">
+          <div class="site-eyebrow" style="margin:0 auto 8px">Pure Insight · Zero Noise</div>
+          <div class="site-title" style="max-width:90%">Pure Insight.<br>Zero Noise.</div>
+          <div class="site-sub" style="max-width:60%;text-align:center">Premium clarity on global events and cosmic wonders — shared with all for free.</div>
+        </div>
+        <div class="site-footer-strip"><span>LUM · ESTD 2024</span><span>HERO 03</span></div>
+      </div>
+    </div>
     <div class="card-meta">
-      <div class="card-title">Glitch Text</div>
-      <div class="card-cat">TIPOGRAFÍA</div>
+      <div class="meta-left">
+        <div class="card-title">Lumina Cosmic</div>
+        <div class="card-cat">EDITORIAL · BRAND</div>
+      </div>
+      <div class="card-badge free">FREE</div>
     </div>
   </a>
 
-  <a href="#" class="card" data-cat="ambient">
-    <div class="card-preview"><div class="m-ripple"><span></span><span></span><span></span><span></span></div></div>
+  <!-- 4 · HALO COIN -->
+  <a href="#" class="card" data-cat="saas">
+    <div class="site site-4">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">○ Halo</div>
+          <div class="site-links"><span>Network</span><span>Ecosystem</span><span>Rewards</span><span>Help</span><span>News</span></div>
+          <div class="site-cta">Open Wallet</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">Defi · Stablecoin</div>
+          <div class="site-title">Your Wealth<br>Works</div>
+          <div class="site-sub">An automated, reward-earning digital dollar built for native passive earnings and effortless connection.</div>
+          <div class="site-btn">Join · Open Wallet</div>
+        </div>
+        <div class="coins">
+          <span class="coin"></span><span class="coin"></span><span class="coin"></span><span class="coin"></span><span class="coin"></span>
+        </div>
+        <div class="site-footer-strip"><span>USD HALO</span><span>HERO 04</span></div>
+      </div>
+    </div>
     <div class="card-meta">
-      <div class="card-title">Ripple Pulse</div>
-      <div class="card-cat">AMBIENT</div>
+      <div class="meta-left">
+        <div class="card-title">Halo DeFi Coin</div>
+        <div class="card-cat">SAAS · FINTECH</div>
+      </div>
+      <div class="card-badge">PREMIUM</div>
     </div>
   </a>
 
-  <a href="#" class="card" data-cat="hero ambient">
-    <div class="card-preview"><div class="m-noise"></div></div>
+  <!-- 5 · SYNC AI -->
+  <a href="#" class="card" data-cat="saas hero">
+    <div class="site site-5">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">⌀ Sync</div>
+          <div class="site-links"><span>Home</span><span>Studio</span><span>About</span><span>Journal</span><span>Reach Us</span></div>
+          <div class="site-cta">Begin Journey</div>
+        </div>
+        <div class="site-body" style="align-items:center;text-align:center">
+          <div class="site-eyebrow" style="margin:0 auto 8px">4.9/5 rating from 18,3K+ users</div>
+          <div class="site-title">Work Smarter. Move Faster.<br>AI Powers You Up.</div>
+          <div class="site-sub" style="max-width:60%;text-align:center">Intelligent automation syncs with the tools you love to streamline tasks and amplify output.</div>
+          <div class="site-btn" style="align-self:center">Begin Free Trial</div>
+        </div>
+        <div class="site-footer-strip" style="color:rgba(10,46,31,0.5)"><span>Logoipsum · Logoipsum · IPSUM</span><span>HERO 05</span></div>
+      </div>
+    </div>
     <div class="card-meta">
-      <div class="card-title">Noise Grain Texture</div>
-      <div class="card-cat">HERO · TEXTURE</div>
+      <div class="meta-left">
+        <div class="card-title">Sync AI Automation</div>
+        <div class="card-cat">SAAS · AI</div>
+      </div>
+      <div class="card-badge free">FREE</div>
     </div>
   </a>
 
-  <a href="#" class="card" data-cat="text">
-    <div class="card-preview"><div class="m-cascade"><span>S</span><span>M</span><span>C</span><span>·</span><span>2</span><span>6</span></div></div>
+  <!-- 6 · BRANDLY -->
+  <a href="#" class="card" data-cat="creative">
+    <div class="site site-6">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">Brandly</div>
+          <div class="site-links"><span>About</span><span>Features</span><span>Pricing</span><span>FAQ</span><span>Help</span></div>
+          <div class="site-cta">Sign Up · Log In</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">50+ BRANDS LAUNCHED</div>
+          <div class="site-title">Building<br>Brands That<br>Resonate</div>
+          <div class="site-sub">Thoughtful design that captivates, empowers, and creates lasting impact.</div>
+          <div class="site-btn">Start Today</div>
+        </div>
+        <div class="site-footer-strip" style="color:rgba(26,26,26,0.4)"><span>BRAND · STUDIO</span><span>HERO 06</span></div>
+      </div>
+    </div>
     <div class="card-meta">
-      <div class="card-title">Letter Cascade</div>
-      <div class="card-cat">TIPOGRAFÍA</div>
+      <div class="meta-left">
+        <div class="card-title">Brandly Studio</div>
+        <div class="card-cat">CREATIVE · AGENCY</div>
+      </div>
+      <div class="card-badge">PREMIUM</div>
     </div>
   </a>
 
-  <a href="#" class="card" data-cat="ambient 3d">
-    <div class="card-preview"><div class="m-conic"><div class="m-conic-shape"></div><div class="m-conic-inner"></div></div></div>
+  <!-- 7 · CRYPTO WEALTH -->
+  <a href="#" class="card" data-cat="saas">
+    <div class="site site-7">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">△ Crypto Wealth</div>
+          <div class="site-links"><span>Markets</span><span>Pricing</span><span>Earn</span><span>About</span></div>
+          <div class="site-cta">Get Started</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">Your Content Engine · Faster and Clearer</div>
+          <div class="site-title">Real-time<br>portfolio insight</div>
+          <div class="site-sub">Track positions, P&L and yield across 200+ chains. One dashboard.</div>
+          <div class="site-btn">Open Dashboard</div>
+        </div>
+        <div class="chart">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <div class="site-footer-strip"><span>CW · 2026</span><span>HERO 07</span></div>
+      </div>
+    </div>
     <div class="card-meta">
-      <div class="card-title">Conic Spinner</div>
-      <div class="card-cat">AMBIENT · 3D</div>
+      <div class="meta-left">
+        <div class="card-title">Crypto Wealth Dashboard</div>
+        <div class="card-cat">SAAS · FINTECH</div>
+      </div>
+      <div class="card-badge free">FREE</div>
+    </div>
+  </a>
+
+  <!-- 8 · SHAMONI -->
+  <a href="#" class="card" data-cat="editorial creative">
+    <div class="site site-8">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand" style="font-family:'Cormorant Garamond',serif;font-style:italic">Shamoni</div>
+          <div class="site-links"><span>Story</span><span>The Club</span><span>Members</span><span>Events</span></div>
+          <div class="site-cta">Buy Collection</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">Exclusive Community of Sailors</div>
+          <div class="site-title">Join an exclusive<br>community of sailors,<br>whether you crave the<br>thrill of the open seas.</div>
+          <div class="site-btn">Buy Collection</div>
+        </div>
+        <div class="site-footer-strip"><span>SHAMONI · 0651</span><span>HERO 08</span></div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-left">
+        <div class="card-title">Shamoni Yacht Club</div>
+        <div class="card-cat">EDITORIAL · LIFESTYLE</div>
+      </div>
+      <div class="card-badge">PREMIUM</div>
+    </div>
+  </a>
+
+  <!-- 9 · DESIGNPRO ACADEMY -->
+  <a href="#" class="card" data-cat="saas creative">
+    <div class="site site-9">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">◆ DesignPro</div>
+          <div class="site-links"><span>Courses</span><span>Mentors</span><span>Community</span><span>Blog</span></div>
+          <div class="site-cta">Apply for Next Enrollment</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">Master the craft · Cohort 11</div>
+          <div class="site-title">DesignPro<br>Academy</div>
+          <div class="site-sub">Master interaction design, motion and design systems with industry mentors.</div>
+          <div class="site-btn">Apply for Next Enrollment</div>
+        </div>
+        <div class="site-footer-strip"><span>DPA · 11</span><span>HERO 09</span></div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-left">
+        <div class="card-title">DesignPro Academy</div>
+        <div class="card-cat">EDUCATION · COURSE</div>
+      </div>
+      <div class="card-badge free">FREE</div>
+    </div>
+  </a>
+
+  <!-- 10 · TRANSFORM DATA -->
+  <a href="#" class="card" data-cat="saas hero">
+    <div class="site site-10">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">Logoipsum</div>
+          <div class="site-links"><span>Solution</span><span>Services</span><span>Products</span><span>Resources</span><span>Pricing</span></div>
+          <div class="site-cta">Sign Up · Log In</div>
+        </div>
+        <div class="site-body" style="align-items:center;text-align:center">
+          <div class="site-eyebrow" style="margin:0 auto 8px;padding:4px 12px;background:rgba(255,255,255,0.5);border-radius:980px;display:inline-block;font-weight:600">★ NEW · Update can blow your mind</div>
+          <div class="site-title" style="max-width:90%">Transform Data Quickly</div>
+          <div class="site-sub" style="max-width:55%;text-align:center">Upload your information and get powerful insights right away. Work smarter and achieve goals effortlessly.</div>
+          <div class="site-btn" style="align-self:center">Ask anything · ⏎ Voice · Prompts</div>
+        </div>
+        <div class="site-footer-strip" style="color:rgba(10,26,46,0.5)"><span>POWERED BY GPT-4o</span><span>HERO 10</span></div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-left">
+        <div class="card-title">Transform Data Quickly</div>
+        <div class="card-cat">SAAS · AI ASSISTANT</div>
+      </div>
+      <div class="card-badge">PREMIUM</div>
+    </div>
+  </a>
+
+  <!-- 11 · SHADER MESH -->
+  <a href="#" class="card" data-cat="creative">
+    <div class="site site-11">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">⬢ Shader</div>
+          <div class="site-links"><span>Gallery</span><span>Pricing</span><span>Discord</span></div>
+          <div class="site-cta">Try Demo</div>
+        </div>
+        <div class="site-body">
+          <div class="site-eyebrow">Shader Mesh Engine · 2026</div>
+          <div class="site-title">Mesh gradients<br>for every brand.</div>
+          <div class="site-sub">Generate 4K gradient meshes that bring landing pages to life. WebGL renderer included.</div>
+          <div class="site-btn">Try Demo</div>
+        </div>
+        <div class="site-footer-strip"><span>SHADER · 2026</span><span>HERO 11</span></div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-left">
+        <div class="card-title">Shader Mesh Engine</div>
+        <div class="card-cat">CREATIVE · WEBGL</div>
+      </div>
+      <div class="card-badge free">FREE</div>
+    </div>
+  </a>
+
+  <!-- 12 · LUMINA AGENCY MINIMAL -->
+  <a href="#" class="card" data-cat="creative editorial">
+    <div class="site site-12">
+      <div class="site-inner">
+        <div class="site-nav">
+          <div class="site-brand">Lumina Studio</div>
+          <div class="site-links"><span>Work</span><span>Studio</span><span>Process</span></div>
+          <div class="site-cta">Email us</div>
+        </div>
+        <div class="site-body" style="align-items:center;text-align:center">
+          <div class="site-eyebrow" style="margin:0 auto 8px">Design Studio · Est. 2019</div>
+          <div class="site-title" style="font-style:italic;font-family:'Instrument Serif',serif;font-weight:400">We craft brands<br>that breathe light.</div>
+          <div class="site-sub" style="max-width:55%;text-align:center">A small studio with big ideas. Identity, motion, web — for ambitious brands.</div>
+          <div class="site-btn" style="align-self:center">Start a project</div>
+        </div>
+        <div class="site-footer-strip"><span>LMN · STUDIO</span><span>HERO 12</span></div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-left">
+        <div class="card-title">Lumina Studio Minimal</div>
+        <div class="card-cat">EDITORIAL · MINIMAL</div>
+      </div>
+      <div class="card-badge">PREMIUM</div>
     </div>
   </a>
 
 </div>
 
 <footer class="footer">
-  Banco de Motion v16 · SMC Design System · 15 patrones CSS/JS puro · sin GIFs · sin builder dependency
+  Banco de Motion v16.1 · SMC Design System · 12 mini-sites premium · CSS/JS puro · sin GIFs · sin builder<br>
+  <a href="../index.html">← Volver al banco principal</a>
 </footer>
 
 <script>
-  // Filter chips
   document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', () => {
       document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -660,19 +906,6 @@
       });
     });
   });
-
-  // Spotlight follow mouse
-  const spotCard = document.getElementById('spotCard');
-  const spot = document.getElementById('spot');
-  if (spotCard && spot) {
-    spotCard.addEventListener('mousemove', e => {
-      const rect = spotCard.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      spot.style.setProperty('--x', x + '%');
-      spot.style.setProperty('--y', y + '%');
-    });
-  }
 </script>
 
 <script src="../_themes.js"></script>
