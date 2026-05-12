@@ -665,32 +665,77 @@ footer .marquee-mini { font-family: var(--font-display); font-size: 14px; color:
     </div>
     <div class="lab-card">
       <aside class="lab-library">
-        <h3>📚 Biblioteca <span>11 efectos</span></h3>
-        <div class="lab-effect-source" draggable="true" data-effect="aurora">💫 Aurora Field</div>
-        <div class="lab-effect-source" draggable="true" data-effect="mesh">🎨 Mesh Gradient</div>
-        <div class="lab-effect-source" draggable="true" data-effect="grain">🎞️ Film Grain</div>
-        <div class="lab-effect-source" draggable="true" data-effect="vignette">⚫ Vignette</div>
-        <div class="lab-effect-source" draggable="true" data-effect="particles">✨ Particles</div>
-        <div class="lab-effect-source" draggable="true" data-effect="grid">⊞ Grid Pattern</div>
-        <div class="lab-effect-source" draggable="true" data-effect="glow">💡 Glow Pulse</div>
-        <div class="lab-effect-source" draggable="true" data-effect="marquee">▸ Marquee Text</div>
-        <div class="lab-effect-source" draggable="true" data-effect="noise">📺 Noise</div>
-        <div class="lab-effect-source" draggable="true" data-effect="orb">🪐 Orb</div>
-        <div class="lab-effect-source" draggable="true" data-effect="kinetic">📝 Kinetic Text</div>
+        <h3>📚 Biblioteca <span id="libCount">36 efectos</span></h3>
+        <div class="lab-tabs">
+          <button class="lab-tab on" data-cat="all">Todos</button>
+          <button class="lab-tab" data-cat="motion">Motion</button>
+          <button class="lab-tab" data-cat="3d">3D</button>
+          <button class="lab-tab" data-cat="fx">FX</button>
+          <button class="lab-tab" data-cat="type">Type</button>
+          <button class="lab-tab" data-cat="proj">Proyectos</button>
+        </div>
+        <div class="lab-effects-list">
+          <!-- MOTION (10) -->
+          <div class="lab-effect-source" draggable="true" data-effect="aurora" data-cat="motion">💫 Aurora Field</div>
+          <div class="lab-effect-source" draggable="true" data-effect="mesh" data-cat="motion">🎨 Mesh Gradient</div>
+          <div class="lab-effect-source" draggable="true" data-effect="glow" data-cat="motion">💡 Glow Pulse</div>
+          <div class="lab-effect-source" draggable="true" data-effect="orb" data-cat="motion">🪐 Orb</div>
+          <div class="lab-effect-source" draggable="true" data-effect="blob" data-cat="motion">🟠 Liquid Blob</div>
+          <div class="lab-effect-source" draggable="true" data-effect="ripple" data-cat="motion">⊙ Ripple</div>
+          <div class="lab-effect-source" draggable="true" data-effect="wave" data-cat="motion">〰️ Wave SVG</div>
+          <div class="lab-effect-source" draggable="true" data-effect="conic" data-cat="motion">◐ Conic Spin</div>
+          <div class="lab-effect-source" draggable="true" data-effect="spotlight" data-cat="motion">🔦 Spotlight</div>
+          <div class="lab-effect-source" draggable="true" data-effect="aurora2" data-cat="motion">🌌 Aurora Borealis</div>
+          <!-- 3D (8) -->
+          <div class="lab-effect-source" draggable="true" data-effect="cube3d" data-cat="3d">🎲 3D Cube</div>
+          <div class="lab-effect-source" draggable="true" data-effect="sphere3d" data-cat="3d">🟣 3D Sphere</div>
+          <div class="lab-effect-source" draggable="true" data-effect="torus3d" data-cat="3d">⭕ 3D Torus</div>
+          <div class="lab-effect-source" draggable="true" data-effect="pyramid3d" data-cat="3d">🔺 3D Pyramid</div>
+          <div class="lab-effect-source" draggable="true" data-effect="iso3d" data-cat="3d">📐 Iso Tower</div>
+          <div class="lab-effect-source" draggable="true" data-effect="cards3d" data-cat="3d">🎴 3D Card Stack</div>
+          <div class="lab-effect-source" draggable="true" data-effect="glass3d" data-cat="3d">💠 Glass Crystal</div>
+          <div class="lab-effect-source" draggable="true" data-effect="ring3d" data-cat="3d">💍 3D Rings</div>
+          <!-- FX (10) -->
+          <div class="lab-effect-source" draggable="true" data-effect="grain" data-cat="fx">🎞️ Film Grain</div>
+          <div class="lab-effect-source" draggable="true" data-effect="vignette" data-cat="fx">⚫ Vignette</div>
+          <div class="lab-effect-source" draggable="true" data-effect="noise" data-cat="fx">📺 Color Noise</div>
+          <div class="lab-effect-source" draggable="true" data-effect="grid" data-cat="fx">⊞ Grid Pattern</div>
+          <div class="lab-effect-source" draggable="true" data-effect="particles" data-cat="fx">✨ Particles</div>
+          <div class="lab-effect-source" draggable="true" data-effect="stars" data-cat="fx">⭐ Star Field</div>
+          <div class="lab-effect-source" draggable="true" data-effect="scanlines" data-cat="fx">▦ Scanlines</div>
+          <div class="lab-effect-source" draggable="true" data-effect="rays" data-cat="fx">✦ God Rays</div>
+          <div class="lab-effect-source" draggable="true" data-effect="dust" data-cat="fx">🌫️ Dust Drift</div>
+          <div class="lab-effect-source" draggable="true" data-effect="glitch" data-cat="fx">🔴 Glitch</div>
+          <!-- Type (4) -->
+          <div class="lab-effect-source" draggable="true" data-effect="marquee" data-cat="type">▸ Marquee Text</div>
+          <div class="lab-effect-source" draggable="true" data-effect="kinetic" data-cat="type">📝 Kinetic Text</div>
+          <div class="lab-effect-source" draggable="true" data-effect="sweep" data-cat="type">✏️ Gradient Sweep</div>
+          <div class="lab-effect-source" draggable="true" data-effect="cascade" data-cat="type">🔤 Letter Cascade</div>
+          <!-- Proyectos SMC (4) -->
+          <div class="lab-effect-source" draggable="true" data-effect="kanki-split" data-cat="proj">🏄 Kanki Split-Panel</div>
+          <div class="lab-effect-source" draggable="true" data-effect="voy-wizard" data-cat="proj">🚐 VOY Wizard</div>
+          <div class="lab-effect-source" draggable="true" data-effect="cencosud-pipe" data-cat="proj">🏬 Cenco Pipeline</div>
+          <div class="lab-effect-source" draggable="true" data-effect="cerebro-net" data-cat="proj">🧠 Cerebro Knowledge</div>
+        </div>
       </aside>
       <div class="lab-canvas" id="labCanvas">
         <div class="lab-canvas-empty" id="labEmpty">
           <div style="font-size:48px; opacity:.5; margin-bottom:8px">🧪</div>
-          Arrastrá efectos aquí · mezclá hasta 4 capas
+          Arrastrá efectos aquí · mezclá hasta 6 capas<br>
+          <span style="font-size:11px;opacity:.6;letter-spacing:.06em;margin-top:6px;display:block">Click en efecto · o 🎲 random</span>
         </div>
         <div class="lab-canvas-layers" id="labLayers"></div>
+        <div class="lab-canvas-badge" id="labBadge"></div>
       </div>
       <aside class="lab-stack">
         <h3>🎯 Stack activo <span id="stackCount">0</span></h3>
-        <div id="labStack" style="display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto"></div>
+        <div id="labStack" style="display:flex;flex-direction:column;gap:6px;flex:1;overflow-y:auto;max-height:280px"></div>
         <div class="lab-controls">
+          <button class="lab-btn lab-btn-random" id="labRandom" title="Tirar dado · mezcla aleatoria">🎲 Random</button>
           <button class="lab-btn lab-btn-primary" id="labClear">Limpiar</button>
-          <button class="lab-btn lab-btn-success" id="labSave">Guardar mix</button>
+        </div>
+        <div class="lab-controls" style="margin-top:6px">
+          <button class="lab-btn lab-btn-success" id="labSave" style="flex:1">💾 Guardar mix</button>
         </div>
         <div class="lab-saved" id="labSaved">
           ✅ Mix guardado · listo para promover a <code>@smc/ui/effects/</code>
@@ -701,105 +746,262 @@ footer .marquee-mini { font-family: var(--font-display); font-size: 14px; color:
 </section>
 
 <style>
-  .lab-card { display:grid; grid-template-columns:240px 1fr 280px; gap:18px; min-height:520px; max-width:1280px; margin:0 auto; padding:0 22px; }
-  .lab-library { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:18px; overflow-y:auto; max-height:520px; }
-  .lab-library h3 { font:600 11px var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5); margin:0 0 14px; display:flex; justify-content:space-between; }
+  .lab-card { display:grid; grid-template-columns:260px 1fr 280px; gap:18px; min-height:560px; max-width:1320px; margin:0 auto; padding:0 22px; }
+  .lab-library { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:16px 14px; overflow:hidden; max-height:560px; display:flex; flex-direction:column; }
+  .lab-library h3 { font:600 11px var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5); margin:0 0 10px; display:flex; justify-content:space-between; flex-shrink:0; }
   .lab-library h3 span { color:#FF6B35; font-size:10px; }
-  .lab-effect-source { padding:10px 14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); border-radius:10px; margin-bottom:8px; cursor:grab; font:500 13px var(--font-sans); color:#F5F5F7; transition:all .15s; display:flex; align-items:center; gap:8px; }
-  .lab-effect-source:hover { background:rgba(255,107,53,.15); border-color:rgba(255,107,53,.5); transform:translateX(4px); }
+  .lab-tabs { display:flex; gap:4px; margin-bottom:10px; flex-wrap:wrap; flex-shrink:0; }
+  .lab-tab { padding:4px 9px; background:rgba(255,255,255,.05); border:0.5px solid rgba(255,255,255,.1); border-radius:99px; font:600 10px var(--font-mono); color:rgba(255,255,255,.6); cursor:pointer; transition:all .15s; letter-spacing:.04em; }
+  .lab-tab:hover { background:rgba(255,255,255,.08); color:#F5F5F7; }
+  .lab-tab.on { background:#FF6B35; color:#0A0A0B; border-color:#FF6B35; }
+  .lab-effects-list { overflow-y:auto; flex:1; padding-right:4px; scrollbar-width:thin; }
+  .lab-effects-list::-webkit-scrollbar { width:6px; }
+  .lab-effects-list::-webkit-scrollbar-thumb { background:rgba(255,255,255,.1); border-radius:99px; }
+  .lab-effect-source { padding:8px 12px; background:rgba(255,255,255,.06); border:0.5px solid rgba(255,255,255,.08); border-radius:8px; margin-bottom:5px; cursor:grab; font:500 12px var(--font-sans); color:#F5F5F7; transition:all .15s; display:flex; align-items:center; gap:8px; }
+  .lab-effect-source:hover { background:rgba(255,107,53,.15); border-color:rgba(255,107,53,.5); transform:translateX(3px); }
   .lab-effect-source:active { cursor:grabbing; }
   .lab-effect-source.dragging { opacity:.4; }
+  .lab-effect-source.hidden { display:none; }
 
-  .lab-canvas { background:#000; border:2px dashed rgba(255,255,255,.15); border-radius:18px; position:relative; min-height:520px; overflow:hidden; transition:border-color .2s; }
-  .lab-canvas.dragover { border-color:#FF6B35; background:rgba(255,107,53,.05); }
-  .lab-canvas-empty { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:13px; color:rgba(255,255,255,.4); text-align:center; pointer-events:none; }
+  .lab-canvas { background:radial-gradient(ellipse at center, #161618 0%, #000 100%); border:2px dashed rgba(255,255,255,.12); border-radius:18px; position:relative; min-height:560px; overflow:hidden; transition:border-color .2s; }
+  .lab-canvas.dragover { border-color:#FF6B35; background:radial-gradient(ellipse at center, rgba(255,107,53,.08) 0%, #000 100%); }
+  .lab-canvas-empty { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:13px; color:rgba(255,255,255,.4); text-align:center; pointer-events:none; line-height:1.5; }
   .lab-canvas-layers { position:absolute; inset:0; pointer-events:none; }
-  .lab-canvas-layers > div { position:absolute; inset:0; }
+  .lab-canvas-layers > div { position:absolute; inset:0; pointer-events:none; }
+  .lab-canvas-badge { position:absolute; top:14px; left:14px; padding:6px 12px; background:rgba(0,0,0,.7); backdrop-filter:blur(8px); border-radius:99px; font:600 10px var(--font-mono); color:#FF6B35; letter-spacing:.08em; z-index:99; opacity:0; transition:opacity .3s; pointer-events:none; }
+  .lab-canvas-badge.show { opacity:1; }
 
-  /* Effects layers */
-  .lay-aurora { background: radial-gradient(circle at 20% 30%, rgba(255,107,53,.5), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0,229,176,.4), transparent 40%); filter:blur(40px); animation:auroraMv 12s ease-in-out infinite alternate; }
-  @keyframes auroraMv { 0% { transform:scale(1) rotate(0); } 100% { transform:scale(1.3) rotate(180deg); } }
-  .lay-mesh { background: linear-gradient(135deg, #6366F1, #EC4899, #F59E0B); filter:blur(80px); opacity:.6; }
-  .lay-grain { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"); mix-blend-mode:overlay; animation:grainMv .4s steps(4) infinite; }
-  @keyframes grainMv { 0%,100% { transform:translate(0); } 25% { transform:translate(-2px,1px); } 50% { transform:translate(1px,-2px); } 75% { transform:translate(2px,2px); } }
-  .lay-vignette { box-shadow:inset 0 0 200px rgba(0,0,0,1); }
+  /* ────────── MOTION ────────── */
+  .lay-aurora { background: radial-gradient(circle at 20% 30%, rgba(255,107,53,.5), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0,229,176,.4), transparent 40%); filter:blur(40px); animation:_auroraMv 12s ease-in-out infinite alternate; }
+  @keyframes _auroraMv { 0% { transform:scale(1) rotate(0); } 100% { transform:scale(1.3) rotate(180deg); } }
+  .lay-aurora2 { background: radial-gradient(ellipse at 50% 0%, rgba(0,229,176,.4) 0%, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(124,58,237,.4) 0%, transparent 50%); filter:blur(50px); animation:_aurora2Mv 16s ease-in-out infinite alternate; mix-blend-mode:screen; }
+  @keyframes _aurora2Mv { 0% { opacity:.6; transform:translateY(0); } 100% { opacity:1; transform:translateY(-20px); } }
+  .lay-mesh { background: linear-gradient(135deg, #6366F1, #EC4899, #F59E0B, #00E5B0); background-size:300% 300%; filter:blur(80px); opacity:.5; animation:_meshMv 18s ease infinite; }
+  @keyframes _meshMv { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+  .lay-glow { background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.6) 0%, transparent 50%); animation:_glowMv 4s ease-in-out infinite; mix-blend-mode:screen; }
+  @keyframes _glowMv { 0%,100% { transform:scale(1); opacity:.8; } 50% { transform:scale(1.4); opacity:1; } }
+  .lay-orb { background:radial-gradient(circle at 50% 50%, rgba(255,107,181,1) 0%, rgba(124,58,237,.8) 30%, transparent 60%); filter:blur(30px); animation:_orbMv 8s ease-in-out infinite; mix-blend-mode:screen; }
+  @keyframes _orbMv { 0%,100% { transform:scale(1) translate(0,0); } 50% { transform:scale(1.3) translate(20px,-20px); } }
+  .lay-blob { display:flex; align-items:center; justify-content:center; }
+  .lay-blob::before { content:''; width:240px; height:240px; background:linear-gradient(135deg,#FF6B35,#FFD23F); border-radius:60% 40% 30% 70% / 60% 30% 70% 40%; animation:_blobMv 8s ease-in-out infinite; filter:blur(2px); }
+  @keyframes _blobMv { 0%,100% { border-radius:60% 40% 30% 70% / 60% 30% 70% 40%; transform:rotate(0); } 50% { border-radius:30% 60% 70% 40% / 50% 60% 30% 60%; transform:rotate(180deg); } }
+  .lay-ripple { display:flex; align-items:center; justify-content:center; }
+  .lay-ripple::before, .lay-ripple::after { content:''; position:absolute; width:60px; height:60px; border:2px solid #00E5B0; border-radius:50%; animation:_rippleMv 2s ease-out infinite; opacity:0; }
+  .lay-ripple::after { animation-delay:1s; border-color:#FF6B35; }
+  @keyframes _rippleMv { 0% { transform:scale(.4); opacity:1; } 100% { transform:scale(4); opacity:0; } }
+  .lay-wave { display:flex; align-items:center; opacity:.6; }
+  .lay-wave::before { content:''; position:absolute; width:200%; height:30%; top:35%; background:repeating-linear-gradient(90deg, transparent, transparent 40px, #00E5B0 40px, #00E5B0 41px); animation:_waveMv 4s linear infinite; mask-image:radial-gradient(ellipse at center, black 30%, transparent 70%); }
+  @keyframes _waveMv { from { transform:translateX(0); } to { transform:translateX(-40px); } }
+  .lay-conic { display:flex; align-items:center; justify-content:center; }
+  .lay-conic::before { content:''; width:180px; height:180px; background:conic-gradient(from 0deg, #FF6B35, #FFD23F, #00E5B0, #6366F1, #FF6B35); border-radius:50%; filter:blur(8px); animation:_spinMv 8s linear infinite; opacity:.7; }
+  @keyframes _spinMv { from { transform:rotate(0); } to { transform:rotate(360deg); } }
+  .lay-spotlight { background:radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,.4) 0%, transparent 70%); animation:_spotMv 5s ease-in-out infinite; mix-blend-mode:screen; }
+  @keyframes _spotMv { 0%,100% { background-position:0% 50%; } 25% { background-position:100% 0%; } 50% { background-position:100% 100%; } 75% { background-position:0% 100%; } }
+
+  /* ────────── 3D ────────── */
+  .lay-cube3d { display:flex; align-items:center; justify-content:center; perspective:800px; }
+  .lay-cube3d::before { content:''; width:120px; height:120px; transform-style:preserve-3d; background:linear-gradient(135deg, rgba(0,229,176,.6), rgba(124,58,237,.6)); animation:_cube3d 12s linear infinite; box-shadow:0 0 80px rgba(0,229,176,.5); }
+  @keyframes _cube3d { from { transform:rotateX(0) rotateY(0); } to { transform:rotateX(360deg) rotateY(360deg); } }
+  .lay-sphere3d { display:flex; align-items:center; justify-content:center; }
+  .lay-sphere3d::before { content:''; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #ECEEF7 0%, #C9D3E8 30%, #6B7BA8 60%, #2E3E60 100%); box-shadow:inset -30px -30px 60px rgba(0,0,0,.5), 0 0 80px rgba(124,58,237,.4); animation:_floatY 6s ease-in-out infinite; }
+  @keyframes _floatY { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-20px); } }
+  .lay-torus3d { display:flex; align-items:center; justify-content:center; perspective:600px; }
+  .lay-torus3d::before { content:''; width:240px; height:60px; border:30px solid; border-color:#FF6B35 transparent #FFD23F transparent; border-radius:50%; transform:rotateX(60deg); animation:_torusMv 8s linear infinite; box-shadow:0 0 60px rgba(255,107,53,.4); }
+  @keyframes _torusMv { from { transform:rotateX(60deg) rotateZ(0); } to { transform:rotateX(60deg) rotateZ(360deg); } }
+  .lay-pyramid3d { display:flex; align-items:center; justify-content:center; }
+  .lay-pyramid3d::before { content:''; width:0; height:0; border-left:80px solid transparent; border-right:80px solid transparent; border-bottom:140px solid; border-image:linear-gradient(45deg, #00E5B0, #6366F1) 1; filter:drop-shadow(0 0 40px rgba(0,229,176,.5)); animation:_floatY 5s ease-in-out infinite; }
+  .lay-iso3d { display:flex; align-items:center; justify-content:center; perspective:800px; }
+  .lay-iso3d::before { content:''; width:140px; height:200px; background:linear-gradient(135deg, #00E5B0 0%, #6366F1 50%, #EC4899 100%); transform:rotateX(60deg) rotateZ(45deg); box-shadow:0 0 80px rgba(0,229,176,.4); animation:_spinMv 14s linear infinite; }
+  .lay-cards3d { display:flex; align-items:center; justify-content:center; perspective:800px; }
+  .lay-cards3d::before, .lay-cards3d::after { content:''; position:absolute; width:140px; height:200px; border-radius:14px; background:linear-gradient(135deg, rgba(255,107,53,.6), rgba(255,210,63,.4)); border:1px solid rgba(255,255,255,.2); }
+  .lay-cards3d::before { transform:rotateY(-15deg) translateX(-40px); }
+  .lay-cards3d::after { transform:rotateY(15deg) translateX(40px); background:linear-gradient(135deg, rgba(0,229,176,.6), rgba(99,102,241,.4)); }
+  .lay-glass3d { display:flex; align-items:center; justify-content:center; perspective:600px; }
+  .lay-glass3d::before { content:''; width:160px; height:160px; background:linear-gradient(135deg, rgba(255,255,255,.4), rgba(0,229,176,.2)); border:1px solid rgba(255,255,255,.4); backdrop-filter:blur(10px); border-radius:24px; transform:rotate(45deg); box-shadow:0 0 60px rgba(0,229,176,.5), inset 0 0 40px rgba(255,255,255,.1); animation:_spinMv 10s linear infinite; }
+  .lay-ring3d { display:flex; align-items:center; justify-content:center; perspective:600px; }
+  .lay-ring3d::before, .lay-ring3d::after { content:''; position:absolute; width:200px; height:200px; border-radius:50%; border:2px solid #00E5B0; transform:rotateX(60deg); animation:_spinMv 8s linear infinite; }
+  .lay-ring3d::after { width:140px; height:140px; border-color:#FF6B35; animation-direction:reverse; animation-duration:6s; }
+
+  /* ────────── FX ────────── */
+  .lay-grain { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"); mix-blend-mode:overlay; animation:_grainMv .4s steps(4) infinite; }
+  @keyframes _grainMv { 0%,100% { transform:translate(0); } 25% { transform:translate(-2px,1px); } 50% { transform:translate(1px,-2px); } 75% { transform:translate(2px,2px); } }
+  .lay-vignette { box-shadow:inset 0 0 200px rgba(0,0,0,1); pointer-events:none; }
+  .lay-noise { background:radial-gradient(circle at 30% 40%, rgba(255,107,53,.5), transparent), radial-gradient(circle at 70% 60%, rgba(99,102,241,.5), transparent); filter:contrast(1.4); mix-blend-mode:screen; }
+  .lay-grid { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size:40px 40px; animation:_gridMv 4s linear infinite; }
+  @keyframes _gridMv { from { background-position:0 0; } to { background-position:40px 40px; } }
   .lay-particles::before, .lay-particles::after { content:''; position:absolute; width:6px; height:6px; border-radius:50%; background:#00E5B0; box-shadow:0 0 16px #00E5B0; }
-  .lay-particles::before { top:20%; left:30%; animation:dribft 5s ease-in-out infinite; }
-  .lay-particles::after { top:60%; left:70%; background:#FF6B35; box-shadow:0 0 16px #FF6B35; animation:dribft 6s ease-in-out infinite reverse; }
-  @keyframes dribft { 0%,100% { transform:translate(0,0); } 50% { transform:translate(40px,-30px) scale(1.6); } }
-  .lay-grid { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size:40px 40px; animation:gridMv 4s linear infinite; }
-  @keyframes gridMv { from { background-position:0 0; } to { background-position:40px 40px; } }
-  .lay-glow { background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.6) 0%, transparent 50%); animation:glowMv 4s ease-in-out infinite; }
-  @keyframes glowMv { 0%,100% { transform:scale(1); opacity:.8; } 50% { transform:scale(1.4); opacity:1; } }
-  .lay-marquee { display:flex; align-items:center; }
-  .lay-marquee::before { content:'LAB · LAB · LAB · LAB · LAB · LAB · '; font:700 64px 'Instrument Serif', serif; color:rgba(255,255,255,.2); white-space:nowrap; animation:marqueeMv 18s linear infinite; }
-  @keyframes marqueeMv { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-  .lay-noise { background:radial-gradient(circle at 30% 40%, rgba(255,107,53,.5), transparent), radial-gradient(circle at 70% 60%, rgba(99,102,241,.5), transparent); filter:contrast(1.4); }
-  .lay-orb { background:radial-gradient(circle at 50% 50%, rgba(255,107,181,1) 0%, rgba(124,58,237,.8) 30%, transparent 60%); filter:blur(30px); animation:orbMv 8s ease-in-out infinite; }
-  @keyframes orbMv { 0%,100% { transform:scale(1); } 50% { transform:scale(1.3); } }
-  .lay-kinetic { display:flex; align-items:center; justify-content:center; }
-  .lay-kinetic::before { content:'SMC'; font:800 96px var(--font-display); letter-spacing:-.04em; color:#F5F5F7; animation:kinMv 2s ease-in-out infinite; }
-  @keyframes kinMv { 0%,100% { opacity:0; transform:scale(.9); } 50% { opacity:1; transform:scale(1); } }
+  .lay-particles::before { top:20%; left:30%; animation:_driftMv 5s ease-in-out infinite; }
+  .lay-particles::after { top:60%; left:70%; background:#FF6B35; box-shadow:0 0 16px #FF6B35; animation:_driftMv 6s ease-in-out infinite reverse; }
+  @keyframes _driftMv { 0%,100% { transform:translate(0,0); } 50% { transform:translate(40px,-30px) scale(1.6); } }
+  .lay-stars { background-image:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+    radial-gradient(2px 2px at 40% 50%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 80%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 90% 50%, #fff, transparent);
+    background-size:200px 200px;
+    animation:_starsMv 3s ease-in-out infinite;
+  }
+  @keyframes _starsMv { 0%,100% { opacity:.5; } 50% { opacity:1; } }
+  .lay-scanlines { background:repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(0,229,176,.06) 3px, rgba(0,229,176,.06) 4px); animation:_scanMv 1.5s linear infinite; }
+  @keyframes _scanMv { from { background-position:0 0; } to { background-position:0 8px; } }
+  .lay-rays { background:repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,255,255,.06) 6deg, transparent 12deg); animation:_spinMv 20s linear infinite; mix-blend-mode:screen; }
+  .lay-dust { background-image:radial-gradient(2px 2px at 20% 40%, rgba(255,255,255,.4), transparent), radial-gradient(2px 2px at 80% 20%, rgba(255,255,255,.3), transparent), radial-gradient(1.5px 1.5px at 50% 80%, rgba(255,255,255,.5), transparent); animation:_driftMv 8s ease-in-out infinite; }
+  .lay-glitch::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(255,0,80,.2), transparent); animation:_glitchMv 3s steps(4) infinite; mix-blend-mode:screen; }
+  @keyframes _glitchMv { 0%,90%,100% { transform:translateX(0); opacity:0; } 92% { transform:translateX(-10px); opacity:1; } 96% { transform:translateX(10px); opacity:.5; } }
 
-  .lab-stack { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:18px; display:flex; flex-direction:column; gap:10px; max-height:520px; }
+  /* ────────── TYPE ────────── */
+  .lay-marquee { display:flex; align-items:center; overflow:hidden; }
+  .lay-marquee::before { content:'LAB · LAB · LAB · LAB · LAB · LAB · '; font:700 64px 'Instrument Serif', serif; color:rgba(255,255,255,.18); white-space:nowrap; animation:_marqueeMv 18s linear infinite; }
+  @keyframes _marqueeMv { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  .lay-kinetic { display:flex; align-items:center; justify-content:center; }
+  .lay-kinetic::before { content:'SMC'; font:800 96px var(--font-display); letter-spacing:-.04em; color:#F5F5F7; animation:_kinMv 2s ease-in-out infinite; mix-blend-mode:difference; }
+  @keyframes _kinMv { 0%,100% { opacity:0; transform:scale(.9); } 50% { opacity:1; transform:scale(1); } }
+  .lay-sweep { display:flex; align-items:center; justify-content:center; }
+  .lay-sweep::before { content:'SHIMMER'; font:800 56px var(--font-display); letter-spacing:-.04em; background:linear-gradient(90deg, #86868B 0%, #86868B 40%, #F5F5F7 50%, #86868B 60%, #86868B 100%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:_sweepMv 3s linear infinite; }
+  @keyframes _sweepMv { 0% { background-position:100% 0; } 100% { background-position:-100% 0; } }
+  .lay-cascade { display:flex; align-items:center; justify-content:center; gap:8px; }
+  .lay-cascade::before { content:'S M C · 2 6'; font:800 64px var(--font-display); letter-spacing:.4em; color:#FF6B35; animation:_kinMv 3s ease-in-out infinite; opacity:.7; }
+
+  /* ────────── PROYECTOS SMC ────────── */
+  .lay-kanki-split { display:grid; grid-template-columns:1fr 1fr; }
+  .lay-kanki-split::before, .lay-kanki-split::after { content:''; }
+  .lay-kanki-split::before { background:linear-gradient(135deg, #1B2F4E, #2E4868); animation:_splitL 6s ease-in-out infinite alternate; }
+  .lay-kanki-split::after { background:linear-gradient(135deg, #C49A3A, #E8C76E); animation:_splitR 6s ease-in-out infinite alternate; }
+  @keyframes _splitL { 0% { transform:translateX(-30%); } 100% { transform:translateX(0); } }
+  @keyframes _splitR { 0% { transform:translateX(30%); } 100% { transform:translateX(0); } }
+  .lay-voy-wizard { display:flex; align-items:center; justify-content:center; }
+  .lay-voy-wizard::before { content:'$125.400'; font:600 56px var(--font-mono); color:#FFD23F; text-shadow:0 0 40px rgba(255,210,63,.5); animation:_countUp 3s ease-out infinite; letter-spacing:-.025em; }
+  @keyframes _countUp { 0% { opacity:0; transform:translateY(20px); } 60%,100% { opacity:1; transform:translateY(0); } }
+  .lay-cencosud-pipe { display:flex; align-items:center; justify-content:center; gap:24px; }
+  .lay-cencosud-pipe::before, .lay-cencosud-pipe::after { content:''; width:60px; height:60px; border-radius:12px; }
+  .lay-cencosud-pipe::before { background:#00A1E0; box-shadow:0 0 40px rgba(0,161,224,.5); animation:_floatY 4s ease-in-out infinite; }
+  .lay-cencosud-pipe::after { background:#1B2F4E; box-shadow:0 0 40px rgba(27,47,78,.5); animation:_floatY 4s ease-in-out infinite reverse; }
+  .lay-cerebro-net { display:flex; align-items:center; justify-content:center; }
+  .lay-cerebro-net::before { content:'🧠'; font-size:80px; filter:drop-shadow(0 0 40px rgba(0,229,176,.6)); animation:_kinMv 4s ease-in-out infinite; }
+
+  .lab-stack { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:18px; display:flex; flex-direction:column; gap:10px; max-height:560px; }
   .lab-stack h3 { font:600 11px var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5); display:flex; justify-content:space-between; }
-  .lab-stack h3 span { background:#FF6B35; color:#0A0A0B; padding:2px 8px; border-radius:99px; font-size:10px; }
-  .lab-stack-item { padding:10px 12px; background:rgba(255,107,53,.1); border:1px solid rgba(255,107,53,.3); border-radius:10px; font:500 13px var(--font-sans); color:#F5F5F7; display:flex; align-items:center; gap:8px; }
-  .lab-stack-item button { margin-left:auto; background:transparent; color:rgba(255,255,255,.5); border:0; cursor:pointer; font-size:16px; padding:0 4px; }
+  .lab-stack h3 span { background:#FF6B35; color:#0A0A0B; padding:2px 8px; border-radius:99px; font-size:10px; font-weight:700; }
+  .lab-stack-item { padding:8px 10px; background:rgba(255,107,53,.1); border:0.5px solid rgba(255,107,53,.3); border-radius:8px; font:500 12px var(--font-sans); color:#F5F5F7; display:flex; align-items:center; gap:6px; animation:_stackIn 240ms ease-out; }
+  @keyframes _stackIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+  .lab-stack-item button { margin-left:auto; background:transparent; color:rgba(255,255,255,.5); border:0; cursor:pointer; font-size:16px; padding:0 4px; line-height:1; }
   .lab-stack-item button:hover { color:#FF6B35; }
-  .lab-controls { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
-  .lab-btn { padding:10px 16px; border-radius:980px; font:600 12px var(--font-sans); cursor:pointer; transition:all .15s; border:1px solid transparent; flex:1; }
+  .lab-controls { display:flex; gap:6px; flex-wrap:wrap; }
+  .lab-btn { padding:9px 12px; border-radius:99px; font:600 11px var(--font-sans); cursor:pointer; transition:all .15s; border:0.5px solid transparent; flex:1; letter-spacing:-.012em; }
   .lab-btn-primary { background:transparent; color:#F5F5F7; border-color:rgba(255,255,255,.2); }
   .lab-btn-primary:hover { background:rgba(255,255,255,.05); }
-  .lab-btn-success { background:#FF6B35; color:#0A0A0B; }
-  .lab-btn-success:hover { background:#FFD23F; }
-  .lab-saved { padding:12px; background:rgba(0,229,176,.1); border:1px solid rgba(0,229,176,.3); border-radius:10px; font:11px var(--font-sans); color:#00E5B0; display:none; }
+  .lab-btn-random { background:linear-gradient(135deg, #FF6B35, #FFD23F); color:#0A0A0B; }
+  .lab-btn-random:hover { transform:scale(1.04); box-shadow:0 8px 24px rgba(255,107,53,.4); }
+  .lab-btn-random:active { transform:scale(0.98); }
+  .lab-btn-success { background:rgba(0,229,176,.15); color:#00E5B0; border-color:rgba(0,229,176,.4); }
+  .lab-btn-success:hover { background:rgba(0,229,176,.25); }
+  .lab-saved { padding:10px; background:rgba(0,229,176,.1); border:0.5px solid rgba(0,229,176,.3); border-radius:8px; font:11px var(--font-sans); color:#00E5B0; display:none; animation:_stackIn 240ms ease-out; }
   .lab-saved.show { display:block; }
   .lab-saved code { background:rgba(0,229,176,.15); padding:2px 6px; border-radius:4px; }
 
-  @media (max-width:1024px) { .lab-card { grid-template-columns:1fr; gap:12px; padding:0 16px; } .lab-canvas { min-height:320px; } }
+  @media (max-width:1024px) { .lab-card { grid-template-columns:1fr; gap:12px; padding:0 16px; } .lab-canvas { min-height:380px; } .lab-library, .lab-stack { max-height:none; } }
 </style>
 
 <script>
 (function(){
-  const sources = document.querySelectorAll('.lab-effect-source');
+  const MAX_LAYERS = 6;
+  const sources = () => document.querySelectorAll('.lab-effect-source');
+  const tabs = document.querySelectorAll('.lab-tab');
   const canvas = document.getElementById('labCanvas');
   const layers = document.getElementById('labLayers');
   const empty = document.getElementById('labEmpty');
   const stackEl = document.getElementById('labStack');
   const stackCount = document.getElementById('stackCount');
+  const badge = document.getElementById('labBadge');
   const saved = document.getElementById('labSaved');
-  const labelMap = { aurora:'💫 Aurora', mesh:'🎨 Mesh', grain:'🎞️ Grain', vignette:'⚫ Vignette', particles:'✨ Particles', grid:'⊞ Grid', glow:'💡 Glow', marquee:'▸ Marquee', noise:'📺 Noise', orb:'🪐 Orb', kinetic:'📝 Kinetic' };
+  const labelMap = {
+    // Motion
+    aurora:'💫 Aurora Field', aurora2:'🌌 Aurora Borealis', mesh:'🎨 Mesh', glow:'💡 Glow', orb:'🪐 Orb',
+    blob:'🟠 Liquid Blob', ripple:'⊙ Ripple', wave:'〰️ Wave', conic:'◐ Conic', spotlight:'🔦 Spotlight',
+    // 3D
+    cube3d:'🎲 3D Cube', sphere3d:'🟣 3D Sphere', torus3d:'⭕ 3D Torus', pyramid3d:'🔺 3D Pyramid',
+    iso3d:'📐 Iso Tower', cards3d:'🎴 3D Cards', glass3d:'💠 Glass Crystal', ring3d:'💍 3D Rings',
+    // FX
+    grain:'🎞️ Grain', vignette:'⚫ Vignette', noise:'📺 Color Noise', grid:'⊞ Grid',
+    particles:'✨ Particles', stars:'⭐ Stars', scanlines:'▦ Scanlines', rays:'✦ God Rays',
+    dust:'🌫️ Dust', glitch:'🔴 Glitch',
+    // Type
+    marquee:'▸ Marquee', kinetic:'📝 Kinetic', sweep:'✏️ Sweep', cascade:'🔤 Cascade',
+    // Proyectos
+    'kanki-split':'🏄 Kanki Split', 'voy-wizard':'🚐 VOY Wizard', 'cencosud-pipe':'🏬 Cenco Pipe', 'cerebro-net':'🧠 Cerebro Net'
+  };
   let stack = [];
 
   function render() {
-    stackCount.textContent = stack.length;
+    stackCount.textContent = stack.length + '/' + MAX_LAYERS;
     empty.style.display = stack.length ? 'none' : 'block';
-    layers.innerHTML = stack.map(e => `<div class="lay-${e}"></div>`).join('');
-    stackEl.innerHTML = stack.map((e,i) => `<div class="lab-stack-item">${labelMap[e]||e}<button onclick="window._labRm(${i})">×</button></div>`).join('');
+    // FIX bug "se pega": cada capa con z-index único para no superponer mal
+    layers.innerHTML = stack.map((e, i) => `<div class="lay-${e}" style="z-index:${i+1}"></div>`).join('');
+    stackEl.innerHTML = stack.map((e,i) => `<div class="lab-stack-item">${labelMap[e]||e}<button onclick="window._labRm(${i})" title="Quitar capa">×</button></div>`).join('');
   }
   window._labRm = i => { stack.splice(i,1); render(); };
 
-  sources.forEach(src => {
-    src.addEventListener('dragstart', e => {
-      e.dataTransfer.setData('effect', src.dataset.effect);
-      src.classList.add('dragging');
+  function addEffect(eff) {
+    if (stack.length >= MAX_LAYERS) {
+      // Si lleno, sustituye la primera (rotación)
+      stack.shift();
+    }
+    stack.push(eff);
+    render();
+  }
+
+  function bindSources() {
+    sources().forEach(src => {
+      if (src._bound) return;
+      src._bound = true;
+      src.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('effect', src.dataset.effect);
+        src.classList.add('dragging');
+      });
+      src.addEventListener('dragend', () => src.classList.remove('dragging'));
+      src.addEventListener('click', () => addEffect(src.dataset.effect));
     });
-    src.addEventListener('dragend', () => src.classList.remove('dragging'));
-    src.addEventListener('click', () => {
-      if (stack.length >= 4) return;
-      stack.push(src.dataset.effect);
-      render();
+  }
+  bindSources();
+
+  // Filter tabs
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('on'));
+      tab.classList.add('on');
+      const cat = tab.dataset.cat;
+      sources().forEach(s => {
+        s.classList.toggle('hidden', cat !== 'all' && s.dataset.cat !== cat);
+      });
     });
   });
+
+  // Drag-drop
   canvas.addEventListener('dragover', e => { e.preventDefault(); canvas.classList.add('dragover'); });
   canvas.addEventListener('dragleave', () => canvas.classList.remove('dragover'));
   canvas.addEventListener('drop', e => {
     e.preventDefault();
     canvas.classList.remove('dragover');
     const eff = e.dataTransfer.getData('effect');
-    if (eff && stack.length < 4) { stack.push(eff); render(); }
+    if (eff) addEffect(eff);
   });
+
+  // 🎲 RANDOM dice
+  function rollDice() {
+    const all = Object.keys(labelMap);
+    const count = 2 + Math.floor(Math.random() * 4); // 2-5 efectos
+    stack = [];
+    const shuffled = [...all].sort(() => Math.random() - 0.5);
+    stack = shuffled.slice(0, count);
+    render();
+    badge.textContent = '🎲 Mix aleatorio · ' + count + ' efectos';
+    badge.classList.add('show');
+    setTimeout(() => badge.classList.remove('show'), 2400);
+  }
+
+  document.getElementById('labRandom').onclick = rollDice;
   document.getElementById('labClear').onclick = () => { stack = []; render(); saved.classList.remove('show'); };
   document.getElementById('labSave').onclick = () => {
     if (!stack.length) return;

@@ -336,10 +336,10 @@
         }
       </style>
 
-      <!-- Ambient orbs · monocromáticos discretos -->
-      <div class="gate-orb" style="width:480px;height:480px;top:-100px;left:-80px;background:radial-gradient(circle,rgba(10,132,255,0.18) 0%,transparent 70%);animation:_gateOrb1 18s ease-in-out infinite"></div>
-      <div class="gate-orb" style="width:520px;height:520px;bottom:-120px;right:-100px;background:radial-gradient(circle,rgba(0,229,176,0.14) 0%,transparent 70%);animation:_gateOrb2 22s ease-in-out infinite"></div>
-      <div class="gate-orb" style="width:380px;height:380px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(124,58,237,0.10) 0%,transparent 70%);animation:_gateOrb3 26s ease-in-out infinite"></div>
+      <!-- Ambient orbs · cambian de color según theme activo via CSS vars -->
+      <div class="gate-orb" id="_gateOrb1" style="width:480px;height:480px;top:-100px;left:-80px;background:radial-gradient(circle,var(--gate-orb-1, rgba(10,132,255,0.18)) 0%,transparent 70%);animation:_gateOrb1 18s ease-in-out infinite"></div>
+      <div class="gate-orb" id="_gateOrb2" style="width:520px;height:520px;bottom:-120px;right:-100px;background:radial-gradient(circle,var(--gate-orb-2, rgba(0,229,176,0.14)) 0%,transparent 70%);animation:_gateOrb2 22s ease-in-out infinite"></div>
+      <div class="gate-orb" id="_gateOrb3" style="width:380px;height:380px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--gate-orb-3, rgba(124,58,237,0.10)) 0%,transparent 70%);animation:_gateOrb3 26s ease-in-out infinite"></div>
 
       <!-- Perspective grid floor -->
       <div class="gate-grid"></div>
@@ -402,7 +402,31 @@
     input.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
   }
 
+  function applyThemeToGate(themeId) {
+    const colorMap = {
+      'apple-premium':    ['rgba(10,132,255,0.18)', 'rgba(0,229,176,0.14)',  'rgba(124,58,237,0.10)'],
+      'kanki-surf':       ['rgba(196,154,58,0.22)', 'rgba(27,47,78,0.30)',   'rgba(232,199,110,0.14)'],
+      'infopet':          ['rgba(0,180,216,0.20)',  'rgba(0,229,176,0.18)',  'rgba(0,102,204,0.14)'],
+      'smc-marketing':    ['rgba(0,229,176,0.22)',  'rgba(27,47,78,0.20)',   'rgba(0,180,216,0.14)'],
+      'marketplace':      ['rgba(255,230,0,0.20)',  'rgba(0,102,204,0.20)',  'rgba(27,47,78,0.16)'],
+      'discovery':        ['rgba(147,51,234,0.22)', 'rgba(0,229,176,0.14)',  'rgba(255,210,63,0.12)'],
+      'intranet-dark':    ['rgba(0,229,176,0.22)',  'rgba(27,47,78,0.50)',   'rgba(147,51,234,0.14)'],
+      'cerebro-ai':       ['rgba(147,51,234,0.22)', 'rgba(167,139,250,0.18)','rgba(45,27,78,0.30)']
+    };
+    const c = colorMap[themeId] || colorMap['apple-premium'];
+    document.documentElement.style.setProperty('--gate-orb-1', c[0]);
+    document.documentElement.style.setProperty('--gate-orb-2', c[1]);
+    document.documentElement.style.setProperty('--gate-orb-3', c[2]);
+  }
+
+  // Listen for theme changes
+  window.addEventListener('smc-theme-change', e => applyThemeToGate(e.detail.id));
+
   function init() {
+    // Apply current theme to gate orbs
+    const savedTheme = localStorage.getItem('smc-theme-v15') || 'apple-premium';
+    applyThemeToGate(savedTheme);
+
     const role = getRole();
     if (!role) {
       showGate();
