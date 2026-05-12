@@ -44,37 +44,32 @@
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 6px 14px;
-    background: rgba(255,107,53,0.12);
-    border: 1px solid rgba(255,107,53,0.32);
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.12);
     border-radius: 980px;
-    font-size: 12px;
-    color: #FF6B35;
-    letter-spacing: 0.04em;
-    font-weight: 500;
+    font: 500 12px 'Inter', -apple-system, sans-serif;
+    color: rgba(235,235,245,0.7);
+    letter-spacing: -0.012em;
     margin-bottom: 22px;
   }
   .hero-eyebrow::before {
-    content: ''; width: 6px; height: 6px;
-    border-radius: 50%; background: #FF6B35;
-    box-shadow: 0 0 12px #FF6B35;
-    animation: pulse 2s ease-in-out infinite;
+    content: ''; width: 5px; height: 5px;
+    border-radius: 50%; background: #00E5B0;
   }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
   .hero h1 {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: clamp(48px, 8vw, 96px);
-    font-weight: 400;
-    line-height: 0.98;
-    letter-spacing: -0.035em;
-    margin-bottom: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+    font-size: clamp(44px, 6.4vw, 80px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    margin-bottom: 18px;
     color: #F5F5F7;
   }
   .hero h1 em {
     font-style: italic;
-    background: linear-gradient(135deg, #FF6B35 0%, #FFD23F 35%, #00E5B0 70%, #6366F1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    color: rgba(235,235,245,0.55);
   }
   .hero p {
     font-size: 19px;
@@ -539,9 +534,9 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-eyebrow">v16.1 · Mini-sites premium · sin GIFs</div>
-  <h1>Motion que se ve como <em>un sitio real</em></h1>
-  <p>12 mini-sites completos · brand + nav + hero + visual + CTA · CSS/JS puro · copy/paste plug-and-play. Calidad motionsites.ai sin vendor lock-in.</p>
+  <div class="hero-eyebrow">Banco de Motion · v16</div>
+  <h1>Motion que se ve como <em>un sitio real</em>.</h1>
+  <p>12 mini-sites completos · brand, hero, visual, CTA. CSS y JS puro, copy/paste, sin GIFs ni vendor lock-in.</p>
   <div class="hero-cta">
     <a href="#grid" class="btn btn-primary">Explorar mini-sites →</a>
     <a href="../index.html" class="btn btn-ghost">Volver al banco</a>
