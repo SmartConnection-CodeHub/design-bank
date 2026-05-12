@@ -17,7 +17,7 @@
       canClickProjects: false,
       welcome: 'Welcome Javier · InfoPet · ve los efectos del DS pero los otros proyectos están bloqueados'
     },
-    'SMC.UI': {
+    'smc.ui': {
       user: 'Guillermo & Sebastián',
       emoji: '🧠',
       project: 'all',
@@ -32,7 +32,9 @@
 
   function getRole() {
     const k = localStorage.getItem(LS_KEY);
-    return k && ROLES[k] ? { key: k, ...ROLES[k] } : null;
+    if (!k) return null;
+    const kLower = k.toLowerCase();
+    return ROLES[kLower] ? { key: kLower, ...ROLES[kLower] } : null;
   }
 
   function logout() {
@@ -138,7 +140,7 @@
     const err = document.getElementById('_authErr');
 
     function tryLogin() {
-      const v = input.value.trim();
+      const v = input.value.trim().toLowerCase();
       if (ROLES[v]) {
         localStorage.setItem(LS_KEY, v);
         gate.style.opacity = '0';
