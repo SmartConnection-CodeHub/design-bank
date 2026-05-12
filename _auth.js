@@ -157,17 +157,99 @@
   function showGate() {
     const gate = document.createElement('div');
     gate.id = '_authGate';
-    gate.style.cssText = `position:fixed;inset:0;background:#FAF7F4;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:${FONT}`;
+    gate.style.cssText = `position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:${FONT};overflow:hidden;background:#000`;
     gate.innerHTML = `
-      <div style="background:white;padding:48px 56px;border-radius:22px;box-shadow:0 24px 64px rgba(0,0,0,0.12);max-width:440px;width:90%;text-align:center;border:1px solid #E5E5E7">
-        <div style="font-size:48px;margin-bottom:12px">🔐</div>
-        <h1 style="font-family:'Instrument Serif',Georgia,serif;font-size:36px;font-weight:600;letter-spacing:-0.022em;color:#1D1D1F;margin:0 0 8px;line-height:1.05">SMC Design System</h1>
-        <p style="font:15px ${FONT};color:#6E6E73;letter-spacing:-0.012em;margin:0 0 24px;line-height:1.4">Ingresa tu clave para acceder.<br>v15 · 21 playgrounds · 12 mini-sites · Banco SO</p>
-        <input type="password" id="_authInput" placeholder="Clave" autofocus style="width:100%;padding:14px 18px;border:1px solid #E5E5E7;border-radius:980px;font:17px ${FONT};letter-spacing:-0.022em;background:#FAF7F4;outline:none;color:#1D1D1F;text-align:center;margin-bottom:12px" autocomplete="off">
-        <div id="_authErr" style="font:13px ${FONT};color:#FF3B30;letter-spacing:-0.012em;margin-bottom:12px;min-height:18px"></div>
-        <button id="_authBtn" style="width:100%;padding:14px;background:#0066CC;color:white;border:none;border-radius:980px;font:600 15px ${FONT};letter-spacing:-0.022em;cursor:pointer;transition:180ms">Entrar →</button>
-        <div style="margin-top:20px;padding-top:18px;border-top:1px solid #E5E5E7;font:11px 'SF Mono',monospace;color:#6E6E73;letter-spacing:0.04em">SMC OS · acceso controlado · 2026</div>
+      <!-- Aurora ambient background -->
+      <div aria-hidden="true" style="position:absolute;inset:-20%;background:
+        radial-gradient(circle at 22% 32%, rgba(255,107,53,0.45) 0%, transparent 38%),
+        radial-gradient(circle at 78% 28%, rgba(0,229,176,0.35) 0%, transparent 42%),
+        radial-gradient(circle at 50% 80%, rgba(99,102,241,0.40) 0%, transparent 48%),
+        radial-gradient(circle at 88% 78%, rgba(255,210,63,0.25) 0%, transparent 38%);
+        filter:blur(60px);animation:_gateAurora 14s ease-in-out infinite alternate;pointer-events:none"></div>
+      <!-- Grid pattern subtle -->
+      <div aria-hidden="true" style="position:absolute;inset:0;background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+        background-size:48px 48px;pointer-events:none;mask-image:radial-gradient(ellipse at center, black 30%, transparent 70%)"></div>
+      <!-- Noise grain -->
+      <div aria-hidden="true" style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence baseFrequency=%220.9%22/%3E%3C/filter%3E%3Crect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22 opacity=%220.4%22/%3E%3C/svg%3E');mix-blend-mode:overlay;opacity:0.5;pointer-events:none"></div>
+
+      <!-- Glass card -->
+      <div style="position:relative;z-index:2;width:min(440px, 90vw);padding:56px 48px 44px;border-radius:24px;
+                  background:rgba(20,20,22,0.55);
+                  backdrop-filter:saturate(180%) blur(40px);
+                  -webkit-backdrop-filter:saturate(180%) blur(40px);
+                  border:1px solid rgba(255,255,255,0.08);
+                  box-shadow:0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+                  color:#F5F5F7;text-align:center;
+                  animation:_gateFadeUp 720ms cubic-bezier(0.4,0,0.2,1) both">
+
+        <!-- Logo mark -->
+        <div style="display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px;font:600 12px 'JetBrains Mono', 'SF Mono', monospace;letter-spacing:0.18em;color:rgba(255,255,255,0.6)">
+          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00E5B0;box-shadow:0 0 12px #00E5B0;animation:_gatePulse 2s ease-in-out infinite"></span>
+          SMC · DESIGN SYSTEM
+        </div>
+
+        <!-- Title -->
+        <h1 style="font-family:'Instrument Serif',Georgia,serif;font-size:52px;font-weight:400;letter-spacing:-0.028em;line-height:1.02;margin:0 0 12px;color:#F5F5F7">
+          Acceso<br><em style="font-style:italic;background:linear-gradient(135deg,#FF6B35 0%,#FFD23F 50%,#00E5B0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">controlado</em>
+        </h1>
+
+        <!-- Subtitle -->
+        <p style="font:15px ${FONT};color:rgba(255,255,255,0.55);letter-spacing:-0.012em;line-height:1.5;margin:0 0 36px;max-width:320px;margin-left:auto;margin-right:auto">
+          Ingresa tu clave para entrar al banco.<br>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;opacity:0.7;display:inline-block;margin-top:8px">v15.1 · 21 PLAYGROUNDS · 12 MINI-SITES · LAB ALQUIMISTA</span>
+        </p>
+
+        <!-- Input -->
+        <input type="password" id="_authInput" placeholder="clave" autofocus
+          style="width:100%;padding:16px 22px;border:1px solid rgba(255,255,255,0.12);border-radius:14px;
+                 font:17px ${FONT};letter-spacing:-0.022em;
+                 background:rgba(255,255,255,0.04);outline:none;color:#F5F5F7;text-align:center;
+                 margin-bottom:14px;transition:200ms cubic-bezier(0.4,0,0.2,1)"
+          autocomplete="off" autocapitalize="off" spellcheck="false">
+
+        <!-- Error message -->
+        <div id="_authErr" style="font:13px ${FONT};color:#FF6B6B;letter-spacing:-0.012em;margin-bottom:14px;min-height:18px;opacity:0;transition:opacity 200ms"></div>
+
+        <!-- Submit -->
+        <button id="_authBtn"
+          style="width:100%;padding:16px;background:#F5F5F7;color:#0A0A0B;border:none;border-radius:14px;
+                 font:600 15px ${FONT};letter-spacing:-0.012em;cursor:pointer;
+                 transition:240ms cubic-bezier(0.4,0,0.2,1);
+                 display:inline-flex;align-items:center;justify-content:center;gap:8px">
+          Entrar <span style="transition:transform 240ms" id="_authArrow">→</span>
+        </button>
+
+        <!-- Footer hint -->
+        <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);
+                    display:flex;align-items:center;justify-content:space-between;
+                    font:11px 'JetBrains Mono','SF Mono',monospace;color:rgba(255,255,255,0.4);letter-spacing:0.08em">
+          <span>SMC OS · 2026</span>
+          <span style="display:flex;align-items:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:50%;background:#00E5B0;animation:_gatePulse 2s ease-in-out infinite"></span>
+            LIVE
+          </span>
+        </div>
       </div>
+
+      <style>
+        @keyframes _gateAurora { 0% { transform:scale(1) rotate(0deg); } 100% { transform:scale(1.4) rotate(120deg); } }
+        @keyframes _gateFadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes _gatePulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+        #_authInput:focus {
+          border-color:rgba(0,229,176,0.6) !important;
+          background:rgba(255,255,255,0.06) !important;
+          box-shadow:0 0 0 4px rgba(0,229,176,0.12);
+        }
+        #_authInput::placeholder { color:rgba(255,255,255,0.3); font-family:'JetBrains Mono', monospace; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; }
+        #_authBtn:hover { transform:scale(1.02); box-shadow:0 16px 40px rgba(255,255,255,0.18); }
+        #_authBtn:hover #_authArrow { transform:translateX(4px); }
+        #_authBtn:active { transform:scale(0.98); }
+        #_authGate.err #_authErr { opacity:1; }
+        #_authGate.err #_authInput { border-color:rgba(255,107,107,0.5) !important; background:rgba(255,107,107,0.06) !important; animation:_gateShake 360ms cubic-bezier(0.4,0,0.2,1); }
+        @keyframes _gateShake { 0%,100% { transform:translateX(0); } 25% { transform:translateX(-6px); } 75% { transform:translateX(6px); } }
+      </style>
     `;
     document.body.appendChild(gate);
 
@@ -183,15 +265,13 @@
         gate.style.transition = 'opacity 360ms';
         setTimeout(() => { gate.remove(); init(); }, 360);
       } else {
-        err.textContent = '✗ Clave inválida';
-        input.style.borderColor = '#FF3B30';
-        input.style.background = 'rgba(255,59,48,0.04)';
+        err.textContent = '✗ Clave inválida · intentá de nuevo';
+        gate.classList.add('err');
         input.value = '';
         setTimeout(() => {
-          input.style.borderColor = '#E5E5E7';
-          input.style.background = '#FAF7F4';
+          gate.classList.remove('err');
           err.textContent = '';
-        }, 1800);
+        }, 2400);
       }
     }
     btn.onclick = tryLogin;

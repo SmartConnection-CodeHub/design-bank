@@ -41,11 +41,15 @@ html { scroll-padding-top: 48px; }
 .nav .brand { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -0.022em; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 6px; }
 .nav .brand .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--smc-accent); animation: brand-pulse 2.4s ease-in-out infinite; }
 @keyframes brand-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.6); } }
-.nav .links { display: flex; gap: 24px; flex: 1; }
-.nav .links a { font-size: 12px; color: var(--text); text-decoration: none; letter-spacing: -0.012em; opacity: .8; position: relative; transition: opacity var(--dur-fast) var(--ease-out); }
+.nav .links { display: flex; gap: 22px; flex: 1; align-items: center; flex-wrap: nowrap; overflow: hidden; }
+.nav .links a { font-size: 12px; font-weight: 500; color: var(--text); text-decoration: none; letter-spacing: -0.012em; opacity: .75; position: relative; transition: opacity var(--dur-fast) var(--ease-out); white-space: nowrap; }
 .nav .links a:hover { opacity: 1; }
 .nav .links a::after { content: ''; position: absolute; bottom: -6px; left: 0; right: 0; height: 2px; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform 280ms var(--ease-out); }
 .nav .links a:hover::after, .nav .links a.active::after { transform: scaleX(1); }
+.nav .links a.nav-accent { color: #FF6B35; opacity: 1; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.nav .links a.nav-accent::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #FF6B35; box-shadow: 0 0 8px #FF6B35; }
+.nav .links a.nav-accent::after { background: #FF6B35; }
+@media (max-width: 1100px) { .nav .links { gap: 16px; } .nav .links a { font-size: 11px; } }
 .nav .right { display: flex; align-items: center; gap: 16px; }
 .nav .search { width: 200px; padding: 6px 12px; border: 1px solid var(--border-soft); border-radius: 980px; font-size: 12px; background: rgba(0,0,0,.02); outline: none; font-family: var(--font-text); letter-spacing: -0.012em; transition: all 220ms var(--ease-out); }
 .nav .search:focus { border-color: var(--accent); background: white; width: 260px; }
@@ -218,10 +222,10 @@ footer .marquee-mini { font-family: var(--font-display); font-size: 14px; color:
       <a href="#components">Components</a>
       <a href="#brand">Brand</a>
       <a href="#patterns">Patterns</a>
-      <a href="#lab" style="color:#FF6B35;font-weight:600">🧪 LAB</a>
+      <a href="#lab" class="nav-accent">LAB</a>
+      <a href="motion/index.html" class="nav-accent">Motion</a>
       <a href="#proyectos">Proyectos</a>
       <a href="#radar">RADAR</a>
-      <a href="motion/index.html" style="background:linear-gradient(135deg,#FF6B35,#FFD23F);color:#0A0A0B;padding:6px 12px;border-radius:980px;font-weight:600">🎬 Motion · NEW</a>
     </div>
     <div class="right">
       <button onclick="toggleIndex()" style="background:var(--text); color:white; border:none; padding:6px 14px; border-radius:980px; font:600 11px var(--font-mono); cursor:pointer; letter-spacing:0.04em;">📑 21 PLAYGROUNDS LIVE</button>
