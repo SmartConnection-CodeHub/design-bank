@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RedesSociales.cl · Motion Signature IG/TikTok · 15 efectos · Design Bank SMC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0a0a; --ink-2:#141414;
+  --white:#ffffff;
+  --gray:#9ca3af;
+  --gray-2:#6b7280;
+  --border:rgba(255,255,255,.10);
+  --ig-1:#feda75; --ig-2:#fa7e1e; --ig-3:#d62976; --ig-4:#962fbf; --ig-5:#4f5bd5;
+  --ig:linear-gradient(135deg,#feda75 0%,#fa7e1e 25%,#d62976 50%,#962fbf 75%,#4f5bd5 100%);
+  --tt-cyan:#25f4ee; --tt-pink:#fe2c55;
+  --tt:linear-gradient(135deg,#25f4ee 0%,#fe2c55 100%);
+  --wa:#25d366;
+  --font:'Inter',-apple-system,sans-serif;
+  --font-display:'Playfair Display',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--ink);color:var(--white);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* Story bars top demo */
+.story-bars{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;gap:3px;padding:6px 12px;background:linear-gradient(180deg,rgba(10,10,10,.95) 0%,transparent 100%)}
+.story-bar{flex:1;height:3px;background:rgba(255,255,255,.20);border-radius:2px;overflow:hidden}
+.story-bar .fill{height:100%;width:0%;background:var(--ig);transition:width .12s linear}
+
+.nav{position:fixed;top:18px;left:0;right:0;z-index:90;display:flex;justify-content:center}
+.nav-pill{background:rgba(10,10,10,.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:99px;padding:9px 22px;display:flex;align-items:center;gap:18px;font-size:12px}
+.nav-pill a{color:var(--white);text-decoration:none;font-weight:600;letter-spacing:.04em}
+.nav-pill a.back{background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+
+.hero{padding:140px 24px 80px;text-align:center;background:radial-gradient(ellipse at 30% 20%,rgba(214,41,118,.18) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(150,47,191,.18) 0%,transparent 60%),var(--ink)}
+.hero-eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ig-3);margin-bottom:18px}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.6rem,7vw,5.5rem);font-weight:800;line-height:.95;letter-spacing:-.035em;margin-bottom:18px;max-width:900px;margin-left:auto;margin-right:auto}
+.hero h1 em{font-style:italic;background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+.hero p{font-size:1.05rem;color:var(--gray);max-width:680px;margin:0 auto 36px;line-height:1.65}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--ig);color:var(--white);border-radius:99px;font-weight:700;text-decoration:none;font-size:13px;letter-spacing:.04em;transition:transform .2s,box-shadow .25s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(214,41,118,.40)}
+
+.container{max-width:1180px;margin:0 auto;padding:0 24px}
+.section{padding:60px 0}
+.section-title{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--ig-3);margin-bottom:18px;padding-left:36px;position:relative;display:inline-block}
+.section-title::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:24px;height:2px;background:var(--ig-3)}
+.section h2{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.02em;line-height:1.05;color:var(--white);margin-bottom:14px}
+.section h2 em{font-style:italic;background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section p.lead{font-size:1rem;color:var(--gray);max-width:760px;margin-bottom:36px;line-height:1.65}
+
+.fx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:30px}
+.fx{background:rgba(255,255,255,.04);border:1px solid var(--border);padding:22px 20px;border-radius:14px;border-left:3px solid;transition:transform .25s,border-color .25s,box-shadow .3s;cursor:pointer;position:relative;overflow:hidden}
+.fx:hover{transform:translateY(-3px);box-shadow:0 18px 40px -16px rgba(214,41,118,.20)}
+.fx.ig{border-left-color:var(--ig-3)}
+.fx.tt{border-left-color:var(--tt-pink)}
+.fx.wa{border-left-color:var(--wa)}
+.fx-num{font-family:var(--font-display);font-size:22px;font-weight:900;color:var(--ig-3);letter-spacing:-.02em;position:absolute;top:14px;right:18px;opacity:.30}
+.fx-tag{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ig-3);margin-bottom:8px}
+.fx.tt .fx-tag{color:var(--tt-pink)}
+.fx.wa .fx-tag{color:var(--wa)}
+.fx h3{font-size:1rem;font-weight:800;color:var(--white);margin-bottom:8px;letter-spacing:-.01em;padding-right:36px}
+.fx p{font-size:12.5px;color:var(--gray);line-height:1.5;margin-bottom:10px}
+.fx .trigger{font-size:10px;color:var(--gray-2);letter-spacing:.06em;text-transform:uppercase;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)}
+.fx .trigger b{color:var(--white)}
+
+/* Demos live · pequeñas */
+.demos{padding:60px 24px;background:linear-gradient(180deg,var(--ink) 0%,var(--ink-2) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.demos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:1180px;margin:32px auto 0;padding:0 24px}
+.demo{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:22px;text-align:center}
+.demo-title{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ig-3);margin-bottom:14px}
+
+/* M1 demo · notification dot */
+.demo-notif{display:inline-block;position:relative}
+.demo-avatar{width:60px;height:60px;border-radius:50%;background:var(--ig);padding:3px}
+.demo-avatar-inner{width:100%;height:100%;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:900;font-size:20px}
+.demo-notif::after{content:'';position:absolute;top:0;right:0;width:14px;height:14px;background:var(--tt-pink);border:2px solid var(--ink);border-radius:50%;animation:notifPulse 2s infinite}
+@keyframes notifPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(254,44,85,.7)}50%{transform:scale(1.2);box-shadow:0 0 0 10px rgba(254,44,85,0)}}
+
+/* M2 demo · avatar ring rotating */
+.demo-ring{position:relative;width:60px;height:60px;border-radius:50%;display:inline-block}
+.demo-ring::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 0deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75);animation:ringSpin 6s linear infinite}
+.demo-ring .ri{position:relative;width:100%;height:100%;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:900;z-index:1}
+@keyframes ringSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+/* M6 trending arrow */
+.demo-trend{display:inline-flex;align-items:center;gap:6px;color:var(--wa);font-weight:800;font-size:18px}
+.demo-trend span{animation:trendUp 1.5s ease-in-out infinite}
+@keyframes trendUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* M13 flame */
+.demo-flame{font-size:32px;display:inline-block;animation:flame 1.4s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(254,44,85,.5))}
+@keyframes flame{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.18) rotate(4deg)}}
+
+/* M15 live tag */
+.demo-live{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:#fe2c55;color:#fff;border-radius:6px;font-size:10px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;animation:livePulse 1.8s infinite}
+.demo-live::before{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(254,44,85,.7)}50%{box-shadow:0 0 0 10px rgba(254,44,85,0)}}
+
+/* CTA */
+.cta-final{padding:80px 24px;text-align:center;background:var(--ig)}
+.cta-final h2{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.02em;margin-bottom:14px;color:var(--white)}
+.cta-final p{color:rgba(255,255,255,.92);max-width:580px;margin:0 auto 28px;font-size:14px}
+.cta-final .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:var(--white);color:var(--ig-4);border-radius:99px;font-weight:800;text-decoration:none;font-size:14px}
+
+footer{padding:32px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:10px;color:var(--gray-2);letter-spacing:.10em;text-transform:uppercase}
+
+@media (max-width:640px){.nav-pill{font-size:10px;padding:7px 14px;gap:10px}}
+</style>
+</head>
+<body>
+
+<div class="story-bars">
+  <div class="story-bar"><div class="fill" data-s="0"></div></div>
+  <div class="story-bar"><div class="fill" data-s="1"></div></div>
+  <div class="story-bar"><div class="fill" data-s="2"></div></div>
+  <div class="story-bar"><div class="fill" data-s="3"></div></div>
+  <div class="story-bar"><div class="fill" data-s="4"></div></div>
+</div>
+
+<div class="nav">
+  <div class="nav-pill">
+    <a href="../index.html" class="back">← Design Bank</a>
+    <span style="opacity:.30">·</span>
+    <a href="#fx">Efectos</a>
+    <a href="#live">Ver Live</a>
+  </div>
+</div>
+
+<section class="hero">
+  <span class="hero-eyebrow">📱 Playground · Motion Signature</span>
+  <h1>RedesSociales.cl<br><em>15 efectos</em> IG/TikTok</h1>
+  <p>Paquete vertical IG/TikTok para agencias marketing y social media managers. Story bars · doble-tap heart · avatar ring · hashtag marquee · WhatsApp pulse.</p>
+  <a href="https://smartconnection-codehub.github.io/agencia-nathaly/propuesta.html" target="_blank" class="hero-cta">Ver propuesta RedesSociales.cl live →</a>
+</section>
+
+<section class="section" id="fx">
+  <div class="container">
+    <span class="section-title">15 efectos · vertical IG/TikTok/WA</span>
+    <h2>Lo que <em>solo se siente</em> en redes.</h2>
+    <p class="lead">
+      Cada efecto inspirado en una mecánica nativa de Instagram, TikTok o WhatsApp.
+      Marca con código de color:
+      <strong style="color:var(--ig-3)">●</strong> IG ·
+      <strong style="color:var(--tt-pink)">●</strong> TikTok ·
+      <strong style="color:var(--wa)">●</strong> WhatsApp ·
+      <strong style="color:var(--gray)">●</strong> neutro.
+    </p>
+
+    <div class="fx-grid">
+      <div class="fx ig"><span class="fx-num">M1</span><div class="fx-tag">Instagram</div><h3>Notification dot pulsing</h3><p>Punto rojo sobre el avatar con pulse infinito · sensación de "tienes nuevo".</p><div class="trigger"><b>Trigger:</b> Always-on · inspiración: IG inbox</div></div>
+      <div class="fx ig"><span class="fx-num">M2</span><div class="fx-tag">Instagram</div><h3>Avatar ring gradient</h3><p>Anillo IG (5 colores) rotando con conic-gradient cada 8s. Identidad visible.</p><div class="trigger"><b>Trigger:</b> Always-on · inspiración: IG profile ring</div></div>
+      <div class="fx ig"><span class="fx-num">M3</span><div class="fx-tag">Instagram</div><h3>Like burst +1 ❤️</h3><p>Corazón flotante con "+1" al click en CTAs. Refuerza acción social.</p><div class="trigger"><b>Trigger:</b> Click CTAs · inspiración: IG like</div></div>
+      <div class="fx ig"><span class="fx-num">M4</span><div class="fx-tag">Instagram</div><h3>Follow → Siguiendo ✓</h3><p>Botón cambia estado · color + check visible · cierre psicológico.</p><div class="trigger"><b>Trigger:</b> Click · inspiración: IG follow CTA</div></div>
+      <div class="fx tt"><span class="fx-num">M5</span><div class="fx-tag">TikTok</div><h3>Sound toggle 🔊/🔇</h3><p>Botón flotante para activar/desactivar audio · TikTok-style.</p><div class="trigger"><b>Trigger:</b> Click manual · inspiración: TikTok FYP</div></div>
+      <div class="fx ig"><span class="fx-num">M6</span><div class="fx-tag">Instagram</div><h3>Trending arrow ↑</h3><p>Flecha verde bouncing infinito. Indica crecimiento métrica.</p><div class="trigger"><b>Trigger:</b> Hover/Always · inspiración: IG insights</div></div>
+      <div class="fx ig"><span class="fx-num">M7</span><div class="fx-tag">Instagram</div><h3>Counter rolling</h3><p>Números engagement rotando vertical · efecto slot-machine.</p><div class="trigger"><b>Trigger:</b> Always-on · inspiración: IG analytics</div></div>
+      <div class="fx ig"><span class="fx-num">M8</span><div class="fx-tag">Instagram</div><h3>Story view shimmer</h3><p>Línea cyan→pink que cruza al revelar sección. Story bar bursting.</p><div class="trigger"><b>Trigger:</b> Enter viewport · inspiración: IG story</div></div>
+      <div class="fx ig"><span class="fx-num">M9</span><div class="fx-tag">Instagram</div><h3>DM badge shake</h3><p>Badge inbox con shake periódica cada 6s. "Tienes mensaje".</p><div class="trigger"><b>Trigger:</b> Loop 6s · inspiración: IG inbox</div></div>
+      <div class="fx ig"><span class="fx-num">M10</span><div class="fx-tag">Instagram</div><h3>Filter swap</h3><p>Phone mockup cicla 4 gradients IG cada 12s · filter cycling.</p><div class="trigger"><b>Trigger:</b> Loop · inspiración: IG filter</div></div>
+      <div class="fx ig"><span class="fx-num">M11</span><div class="fx-tag">Instagram</div><h3>Comment bubble ripple</h3><p>Onda pink al click cards · bubble chat bursting.</p><div class="trigger"><b>Trigger:</b> Click · inspiración: IG comment popup</div></div>
+      <div class="fx ig"><span class="fx-num">M12</span><div class="fx-tag">Instagram</div><h3>Profile zoom + rotate</h3><p>Avatar hace zoom 1.12x + rotación -3° al hover. Vida.</p><div class="trigger"><b>Trigger:</b> Hover · inspiración: IG profile pic</div></div>
+      <div class="fx tt"><span class="fx-num">M13</span><div class="fx-tag">TikTok</div><h3>Boost flame 🔥</h3><p>Llama flickering en featured · TikTok boost indicator.</p><div class="trigger"><b>Trigger:</b> Always-on · inspiración: TikTok boost</div></div>
+      <div class="fx tt"><span class="fx-num">M14</span><div class="fx-tag">TikTok</div><h3>For You indicator</h3><p>Dots laterales con active tracking · TikTok For You feed vertical.</p><div class="trigger"><b>Trigger:</b> Scroll-driven · inspiración: TikTok FYP</div></div>
+      <div class="fx ig"><span class="fx-num">M15</span><div class="fx-tag">Instagram</div><h3>Live tag "EN VIVO"</h3><p>Badge rojo pulsing · indica transmisión activa estilo IG Live.</p><div class="trigger"><b>Trigger:</b> Always-on · inspiración: IG Live</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="demos" id="demos-section">
+  <span class="section-title" style="margin-left:24px">5 demos live</span>
+  <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.02em;margin:14px 24px 0;color:var(--white)">Probá <em style="font-style:italic;background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent">aquí mismo</em>.</h2>
+  <div class="demos-grid">
+    <div class="demo">
+      <div class="demo-title">M1 · Notification dot</div>
+      <div class="demo-notif"><div class="demo-avatar"><div class="demo-avatar-inner">N</div></div></div>
+    </div>
+    <div class="demo">
+      <div class="demo-title">M2 · Avatar ring</div>
+      <div class="demo-ring"><div class="ri">R</div></div>
+    </div>
+    <div class="demo">
+      <div class="demo-title">M6 · Trending up</div>
+      <div class="demo-trend"><span>↑</span> +24%</div>
+    </div>
+    <div class="demo">
+      <div class="demo-title">M13 · Boost flame</div>
+      <div class="demo-flame">🔥</div>
+    </div>
+    <div class="demo">
+      <div class="demo-title">M15 · Live tag</div>
+      <div class="demo-live">EN VIVO</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final" id="live">
+  <h2>¿Lo querés ver completo?</h2>
+  <p>La propuesta real de RedesSociales.cl (cliente Nathaly Varela · @redessociales.cl_) tiene los 15 efectos en producción. Doble-tap heart · phone mockup · marquee hashtags.</p>
+  <a href="https://smartconnection-codehub.github.io/agencia-nathaly/propuesta.html" target="_blank" class="btn">Abrir RedesSociales.cl propuesta →</a>
+</section>
+
+<footer>
+  <p>Design Bank SMC · Motion Signature RedesSociales.cl · 15 efectos IG/TikTok · 2026-05-13</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const total=document.documentElement.scrollHeight-window.innerHeight;
+  if(total<=0)return;
+  const pct=(window.scrollY/total)*100;
+  document.querySelectorAll('[data-s]').forEach((f,i)=>{
+    const s=i*20,e=(i+1)*20;
+    let l=(pct-s)/(e-s)*100;
+    l=Math.max(0,Math.min(100,l));
+    f.style.width=l+'%';
+  });
+},{passive:true});
+</script>
+
+</body>
+</html>

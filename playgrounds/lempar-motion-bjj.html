@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEMPAR · Motion Signature BJJ · 35 efectos · Design Bank SMC</title>
+<style>
+:root{
+  --ink:#0d0d0d; --ink-2:#1a1a1a;
+  --bone:#f4f1ea; --bone-soft:#faf7ef;
+  --brass:#b08d4c; --brass-bright:#c9a463;
+  --blood:#7a1f1f;
+  --mat:#3a5a40;
+  --border:rgba(176,141,76,.20);
+  --font:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--ink);color:var(--bone);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* Belt progress demo · top */
+.belt-progress{position:fixed;top:0;left:0;right:0;height:8px;z-index:100;background:linear-gradient(90deg,#fefcf6 0%,#fefcf6 20%,#1a4990 20%,#1a4990 40%,#6b1f8e 40%,#6b1f8e 60%,#5a3318 60%,#5a3318 80%,#0a0a0a 80%,#0a0a0a 100%);box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.belt-fill{height:100%;background:linear-gradient(90deg,var(--brass),var(--brass-bright));box-shadow:0 0 12px var(--brass);width:0%;transition:width .12s linear}
+
+.nav{position:fixed;top:14px;left:0;right:0;z-index:90;display:flex;justify-content:center}
+.nav-pill{background:rgba(13,13,13,.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:99px;padding:8px 20px;display:flex;align-items:center;gap:18px;font-size:12px}
+.nav-pill a{color:var(--bone);text-decoration:none;font-weight:600;letter-spacing:.04em}
+.nav-pill a.back{color:var(--brass)}
+
+.hero{padding:140px 24px 80px;text-align:center;background:radial-gradient(ellipse at 30% 20%,rgba(176,141,76,.18) 0%,transparent 60%),var(--ink)}
+.hero-eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-bottom:18px}
+.hero h1{font-size:clamp(2.6rem,7vw,5.5rem);font-weight:800;line-height:.95;letter-spacing:-.035em;margin-bottom:18px;max-width:900px;margin-left:auto;margin-right:auto}
+.hero h1 em{color:var(--brass);font-style:italic;font-weight:400}
+.hero p{font-size:1.05rem;color:rgba(244,241,234,.65);max-width:680px;margin:0 auto 36px;line-height:1.65}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--brass);color:var(--ink);border-radius:99px;font-weight:700;text-decoration:none;font-size:13px;letter-spacing:.04em}
+.hero-cta:hover{background:var(--brass-bright)}
+
+.container{max-width:1180px;margin:0 auto;padding:0 24px}
+.section{padding:60px 0}
+.section-title{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-bottom:18px;padding-left:36px;position:relative;display:inline-block}
+.section-title::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:24px;height:2px;background:var(--brass)}
+.section h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;line-height:1;color:var(--bone);margin-bottom:14px}
+.section p.lead{font-size:1rem;color:rgba(244,241,234,.65);max-width:760px;margin-bottom:36px;line-height:1.65}
+
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:30px}
+.cat{background:rgba(255,255,255,.04);border:1px solid var(--border);padding:24px 22px;border-radius:14px;border-top:3px solid var(--brass);transition:transform .25s,border-color .25s}
+.cat:hover{transform:translateY(-3px);border-top-color:var(--brass-bright)}
+.cat-h{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:8px}
+.cat h3{font-size:1.05rem;font-weight:800;color:var(--bone);margin-bottom:10px;letter-spacing:-.01em}
+.cat ul{list-style:none;padding:0}
+.cat ul li{padding:6px 0 6px 16px;position:relative;font-size:12.5px;color:rgba(244,241,234,.70);line-height:1.5;border-bottom:1px solid rgba(255,255,255,.05)}
+.cat ul li:last-child{border:none}
+.cat ul li::before{content:'•';position:absolute;left:0;color:var(--brass);font-weight:800}
+
+/* TATAMI demo */
+.tatami{position:relative;background:var(--bone);color:var(--ink);padding:80px 24px;overflow:hidden}
+.tatami::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent 0,transparent 26px,rgba(176,141,76,.10) 26px,rgba(176,141,76,.10) 27px),repeating-linear-gradient(-45deg,transparent 0,transparent 26px,rgba(176,141,76,.10) 26px,rgba(176,141,76,.10) 27px);animation:drift 75s linear infinite}
+.tatami > *{position:relative;z-index:1}
+@keyframes drift{0%{background-position:0 0,0 0}100%{background-position:88px 88px,-88px 88px}}
+.tatami .section-title{color:var(--blood)}
+.tatami .section-title::before{background:var(--blood)}
+.tatami h2{color:var(--ink)}
+.tatami p.lead{color:#5c5c5c}
+
+/* CTA bottom */
+.cta-final{padding:80px 24px;text-align:center;background:var(--ink-2);border-top:1px solid var(--border)}
+.cta-final h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.02em;margin-bottom:14px;color:var(--bone)}
+.cta-final p{color:rgba(244,241,234,.65);max-width:580px;margin:0 auto 28px;font-size:14px}
+.cta-final .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:var(--brass);color:var(--ink);border-radius:99px;font-weight:700;text-decoration:none;font-size:14px}
+
+footer{padding:32px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:10px;color:rgba(244,241,234,.45);letter-spacing:.10em;text-transform:uppercase}
+
+@media (max-width:640px){.nav-pill{font-size:10px;padding:6px 14px;gap:10px}}
+</style>
+</head>
+<body>
+
+<div class="belt-progress"><div class="belt-fill" id="bf"></div></div>
+
+<div class="nav">
+  <div class="nav-pill">
+    <a href="../index.html" class="back">← Design Bank</a>
+    <span style="opacity:.30">·</span>
+    <a href="#cats">Categorías</a>
+    <a href="#live">Ver Live</a>
+  </div>
+</div>
+
+<section class="hero">
+  <span class="hero-eyebrow">🥋 Playground · Motion Signature</span>
+  <h1>LEMPAR · <em>35 efectos</em><br>BJJ / Grappling</h1>
+  <p>Paquete completo motion para escuelas de artes marciales · disciplina · respeto · dojo. Categorías Belts · Combat · Dojo · Identity · Numbers · UX neutral.</p>
+  <a href="https://smartconnection-codehub.github.io/lempar-grappling-arts/propuesta.html" target="_blank" class="hero-cta">Ver propuesta LEMPAR live →</a>
+</section>
+
+<section class="section" id="cats">
+  <div class="container">
+    <span class="section-title">Categorías · 35 efectos totales</span>
+    <h2>El sistema visual <em style="color:var(--brass);font-style:italic">completo</em>.</h2>
+    <p class="lead">
+      Cada categoría es independiente · combinable según necesidad del proyecto. Paleta base:
+      <strong style="color:#0d0d0d;background:#f4f1ea;padding:2px 6px">bone</strong>
+      <strong style="color:#f4f1ea;background:#0d0d0d;padding:2px 6px">ink</strong>
+      <strong style="color:#0d0d0d;background:var(--brass);padding:2px 6px">brass</strong>
+      <strong style="color:#f4f1ea;background:var(--blood);padding:2px 6px">oxblood</strong>.
+    </p>
+
+    <div class="cat-grid">
+      <div class="cat">
+        <div class="cat-h">🎗️ Belts · 4 efectos</div>
+        <h3>Sistema de cinturones BJJ</h3>
+        <ul>
+          <li>Belt scroll progress top (5 cinturones con shimmer brass)</li>
+          <li>Belt-toast grande centrado con stripe</li>
+          <li>Stripes accumulate bottom-left (4 stripes)</li>
+          <li>Black Belt achievement 99% + confeti dorado</li>
+        </ul>
+      </div>
+      <div class="cat">
+        <div class="cat-h">🥊 Combat · 4 efectos</div>
+        <h3>Acciones de lucha</h3>
+        <ul>
+          <li>TAP-OUT triple click global + camera shake + flash blood</li>
+          <li>Mat impact doble click onda radial</li>
+          <li>Tournament bracket "VS" entre compare-cols</li>
+          <li>Submission counter banner</li>
+        </ul>
+      </div>
+      <div class="cat">
+        <div class="cat-h">🏛️ Dojo · 5 efectos</div>
+        <h3>Ambiente del gym</h3>
+        <ul>
+          <li>Tatami pattern diagonal drift 60-75s</li>
+          <li>Octagon watermark rotando 90s</li>
+          <li>Coach callouts tooltips brass</li>
+          <li>Section swoosh línea brass</li>
+          <li>Section wash gradient dorado</li>
+        </ul>
+      </div>
+      <div class="cat">
+        <div class="cat-h">🎭 Identity · 5 efectos</div>
+        <h3>Marca del fighter</h3>
+        <ul>
+          <li>Logo breathing técnica continua</li>
+          <li>Logo rolling 360° al hover</li>
+          <li>Avatar brass crest escudo</li>
+          <li>Constellation dots navegación lateral</li>
+          <li>Round timer "Round X · MM:SS"</li>
+        </ul>
+      </div>
+      <div class="cat">
+        <div class="cat-h">🔢 Numbers · 5 efectos</div>
+        <h3>Métricas con vida</h3>
+        <ul>
+          <li>Champion podium #1 brass float</li>
+          <li>Number explosion scale 1.15 + glow</li>
+          <li>Number count-up dramático ease-out 1.4s</li>
+          <li>Heart beat hover numbers band</li>
+          <li>Number shimmer brass gradient sweep</li>
+        </ul>
+      </div>
+      <div class="cat">
+        <div class="cat-h">⚡ UX neutral · 12 efectos</div>
+        <h3>Reusables cross-cliente</h3>
+        <ul>
+          <li>Magnetic cursor brass · 3D tilt mouse-driven · Click ripple</li>
+          <li>Particles flotantes · Magnetic FAB · Parallax video</li>
+          <li>Reveal on scroll · Hero stagger words</li>
+          <li>Achievement unlock · Training mode badge</li>
+          <li>Compare-col gripSlide · Marquee infinito</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tatami">
+  <div class="container">
+    <span class="section-title">Demo · tatami activo</span>
+    <h2>Esta es la textura del <em style="color:var(--blood);font-style:italic">dojo</em>.</h2>
+    <p class="lead">Patrón diagonal cruzado con líneas brass al 7% de opacidad · drift continuo 75s. Sutil en wide screens · activa en cream/bone sections.</p>
+  </div>
+</section>
+
+<section class="cta-final" id="live">
+  <h2>¿Lo querés ver en acción?</h2>
+  <p>La propuesta real de LEMPAR Grappling Arts (cliente Claudio González) usa los 35 efectos. Belt progress · Logo breathing · TAP-OUT triple click · Black Belt achievement al 99% scroll.</p>
+  <a href="https://smartconnection-codehub.github.io/lempar-grappling-arts/propuesta.html" target="_blank" class="btn">Abrir LEMPAR propuesta →</a>
+</section>
+
+<footer>
+  <p>Design Bank SMC · Motion Signature LEMPAR · 35 efectos BJJ · 2026-05-13</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const t=document.documentElement.scrollHeight-window.innerHeight;
+  if(t<=0)return;
+  document.getElementById('bf').style.width=(window.scrollY/t*100)+'%';
+},{passive:true});
+</script>
+
+</body>
+</html>
